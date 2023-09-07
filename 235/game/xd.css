@@ -15,13 +15,19 @@ h1 {
     padding-top: 0px;
 }
 
+h2 {
+    text-align: center;
+}
+
 h4{
     font-weight: normal;
     font-size: 20px;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }
 
 body {
-    background-image: linear-gradient(360deg, rgb(125, 53, 155) 0%, rgb(175, 115, 209) 35%, rgb(218, 189, 246) 100%);
+    background-image: linear-gradient(360deg, rgb(91, 33, 116) 0%, rgb(166, 105, 201) 35%, rgb(218, 189, 246) 100%);
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: top center;
@@ -34,11 +40,12 @@ blockquote {
 
 table {
     border-collapse: collapse;
+    border-spacing: 0px;
     width: 100%;
 }
 
 td {
-    padding: 5px;
+    padding: 10px;
     text-align: center;
 }
 
@@ -53,11 +60,10 @@ iframe {
     width: 100%;
 }
 
-.infoDiv table{
+.infoDiv table {
     border-collapse: collapse;
     border: 1px solid black;
     border-spacing: 0px;
-    width: 100%;
 }
 
 .infoDiv th {
@@ -70,6 +76,6 @@ iframe {
 .infoDiv tr, td {
     border-collapse: collapse;
     border-right: 1px solid black;
-    padding-bottom: 5px;
+    padding-bottom: 0px;
     text-align: left;
 }
