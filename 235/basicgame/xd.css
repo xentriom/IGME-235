@@ -75,7 +75,7 @@ section.info table {
     width: 100%;
 }
 
-section.info th, td {
+section.info table th, td {
     border: 1px solid black;
     padding: 10px;
     width: 33%;
