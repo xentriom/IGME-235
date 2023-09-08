@@ -31,49 +31,25 @@ blockquote {
     padding: 1px 10px;
 }
 
-table {
+/* Videos section*/
+section.videos {
+    margin: auto 10px;
+}
+
+section.videos table {
     border-collapse: collapse;
-    border-spacing: 0px;
     width: 100%;
 }
 
-td {
-    padding: 10px;
-    text-align: center;
-}
-
-iframe {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+section.videos td {
+    border: none;
 }
 
 .yt_video {
     aspect-ratio: 16 / 9;
     width: 100%;
 }
-
-section table {
-    border-collapse: collapse;
-    border: 1px solid black;
-    border-spacing: 0px;
-    table-layout: auto;
-}
-
-section th {
-    border-collapse: collapse;
-    border: 1px solid black;
-    padding: 8px;
-    text-align: center;
-}
-
-.infoDiv tr, td {
-    border-collapse: collapse;
-    border-right: 1px solid black;
-    padding-bottom: 0px;
-    text-align: left;
-    width: 33%;
-}
+/*----------------------------------------------*/
 
 main {
     margin-left: 2%;
@@ -88,3 +64,20 @@ footer {
     left: 0;
     z-index: 10;
 }
+
+/*----------------GAME INFO-------------------*/
+section.info {
+    margin: auto 20px;
+}
+
+section.info table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+section.info th, td {
+    border: 1px solid black;
+    padding: 10px;
+    width: 33%;
+}
+/*----------------------------------------------*/
