@@ -31,7 +31,15 @@ blockquote {
     padding: 1px 10px;
 }
 
-/* Videos section*/
+main {
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 20px;
+}
+
+/*===============================
+VIDEO
+===============================*/
 section.videos {
     margin: auto 10px;
 }
@@ -49,23 +57,10 @@ section.videos td {
     aspect-ratio: 16 / 9;
     width: 100%;
 }
-/*----------------------------------------------*/
 
-main {
-    margin-left: 2%;
-    margin-right: 2%;
-    font-size: 20px;
-}
-
-footer {
-    position: relative;
-    background-color: rgb(202, 189, 205);
-    bottom: 0;
-    left: 0;
-    z-index: 10;
-}
-
-/*----------------GAME INFO-------------------*/
+/*===============================
+GAME INFO
+===============================*/
 section.info {
     margin: auto 20px;
 }
@@ -80,4 +75,33 @@ section.info table th, td {
     padding: 10px;
     width: 33%;
 }
-/*----------------------------------------------*/
+
+/*===============================
+FOOTER
+===============================*/
+footer {
+    position: relative;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    text-align: center;
+}
+
+footer table {
+    margin: auto;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+footer td {
+    padding: 5px;
+    border: none;
+}
+
+footer a {
+    color: rgb(206, 221, 239);
+}
+
+footer a:hover {
+    color: rgb(86, 44, 164);
+}
