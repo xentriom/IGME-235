@@ -53,14 +53,14 @@ iframe {
     width: 100%;
 }
 
-.infoDiv table {
+section table {
     border-collapse: collapse;
     border: 1px solid black;
     border-spacing: 0px;
     table-layout: auto;
 }
 
-.infoDiv th {
+section th {
     border-collapse: collapse;
     border: 1px solid black;
     padding: 8px;
@@ -75,13 +75,13 @@ iframe {
     width: 33%;
 }
 
-.descriptionDiv {
+main {
     margin-left: 2%;
     margin-right: 2%;
     font-size: 20px;
 }
 
-.sourceDiv {
+footer {
     position: relative;
     background-color: rgb(202, 189, 205);
     bottom: 0;
