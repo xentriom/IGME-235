@@ -23,12 +23,17 @@
             font-family: 'Montserrat', sans-serif;
         }
         h2 {
-            color: rgb(51, 0, 255);
+            border-bottom: none;
+            color: rgb(3, 37, 98);
             margin-left: 100px;
             font-family: 'Montserrat', sans-serif;
         }
-        p, ul, cite {
+        p, ul {
+            color: rgb(1, 27, 39);
             margin-left: 100px;
+        }
+        .quote p {
+            margin-left: 0px;
         }
         img {
             display: block;
@@ -39,8 +44,13 @@
             float:right; margin: 0 12px;
         }
         blockquote {
-            background-color: lightgray;
+            background-color: rgb(17, 157, 164);
+            margin-left: 100px;
+            margin-right: 200px;
             padding: 1rem;
+        }
+        footer {
+            margin-left: 100px;
         }
     </style>
 </head>
@@ -64,7 +74,7 @@
 
         <h2>Description</h2>
         <p><em>Dig Dug</em> is a 1-2 player arcade game in which you have to use your shovel to dig your way through the earth.
-            Stopping you from doing this are two monsters, called <b>Pooka</b> and <b>Fygar</b>, who will continually chase you around.
+            Stopping you from doing this are two monsters, called <b>Pooka</b> and <b>Fygar</b>, who will <br>continually chase you around.
             The only weapon that you carry is an <b>air pump</b>, which you can use to inflate the monsters to the point where they
             explode. [...]</p>
         <hr>
@@ -78,6 +88,7 @@
         </ul>
         <hr>
 
+        <section class="quote">
         <h2>Quote</h2>
         <blockquote>
             <p>This definitely goes under the heading of <i>"Games That Were Made While a Programmer Was on Drugs,"</i> or at least
@@ -86,6 +97,7 @@
                 <a href="http://www.ataritimes.com/index.php?ArticleIDX=395" (target="_blank")>http://www.ataritimes.com/index.php?ArticleIDX=395</a>
             </cite>
         </blockquote>
+        </section>
         <hr>
     </main>
 
