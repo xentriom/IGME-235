@@ -8,16 +8,29 @@
     <link rel="icon" type="image/png" href="images/favicon.ico" sizes="16x16"/>
     
     <style>
+        body {
+            background-color: #9392f3;
+        }
         h1 {
             color: red;
             font-family: sans-serif;
             border-bottom: 1px solid blue;
             text-align: center;
         }
+        h2 {
+            color: rgb(51, 0, 255);
+            margin-left: 100px;
+        }
+        p, ul {
+            margin-left: 100px;
+        }
         img {
             display: block;
             margin: 0 auto;
             max-width: 100%;
+        }
+        img.side {
+            float:right; margin: 0 12px;
         }
         blockquote {
             background-color: lightgray;
@@ -28,11 +41,11 @@
 
 <body>
     <header>
-        <a href="big/pic1.html"><image src="images/dig-dug-burnt.png" alt="Dig Dug"></a>
+        <a href="big/pic1.html"><image src="images/dig-dug-burnt.png" class="side" alt="Dig Dug" width="9%"></a>
+            <img src="images/dig-dug.png" alt="Dig Dug Logo" width="30%">
         <h1>Dig Dug</h1>
-        <img src="images/dig-dug.png" alt="Dig Dug Logo">
     </header>
-    <img src="images/1fygar_inflate.jpg" alt="Dig Dug Logo">
+
     <main>
         <h2>Publishing Info</h2>
         <ul>
@@ -40,10 +53,11 @@
             <li>Developed by: <abbr title="Nakamura Manufacturing Company">Namco</abbr> Limited</li>
             <li>Apr, 1982</li>
         </ul>
+        <img src="images/1fygar_inflate.jpg" class="side" alt="Dig Dug Logo">
         <hr>
 
         <h2>Description</h2>
-        <p>Dig Dug is a 1-2 player arcade game in which you have to use your shovel to dig your way through the earth.
+        <p><em>Dig Dug</em> is a 1-2 player arcade game in which you have to use your shovel to dig your way through the earth.
             Stopping you from doing this are two monsters, called <b>Pooka</b> and <b>Fygar</b>, who will continually chase you around.
             The only weapon that you carry is an <b>air pump</b>, which you can use to inflate the monsters to the point where they
             explode. [...]</p>
