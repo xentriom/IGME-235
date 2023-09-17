@@ -35,7 +35,8 @@ HEADING
 header {
     display: flex;
     justify-content: space-between;
-    padding: 10px;
+    padding-left: 40px;
+    padding-right: 20px;
 }
 
 header img {
@@ -50,27 +51,25 @@ header h1 {
     color: black;
     font-family: sans-serif;
     font-size: 4em;
-    margin: auto 0;
+    padding-top: 10px;
 }
 
 /*===============================
 SCREENSHOTS
 ===============================*/
-section.screenshots {
-    margin: auto 10px;
-}
-
 section.screenshots table {
     border-collapse: collapse;
     width: 100%;
+    text-align: center;
 }
 
 section.screenshots td {
     border: none;
+    width: 25%;
 }
 
 section.screenshots img {
-    width: 100%;
+    width: 80%;
 }
 
 /*===============================
