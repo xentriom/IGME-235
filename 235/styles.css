@@ -1,13 +1,23 @@
+* {
+    font-family: Helvetica, sans-serif;
+}
+
 body {
     background-color: #323f6a;
 }
 
 header {
-    background-color: #c9cad9;
+    display: flex;
+    justify-content: space-between;
 }
 
 p {
     color: #bbd0ff;
+    font-size: 20px;
+}
+
+section.bio {
+    font-size: 1.5em;
 }
 
 a:link {
