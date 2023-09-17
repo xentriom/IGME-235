@@ -54,6 +54,26 @@ header h1 {
 }
 
 /*===============================
+SCREENSHOTS
+===============================*/
+section.screenshots {
+    margin: auto 10px;
+}
+
+section.screenshots table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+section.screenshots td {
+    border: none;
+}
+
+section.screenshots img {
+    width: 100%;
+}
+
+/*===============================
 VIDEO
 ===============================*/
 section.videos {
