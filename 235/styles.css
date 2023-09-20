@@ -10,6 +10,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 10px;
 }
 
 header h1 {
@@ -18,10 +19,7 @@ header h1 {
 
 h1 {
     color: #bbd0ff;
-    font-size: 50px;
-}
-
-section {
+    font-size: 60px;
 }
 
 .container {
@@ -33,8 +31,25 @@ section {
     width: 35%;
     margin: 10px;
     border-radius: 20px;
-    background-color: #d1d2f9;
+    background-color: #D1D2F9;
     padding-left: 15px;
+}
+
+section.container h2 {
+    font-size: 40px;
+}
+section.container p {
+    font-size: 25px;
+}
+
+.bio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D1D2F9;
+    width: 73%;
+    margin: 20px auto;
+    border-radius: 20px;
 }
 
 img {
@@ -42,24 +57,16 @@ img {
     border-radius: 10px;
 }
 
-p {
-    font-size: 20px;
-}
-
-section.bio {
-    font-size: 1.5em;
-}
-
 a:link {
-    color: #a3bcf9;
+    color: #7796CB;
 }
 
 a:visited{
-    color: red;
+    color: rgb(168, 137, 218);
 }
 
 a:hover {
-    color: #d1d2f9;
+    color: #576490;
 }
 
 a:focus {
