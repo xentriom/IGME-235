@@ -12,3 +12,17 @@ figure {
 figure img {
     width: 95%;
 }
+
+.tet {
+    float: left;
+    border: 1px solid black;
+    width: 25%;
+    clear: right;
+}
+
+#footer {
+    position: fixed;
+    top: 0;
+    right: 0;
+}
+  
