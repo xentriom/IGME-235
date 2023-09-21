@@ -1,4 +1,14 @@
 /* Do everything in this file */
 h2 {
     border-bottom: 1px solid red;
+    clear: right;
+}
+
+figure {
+    float: right;
+    width: 40%;
+}
+
+figure img {
+    width: 95%;
 }
