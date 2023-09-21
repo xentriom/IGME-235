@@ -34,10 +34,11 @@ p{
 
 .box {
     width: 35%;
-    margin: 10px;
+    margin: 15px;
     border-radius: 20px;
     background-color: #D1D2F9;
     padding-left: 15px;
+    padding-right: 15px;
 }
 
 section.container h2 {
@@ -48,8 +49,8 @@ section.container h2 {
 .bio {
     display: flex;
     background-color: #D1D2F9;
-    width: 71%;
-    margin: 20px auto;
+    width: 74%;
+    margin: 25px auto;
     border-radius: 20px;
     padding-left: 20px;
     color: #27145c;
