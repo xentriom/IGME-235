@@ -1,3 +1,4 @@
+/* Entire page */
 * {
     font-family: Helvetica, sans-serif;
 }
@@ -22,11 +23,15 @@ h1 {
     font-size: 60px;
 }
 
+p{
+    font-size: 25px;
+}
+
 .container {
     display: flex;
     justify-content: center;
 }
-  
+
 .box {
     width: 35%;
     margin: 10px;
@@ -36,24 +41,22 @@ h1 {
 }
 
 section.container h2 {
+    color: #6074f7;
     font-size: 40px;
-}
-section.container p {
-    font-size: 25px;
 }
 
 .bio {
     display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #D1D2F9;
-    width: 73%;
+    width: 71%;
     margin: 20px auto;
     border-radius: 20px;
+    padding-left: 20px;
+    color: #27145c;
 }
 
 img {
-    border: 5px solid #d1d2f9;
+    border: 5px solid #7796CB;
     border-radius: 10px;
 }
 
@@ -61,7 +64,7 @@ a:link {
     color: #7796CB;
 }
 
-a:visited{
+a:visited {
     color: rgb(168, 137, 218);
 }
 
