@@ -1,0 +1,16 @@
+header {
+    background-color: #005689;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+/* Nav bar for mobile view */
+@media screen and (max-width: 500px) {
+    
+}
+
+/* Nav bar for tablet view */
+@media screen and (max-width: 1100px) {
+    
+}
