@@ -2,10 +2,11 @@
     display: grid;
     grid-template-areas:
         "header header header"
-        "nav nav nav"
+        "content1 content2 content3"
         "footer footer footer";
-    grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: auto 1fr auto;
+    grid-template-columns: 33% 33% 33%;
+    margin: 2vh auto;
 }
 
 header {
@@ -13,8 +14,22 @@ header {
     background-color: #005689;
 }
 
-nav {
-    grid-area: nav;
+#article1 {
+    grid-area: content1;
+    background-color: #f2f2f2;
+}
+#article2 {
+    grid-area: content2;
+    background-color: #f2f2f2;
+}
+#article3 {
+    grid-area: content3;
+    background-color: #f2f2f2;
+}
+
+.articles {
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 footer {
@@ -22,6 +37,4 @@ footer {
 }
 
 /* Nav bar for mobile view */
-@media screen and (max-width: 500px) {
-    
-}
+@media screen and (max-width: 500px) {}
