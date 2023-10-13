@@ -1,56 +1,90 @@
-#container {
+.container {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: auto 300px 200px 200px 200px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 0.4fr 0.4fr 2fr 1fr 1fr;
     grid-template-areas:
-        "header header header header"
-        "mainText mainImg mainImg article2"
+        "navBar navBar navBar navBar"
+        "headlines headlines headlines headlines"
+        "article1 article1 article1 article2"
         "article3 article4 article5 article6"
-        "article7 article7 article7 article7"
-        "footer footer footer footer";
-    margin: auto;
+        "article3 article4 article7 article8";
 }
 
-header {
-    grid-area: header;
+.navBar {
+    grid-area: navBar;
     background-color: blue;
 }
 
-div#article1_text {
-    grid-area: mainText;
-}
-div#article1_img {
-    grid-area: mainImg;
-    display: flex;
-    justify-content: center;
+.headlines {
+    grid-area: headlines;
 }
 
-div#article2 {
+.article1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 0.6fr 1.4fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "a1-title a1-img"
+        "a1-text a1-img";
+    grid-area: article1;
+}
+
+.article2 {
     grid-area: article2;
 }
 
-div#article3 {
+.article3 {
     grid-area: article3;
 }
 
-div#article4 {
+.article4 {
     grid-area: article4;
 }
 
-div#article5 {
+.article5 {
     grid-area: article5;
 }
 
-div#article6 {
+.article6 {
     grid-area: article6;
 }
 
-div#article7 {
+.article7 {
     grid-area: article7;
 }
 
-#footer {
-    grid-area: footer;
+.article8 {
+    grid-area: article8;
+}
+
+.a1-title {
+    grid-area: a1-title;
+}
+
+.a1-text {
+    grid-area: a1-text;
+}
+
+.a1-img {
+    grid-area: a1-img;
+    align-self: center;
+}
+
+
+
+
+h1 {
+    color: blue;
+}
+
+.navBar h1 {
+    color: white;
+}
+
+h2 {
+    font-size: smaller;
 }
 
 /* Nav bar for mobile view */
