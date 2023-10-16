@@ -1,90 +1,110 @@
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2fr 1fr 1fr;
-    grid-template-areas:
-        "navBar navBar navBar navBar"
-        "headlines headlines headlines headlines"
-        "article1 article1 article1 article2"
-        "article3 article4 article5 article6"
-        "article3 article4 article7 article8";
-}
-
-.navBar {
-    grid-area: navBar;
-    background-color: blue;
-}
-
-.headlines {
-    grid-area: headlines;
-}
-
-.article1 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.6fr 1.4fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "a1-title a1-img"
-        "a1-text a1-img";
-    grid-area: article1;
-}
-
-.article2 {
-    grid-area: article2;
-}
-
-.article3 {
-    grid-area: article3;
-}
-
-.article4 {
-    grid-area: article4;
-}
-
-.article5 {
-    grid-area: article5;
-}
-
-.article6 {
-    grid-area: article6;
-}
-
-.article7 {
-    grid-area: article7;
-}
-
-.article8 {
-    grid-area: article8;
-}
-
-.a1-title {
-    grid-area: a1-title;
-}
-
-.a1-text {
-    grid-area: a1-text;
-}
-
-.a1-img {
-    grid-area: a1-img;
-    align-self: center;
-}
-
-
-
-
+/* Top border color #4bc6df */
 h1 {
-    color: blue;
+    color: #005689;
 }
 
 .navBar h1 {
     color: white;
 }
 
-h2 {
-    font-size: smaller;
+.container {
+    display: grid;
+    grid-template-columns: 0.2fr 0.2fr 1.8fr 10px 1.8fr 10px 1.8fr 10px 1.8fr 0.2fr 0.2fr;
+    grid-template-rows: 0.4fr auto 10px 1.8fr 10px 1.8fr;
+    grid-template-areas:
+        "navBar navBar navBar navBar navBar navBar navBar navBar navBar navBar navBar"
+        "m1 m2 header header header header header header header m3 m4"
+        "m1 m2 m5 m5 m5 m5 m5 m5 m5 m3 m4"
+        "m1 m2 article1 article1 article1 article1 article1 m10 article2 m3 m4"
+        "m1 m2 m6 m6 m6 m6 m6 m6 m6 m3 m4"
+        "m1 m2 article3 m7 article4 m8 article5 m9 article6 m3 m4";
+}
+
+.navBar {
+    grid-area: navBar;
+    background: #005689;
+}
+
+.header {
+    grid-area: header;
+    background: lightgray;
+    line-height: 1.5px;
+}
+
+.m1 { grid-area: m1; background-color: lightgray; }
+.m2 { grid-area: m2; }
+.m3 { grid-area: m3; }
+.m4 { grid-area: m4; background-color: lightgray; }
+.m5 { grid-area: m5; }
+.m6 { grid-area: m6; }
+.m7 { grid-area: m7; }
+.m8 { grid-area: m8; }
+.m9 { grid-area: m9; }
+.m10 { grid-area: m10; }
+.m11 { grid-area: m11; }
+.m12 { grid-area: m12; }
+
+.article1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "text image image";
+    grid-area: article1;
+}
+
+.text {
+    grid-area: text;
+}
+
+.image {
+    grid-area: image;
+    /* display: flex;
+    justify-content: right; */
+}
+
+.article2 { grid-area: article2; }
+.article3 { grid-area: article3; }
+.article4 { grid-area: article4; }
+
+.article5 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10px 1fr;
+    grid-template-areas:
+        "topic1"
+        "m11"
+        "topic2";
+    grid-area: article5;
+}
+
+.topic1 { grid-area: topic1; }
+.topic2 { grid-area: topic2; }
+
+.article6 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 10px 1fr;
+    grid-template-areas:
+        "topic3"
+        "m12"
+        "topic4";
+    grid-area: article6;
+}
+
+.topic3 { grid-area: topic3; }
+.topic4 { grid-area: topic4; }
+
+.articles {
+    background-color: lightgray;
+    border-top: 5px solid #4bc6df;
+    padding: 0px 10px 0px 10px;
+}
+.articles img {
+    width: 100%;
+    height: auto;
 }
 
 /* Nav bar for mobile view */
