@@ -61,8 +61,6 @@ h1 {
 
 .image {
     grid-area: image;
-    /* display: flex;
-    justify-content: right; */
 }
 
 .article2 { grid-area: article2; }
@@ -106,6 +104,3 @@ h1 {
     width: 100%;
     height: auto;
 }
-
-/* Nav bar for mobile view */
-@media screen and (max-width: 500px) {}
