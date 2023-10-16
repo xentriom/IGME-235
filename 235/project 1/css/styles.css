@@ -1,4 +1,7 @@
-/* Top border color #4bc6df */
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
 h1 {
     color: #005689;
 }
