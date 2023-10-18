@@ -11,9 +11,12 @@
 
 #box-1 {
     grid-row-start: 1;
-    grid-row-end: 13;
+    grid-row-end: 20;
     border-right: 5px solid black;
     padding: 30px 30px 30px 30px;
+    height: auto;
+    position: sticky;
+    top: 0px;
 }
 
 .socialLinks {
@@ -28,4 +31,16 @@
 
 .projects h1 {
     text-align: center;
+}
+
+@media screen and (max-width: 1100px) {
+    #grid-container div {
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #grid-container div {
+        font-size: 8px;
+    }
 }
