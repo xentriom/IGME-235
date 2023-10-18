@@ -5,6 +5,7 @@
 #grid-container {
     display: grid;
     grid-template-columns: 10% auto;
+    border: 5px solid black;
 }
 
 #grid-container div {
@@ -31,10 +32,6 @@
 .projects {
     /* display: flex; */
     padding: 0px 30px 30px 30px;
-}
-
-.projects h1 {
-    text-align: center;
 }
 
 @media screen and (max-width: 1100px) {
