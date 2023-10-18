@@ -3,39 +3,70 @@
 }
 
 body {
-    padding: 0px 8% 0px 8%;
+    margin: 0px 0px 0px 0px;
 }
 
 #grid-container {
     display: grid;
     grid-template-columns: 10% auto;
-    border: 5px solid black;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "sidebar socialLinks"
+        "filler Project1"
+        "filler Project2"
+        "filler Project3"
+        "filler Project4";
 }
 
 #grid-container div {
     background-color: lightblue;
-    text-align: left;
     font-size: 24px;
 }
 
 #box-1 {
-    grid-row-start: 1;
-    grid-row-end: 4;
-    border-right: 5px solid black;
+    grid-area: sidebar;
     padding: 10px 30px 30px 30px;
-    height: auto;
+    border-right: 5px solid black;
+    height: 9vh;
     position: sticky;
     top: 0px;
 }
 
-.socialLinks {
-    color: rebeccapurple;
-    padding: 0px 30px 0px 30px;
+#box-2 {
+    grid-area: socialLinks;
+    padding: 10px 30px 10px 30px;
     border-bottom: 5px solid black;
+    position: sticky;
+    top: 0px;
+}
+
+.filler {
+    grid-area: filler;
+    padding: 10px 30px 10px 30px;
+    border-right: 5px solid black;
+}
+
+#box-3 {
+    grid-area: Project1;
+    text-align: left;
+}
+
+#box-4 {
+    grid-area: Project2;
+    text-align: right;
+}
+
+#box-5 {
+    grid-area: Project3;
+    text-align: left;
+}
+
+#box-6 {
+    grid-area: Project4;
+    text-align: right;
 }
 
 .projects {
-    /* display: flex; */
     padding: 0px 30px 30px 30px;
 }
 
