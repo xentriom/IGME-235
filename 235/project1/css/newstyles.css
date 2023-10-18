@@ -12,9 +12,9 @@ body {
     grid-template-columns: 12% auto;
     grid-template-rows: auto auto;
     grid-template-areas:
-        "socialLinks socialLinks"
+        "sidebar socialLinks"
         "sidebar Project1"
-        "filler Project2"
+        "sidebar Project2"
         "filler Project3"
         "filler Project4";
 }
@@ -25,7 +25,7 @@ nav {
     border-right: 5px solid black;
     height: 100%;
     position: sticky;
-    top: 9%;
+    top: 0%;
     background-color: #7796CB;
 }
 
