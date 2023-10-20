@@ -1,47 +1,44 @@
 * {
     font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
 }
 
 body {
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
 }
 
 #grid-container {
     display: grid;
-    grid-template-columns: 12% auto;
+    grid-template-columns: 15% auto;
     grid-template-rows: auto auto;
     grid-template-areas:
-        "sidebar socialLinks"
         "sidebar Project1"
         "sidebar Project2"
-        "filler Project3"
-        "filler Project4";
+        "filler2 Project3"
+        "filler2 Project4";
+    max-width: 1500px;
+    margin: auto;
 }
 
-nav {
+#grid-container h1 {
+    font-size: 3em;
+}
+
+#box-2 {
     grid-area: sidebar;
-    padding: 10px 30px 30px 30px;
-    border-right: 5px solid black;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
     position: sticky;
+    padding: 10px 30px 30px 30px;
+    height: 100%;
     top: 0%;
     background-color: #7796CB;
 }
 
-#box-2 {
-    grid-area: socialLinks;
-    padding: 10px 1em 0px 1em;
-    border-bottom: 5px solid black;
-    position: sticky;
-    top: 0px;
-    background-color: #576490;
-}
-
-.filler {
-    grid-area: filler;
+.filler2 {
+    grid-area: filler2;
     padding: 10px 30px 10px 30px;
-    border-right: 5px solid black;
     background-color: #7796CB;
 }
 
@@ -50,9 +47,19 @@ nav {
     text-align: left;
 }
 
+#box-3 span {
+    width: 50%;
+    height: 90%;
+}
+
 #box-4 {
     grid-area: Project2;
     text-align: right;
+}
+
+#box-4 span {
+    width: 50%;
+    height: 90%;
 }
 
 #box-5 {
@@ -60,27 +67,42 @@ nav {
     text-align: left;
 }
 
+#box-5 span {
+    width: 50%;
+    height: 90%;
+}
+
 #box-6 {
     grid-area: Project4;
     text-align: right;
 }
 
-.projectLinks {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+#box-6 span {
+    width: 50%;
+    height: 90%;
 }
 
 .projects {
-    padding: 0px 30px 30px 30px;
+    padding: 15px 30px 15px 30px;
     background-color: #D1D2F9;
+    border-bottom: 2px dotted black;
+    display: flex;
+    justify-content: space-between;
 }
 
-.socialLinks {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+.projects p {
+    font-size: 1vw;
+}
+
+.projects img {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 1500px) {
+    #grid-container div {
+        font-size: 20px;
+    }
 }
 
 @media screen and (max-width: 1100px) {
@@ -99,7 +121,23 @@ nav {
             "Project1"
             "Project2"
             "Project3"
-            "Project4"
-            "socialLinks";
+            "Project4";
+    }
+
+    .filler {
+        grid-area: filler;
+        padding: 0px;
+        background-color: #7796CB;
+    }
+
+    #box-2 {
+        grid-area: sidebar;
+        padding: 10px 1em 0px 1em;
+        position: sticky;
+        top: 0px;
+        background-color: #576490;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
     }
 }
