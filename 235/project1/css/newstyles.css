@@ -123,7 +123,7 @@ p {
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
     #grid-container {
         display: grid;
         grid-template-columns: 100%;
