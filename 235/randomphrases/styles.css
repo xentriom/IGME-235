@@ -160,8 +160,8 @@ button:active {
         background-color: white;
         color: black;
         border: 1px solid black;
-        padding: 20px 30px;
-        font-size: 24px;
+        padding: 10px 20px;
+        font-size: 20px;
         cursor: pointer;
         margin: 4% auto;
         display: block;
