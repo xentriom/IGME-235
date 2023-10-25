@@ -166,6 +166,7 @@ button:active {
         margin: 4% auto;
         display: block;
         border-radius: 10px;
+        margin-top: 10px;
     }
 }
 
