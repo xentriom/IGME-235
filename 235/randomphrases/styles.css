@@ -94,7 +94,7 @@ button:active {
         height: 80vh;
         margin: 0 auto;
         display: grid;
-        grid-template-rows: 1.4fr 0.6fr;
+        grid-template-rows: 0.8fr 1.2fr;
         grid-template-columns: 1fr;
         grid-template-areas: "left" "right";
     }
@@ -102,7 +102,7 @@ button:active {
     .left {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.6fr 1.4fr;
+        grid-template-rows: 0.5fr 1.5fr;
         grid-template-areas:
             "nameArea"
             "imageArea";
@@ -126,7 +126,7 @@ button:active {
     .right {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.4fr 1.6fr;
+        grid-template-rows: 0.5fr 1.5fr;
         grid-template-areas:
             "creditArea" "quoteArea";
         grid-area: right;
