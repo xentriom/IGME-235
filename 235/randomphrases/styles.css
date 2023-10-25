@@ -134,7 +134,7 @@ button:active {
 
     .quoteArea {
         grid-area: quoteArea;
-        font-size: 25px;
+        font-size: 20px;
         padding: 0% 3% 0px 3%;
     }
 
