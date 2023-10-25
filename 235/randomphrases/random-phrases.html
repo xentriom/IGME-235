@@ -4,92 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Random Phrases</title>
-    <style>
-        footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background-color: black;
-            color: white;
-            text-align: center;
-            margin: 0px;
-        }
-        
-        @media screen and (max-width: 480px) {
-            .firstContainer {
-                background-color: gray;
-                height: 70vh;
-                margin: 0 auto;
-            }
-
-            .secondContainer {
-                background-color: darkblue;
-                height: 15vh;
-                margin: 0 auto;
-                border-top: 4px dotted white;
-            }
-
-            button {
-            background-color: white;
-            color: black;
-            border: 2px solid black;
-            padding: 20px 30px;
-            font-size: 24px;
-            cursor: pointer;
-            margin: 8% auto;
-            display: block;
-            border-radius: 10px;
-        }
-        }
-
-        @media screen and (min-width: 1100px) {
-            .firstContainer {
-                background-color: gray;
-                height: 70vh;
-                width: 95vh;
-                margin: 0 auto;
-                display: flex;
-                justify-content: center;
-            }
-
-            .secondContainer {
-                background-color: darkblue;
-                height: 15vh;
-                width: 95vh;
-                margin: 0 auto;
-                border-top: 5px dotted white;
-            }
-
-            button {
-            background-color: white;
-            color: black;
-            border: 2px solid black;
-            padding: 20px 30px;
-            font-size: 24px;
-            cursor: pointer;
-            margin: 4% auto;
-            display: block;
-            border-radius: 10px;
-        }
-        }
-    </style>
 </head>
 
 <body>
     <div class="firstContainer">
-
+        <div class="left">
+            <div class="nameArea">
+                <h1 id="name"></h1>
+            </div>
+            <div class="imageArea">
+                <img id="image" src="" alt="">
+            </div>
+        </div>
+        <div class="right">
+            <div class="quoteArea">
+                <p id="quote"></p>
+            </div>
+            <div class="creditArea">
+                <p id="credit"></p>
+            </div>
+        </div>
     </div>
 
     <div class="secondContainer">
         <div id="button">
-            <button>Generate Quote</button>
+            <button>Generate Character</button>
         </div>
     </div>
 
     <footer>
         <p>© Copyright 2023 Jason Chen</p>
     </footer>
+
+    <script>
+        "use strict";
+
+        // Object containing all the characters (expandable) [1107x1107 img size]
+        const characters = {
+            kazuha: {
+                characterName: "Kazuha",
+                characterQuote: "The birdsong at daybreak is nature's gift to us. Let us go. Our journey begins anew.",
+                characterImage: "images/kazuha.png",
+                characterImageCredits: "Genshin Impact",
+                characterColor: "#c74f43"
+            },
+            zhongli: {
+                characterName: "Zhongli",
+                characterQuote: "Every journey has its final days. Don't rush.",
+                characterImage: "images/zhongli.jpg",
+                characterImageCredits: "カネンゴミ",
+                characterColor: "#2f2121"
+            },
+            raiden: {
+                characterName: "Raiden Shogun",
+                characterQuote: "Reality is the stillness buried deep beneath the illusion",
+                characterImage: "images/raiden.jpg",
+                characterImageCredits: "Genshin Impact",
+                characterColor: "#815b96"
+            },
+            beidou: {
+                characterName: "Beidou",
+                characterQuote: "When you don't know what to do, just take the first step. The rest will figure itself out naturally",
+                characterImage: "images/beidou.jpg",
+                characterImageCredits: "Atdan",
+                characterColor: "#533b35"
+            },
+            yanfei: {
+                characterName: "Yanfei",
+                characterQuote: "Do not seek to emulate the past, for there is no law that can suffice for all time",
+                characterImage: "images/yanfei.jpg",
+                characterImageCredits: "雨壱絵穹",
+                characterColor: "#b7444c"
+            }
+        };
+
+        // Get each element to be modified
+        let nameSection = document.getElementById("name");
+        let imageSection = document.getElementById("image");
+        let quoteSection = document.getElementById("quote");
+        let creditSection = document.getElementById("credit");
+        let button = document.querySelector('button');
+
+        // Function to change the character
+        function changeCharacter() {
+            const characterKey = Object.keys(characters);
+            const random = Math.floor(Math.random() * characterKey.length);
+            const selectedCharacter = characterKey[random];
+            const character = characters[selectedCharacter];
+
+            quoteSection.textContent = `"${character.characterQuote}"`;
+            nameSection.textContent = character.characterName;
+            nameSection.style.color = character.characterColor;
+            imageSection.src = character.characterImage;
+            creditSection.textContent = `Image Credits: ${character.characterImageCredits}`;
+        }
+
+        // Event listeners for the button and DOM
+        button.addEventListener('click', changeCharacter);
+        document.addEventListener('DOMContentLoaded', changeCharacter);
+    </script>
 </body>
 
 </html>
