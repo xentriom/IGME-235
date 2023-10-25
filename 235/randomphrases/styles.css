@@ -115,6 +115,8 @@ button:active {
         justify-content: center;
         align-items: center;
         font-size: 20px;
+        margin-top: -10px;
+        margin-bottom: -15px;
     }
 
     .imageArea {
