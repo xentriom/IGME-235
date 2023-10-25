@@ -126,7 +126,7 @@ button:active {
     .right {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.5fr 1.5fr;
+        grid-template-rows: 0.3fr 1.7fr;
         grid-template-areas:
             "creditArea" "quoteArea";
         grid-area: right;
@@ -135,7 +135,7 @@ button:active {
     .quoteArea {
         grid-area: quoteArea;
         font-size: 20px;
-        padding: 0% 3% 0px 3%;
+        padding: 0% 3% 0px 5%;
     }
 
     .creditArea {
