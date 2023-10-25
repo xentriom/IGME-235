@@ -91,7 +91,7 @@ button:active {
 
     .firstContainer {
         background-color: lightgray;
-        height: 75vh;
+        height: 70vh;
         margin: 0 auto;
         display: grid;
         grid-template-rows: 0.8fr 1.2fr;
@@ -151,7 +151,7 @@ button:active {
 
     .secondContainer {
         background-color: lightgray;
-        height: 25vh;
+        height: 30vh;
         margin: 0 auto;
         border-top: 4px solid lightgray;
     }
