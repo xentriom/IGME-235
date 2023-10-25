@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Phrases</title>
+    <style>
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+            margin: 0px;
+        }
+        
+        @media screen and (max-width: 480px) {
+            .firstContainer {
+                background-color: gray;
+                height: 70vh;
+                margin: 0 auto;
+            }
+
+            .secondContainer {
+                background-color: darkblue;
+                height: 15vh;
+                margin: 0 auto;
+                border-top: 4px dotted white;
+            }
+
+            button {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+            padding: 20px 30px;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 8% auto;
+            display: block;
+            border-radius: 10px;
+        }
+        }
+
+        @media screen and (min-width: 1100px) {
+            .firstContainer {
+                background-color: gray;
+                height: 70vh;
+                width: 95vh;
+                margin: 0 auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .secondContainer {
+                background-color: darkblue;
+                height: 15vh;
+                width: 95vh;
+                margin: 0 auto;
+                border-top: 5px dotted white;
+            }
+
+            button {
+            background-color: white;
+            color: black;
+            border: 2px solid black;
+            padding: 20px 30px;
+            font-size: 24px;
+            cursor: pointer;
+            margin: 4% auto;
+            display: block;
+            border-radius: 10px;
+        }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="firstContainer">
+
+    </div>
+
+    <div class="secondContainer">
+        <div id="button">
+            <button>Generate Quote</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© Copyright 2023 Jason Chen</p>
+    </footer>
+</body>
+
+</html>
