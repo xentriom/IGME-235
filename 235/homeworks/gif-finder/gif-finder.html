@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giphy Finder</title>
     <style>
         * {
@@ -193,7 +194,8 @@
                 let result = results[i];
 
                 // 11 - get the URL to the GIF
-                let smallURL = result.images.fixed_width_small.ur1;
+                let smallURL = result.images.fixed_width_small.url;
+                console.log(smallURL);
                 if (!smallURL) smallURL = "images/no-image-found.png";
 
                 // 12 - get the URL to the GIPHY Page
