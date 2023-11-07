@@ -5,11 +5,14 @@
 header {
     background: url(images/cats.jpg);
     height: 195px;
+    margin: 0px 5% 0px 5%;
+    border: 2px solid black;
+    border-radius: 20px;
 }
 
 header h1 {
     margin: 0;
-    color: blue;
+    color: black;
     text-align: center;
     font-size: 100px;
     padding-top: 35px;
