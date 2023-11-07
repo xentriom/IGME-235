@@ -88,7 +88,29 @@ button:focus {
     outline: 0;
 }
 
+.widget1 {
+    
+}
+
+.widget2 {
+
+}
+
+.widget3 {
+
+}
+
 .widgets {
     margin-top: 1em;
     margin-bottom: 1em;
+}
+
+.container {
+    background-color: lightgray;
+    border: 1px solid black;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1em 10% 1em 10%;
+    justify-content: center;
+    align-items: center;
 }
