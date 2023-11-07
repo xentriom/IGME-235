@@ -95,13 +95,15 @@ function dataLoaded(e) {
         let smallURL = result.images.fixed_width_small.url;
         if (!smallURL) smallURL = "images/no-image-found.png";
 
+        let rating = result.rating.toUpperCase();
+
         // 12 - get the URL to the GIPHY Page
         let url = result.url;
 
         // 13 - Build a ‹div> to hold each result
         // ES6 String Templating
         let line = `<div class='result'><img src='${smallURL}' title= '${result.id}' />`;
-        line += `<span><a target='_blank' href='${url}'>View on Giphy</a></span></div>`;
+        line += `<span><a target='_blank' href='${url}'>View on Giphy</a></span><br>Rating: ${rating}</div>`;
 
         // 14 - another way of doing the same thing above
         // Replaces this:
