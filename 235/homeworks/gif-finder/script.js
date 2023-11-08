@@ -121,7 +121,7 @@ function dataLoaded(e) {
         bigString += line;
     }
     // 16 - all done building the HTML - show it to the user!
-    document.querySelector("#content").innerHTML = `<div class='center'>${bigString}"</div>`;
+    document.querySelector("#content").innerHTML = `<div class='center'>${bigString}</div>`;
 
     // 17 - update the status
     // document.querySelector("#status").innerHTML = "<b>Success!</b>";
