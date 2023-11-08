@@ -41,7 +41,7 @@ function searchButtonClicked() {
     url += "&limit=" + limit;
 
     // 10 - update the UI
-    document.querySelector("#status").innerHTML = "<b>Searching for '" + displayTerm + "'</b>";
+    // document.querySelector("#status").innerHTML = "<b>Searching for '" + displayTerm + "'</b>";
 
     // 11 - see what the URL looks like
     console.log(url);
@@ -121,10 +121,10 @@ function dataLoaded(e) {
         bigString += line;
     }
     // 16 - all done building the HTML - show it to the user!
-    document.querySelector("#content").innerHTML = bigString;
+    document.querySelector("#content").innerHTML = `<div class='center'>${bigString}"</div>`;
 
     // 17 - update the status
-    document.querySelector("#status").innerHTML = "<b>Success!</b>";
+    // document.querySelector("#status").innerHTML = "<b>Success!</b>";
 }
 
 function dataError(e) {

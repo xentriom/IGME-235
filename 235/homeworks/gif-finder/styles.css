@@ -89,16 +89,14 @@ button:focus {
 }
 
 .widget1 {
-    
+    margin-right: 5px;
 }
 
 .widget2 {
-
+    margin-right: 20px;
 }
 
-.widget3 {
-
-}
+.widget3 {}
 
 .widgets {
     margin-top: 1em;
@@ -110,7 +108,39 @@ button:focus {
     border: 1px solid black;
     display: flex;
     flex-wrap: wrap;
-    margin: 1em 10% 1em 10%;
+    margin: 1em 20% 1em 20%;
     justify-content: center;
     align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.center {
+    text-align: center;
+}
+
+@media screen and (max-width: 815px) {
+    header h1 {
+        padding-top: 35px;
+        font-size: 85px;
+    }
+}
+
+@media screen and (max-width: 695px) {
+    header h1 {
+        padding-top: 15px;
+        font-size: 75px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    header h1 {
+        padding-top: 10px;
+        font-size: 70px;
+    }
 }
