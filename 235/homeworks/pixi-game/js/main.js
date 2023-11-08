@@ -94,6 +94,7 @@ function setup() {
     // #7 - Load sprite sheet
 
     // #8 - Start update loop
+    app.ticker.add(gameLoop);
 
     // #9 - Start listening for click events on the canvas
 
@@ -205,6 +206,14 @@ function startGame() {
     startScene.visible = false;
     gameOverScene.visible = false;
     gameScene.visible = true;
+    levelNum = 1;
+    score = 0;
+    life = 100;
+    increaseScoreBy(0);
+    decreaselifeBy(0);
+    ship.x = 300;
+    ship.y = 550;
+    loadLevel();
 }
 
 function increaseScoreBy(value) {
@@ -216,4 +225,100 @@ function decreaselifeBy(value) {
     life -= value;
     life = parseInt(life);
     lifeLabel.text = `life ${life}`;
+}
+
+function gameLoop() {
+    if (paused) return; // keep this commented out for now
+
+    // #1 - Calculate "delta time"
+    let dt = 1 / app.ticker.FPS;
+    if (dt > 1 / 12) dt = 1 / 12;
+
+    // #2 - Move Ship
+    let mousePosition = app.renderer.plugins.interaction.mouse.global;
+    ship.position = mousePosition;
+
+    let amt = 6 * dt; // at 60 FPS would move about 10% of distance per update
+
+    // lerp (linear interpolate) the x & y values with lerp()
+    let newX = lerp(ship.x, mousePosition.x, amt);
+    let newY = lerp(ship.y, mousePosition.y, amt);
+
+    // keep the ship on the screen with clamp()
+    let w2 = ship.width / 2;
+    let h2 = ship.height / 2;
+    ship.x = clamp(newX, 0 + w2, sceneWidth - w2);
+    ship.y = clamp(newY, 0 + h2, sceneHeight - h2);
+
+    // #3 - Move Circles
+    for (let c of circles) {
+        c.move(dt);
+        if (c.x <= c.radius || c.x >= sceneWidth - c.radius) {
+            c.reflectX();
+            c.move(dt);
+        }
+
+        if (c.y <= c.radius || c.y >= sceneHeight - c.radius) {
+            c.reflectY();
+            c.move(dt);
+        }
+    }
+
+    // #4 - Move Bullets
+
+
+    // #5 - Check for Collisions
+    for (let c of circles) {
+        if (c.isAlive && rectsIntersect(c, ship)) {
+            hitSound.play();
+            gameScene.removeChild(c);
+            c.isAlive = false;
+            decreaselifeBy(20);
+        }
+    }
+
+    // #6 - Now do some clean up
+    bullets = bullets.filter(b => b.isAlive);
+    circles = circles.filter(c => c.isAlive);
+    explosions = explosions.filter(e => e.playing);
+
+    // #7 - Is game over?
+    if (life <= 0) {
+        end();
+        return; // return here so we skip #8 below
+    }
+
+
+    // #8 - Load next level
+}
+
+function createCircles(numCircles) {
+    for (let i = 0; i < numCircles; i++) {
+        let c = new Circle(10, 0xFFFF00);
+        c.x = Math.random() * (sceneWidth - 50) + 25;
+        c.y = Math.random() * (sceneHeight - 400) + 25;
+        circles.push(c);
+        gameScene.addChild(c);
+    }
+}
+
+function loadLevel() {
+    createCircles(levelNum * 5);
+    paused = false;
+}
+
+function end() {
+    paused = true;
+    // clear out level
+    circles.forEach(c => gameScene.removeChild(c)); // concise arrow function with no brackets and no return
+    circles = [];
+
+    bullets.forEach(b => gameScene.removeChild(b)); // ditto
+    bullets = [];
+
+    explosions.forEach(e => gameScene.removeChild(e)); // ditto
+    explosions = [];
+
+    gameOverScene.visible = true;
+    gameScene.visible = false;
 }
