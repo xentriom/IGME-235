@@ -92,11 +92,13 @@ function setup() {
     });
 
     // #7 - Load sprite sheet
+    explosionTextures = loadSpriteSheet();
 
     // #8 - Start update loop
     app.ticker.add(gameLoop);
 
     // #9 - Start listening for click events on the canvas
+    app.view.onclick = fireBullet;
 
     // Now our `startScene` is visible
     // Clicking the button calls startGame()
@@ -236,7 +238,7 @@ function gameLoop() {
 
     // #2 - Move Ship
     let mousePosition = app.renderer.plugins.interaction.mouse.global;
-    ship.position = mousePosition;
+    // ship.position = mousePosition;
 
     let amt = 6 * dt; // at 60 FPS would move about 10% of distance per update
 
@@ -265,10 +267,28 @@ function gameLoop() {
     }
 
     // #4 - Move Bullets
-
+    for (let b of bullets) {
+        b.move(dt);
+    }
 
     // #5 - Check for Collisions
     for (let c of circles) {
+        for (let b of bullets) {
+            // #5A - circles vs bullets
+            if (rectsIntersect(c, b)) {
+                fireballSound.play();
+                createExplosion(c.x, c.y, 64, 64); // we will implement this soon
+                gameScene.removeChild(c);
+                c.isAlive = false;
+                gameScene.removeChild(b);
+                b.isAlive = false;
+                increaseScoreBy(1);
+            }
+
+            if (b.y < -10) b.isAlive = false;
+        }
+
+        // #5B - circles vs ship
         if (c.isAlive && rectsIntersect(c, ship)) {
             hitSound.play();
             gameScene.removeChild(c);
@@ -276,6 +296,7 @@ function gameLoop() {
             decreaselifeBy(20);
         }
     }
+    // All done checking for collisions!
 
     // #6 - Now do some clean up
     bullets = bullets.filter(b => b.isAlive);
@@ -288,8 +309,11 @@ function gameLoop() {
         return; // return here so we skip #8 below
     }
 
-
     // #8 - Load next level
+    if (circles.length == 0) {
+        levelNum++;
+        loadLevel();
+    }
 }
 
 function createCircles(numCircles) {
@@ -321,4 +345,51 @@ function end() {
 
     gameOverScene.visible = true;
     gameScene.visible = false;
+}
+
+function fireBullet(e) {
+    // let rect = app.view.getBoundingClientRect();
+    // let mouseX = e.clientX - rect.x;
+    // let mouseY = e.clientY - rect.y;
+    // console.log(`${mouseX},${mouseY}`);
+    if (paused) return;
+
+    fireballSound.play();
+    let b = new Bullet(0xFFFFFF, ship.x, ship.y);
+    bullets.push(b);
+    gameScene.addChild(b);
+    shootSound.play();
+}
+
+function loadSpriteSheet() {
+    // the 16 animation frames in each row are 64x64 pixels
+    // we are using the second row
+    // http://pixijs.download/release/docs/PIXI.BaseTexture.html
+    let spriteSheet = PIXI.BaseTexture.from("images/explosions.png");
+    let width = 64;
+    let height = 64;
+    let numFrames = 16;
+    let textures = [];
+    for (let i = 0; i < numFrames; i++) {
+        // http://pixijs.download/release/docs/PIXI.Texture.html
+        let frame = new PIXI.Texture(spriteSheet, new PIXI.Rectangle(i * width, 64, width, height));
+        textures.push(frame);
+    }
+    return textures;
+}
+
+function createExplosion(x, y, frameWidth, frameHeight){
+    // http://pixijs.download/release/docs/PIXI.AnimatedSprite.html
+    // the animation frames are 64x64 pixels
+    let w2 = frameWidth / 2;
+    let h2 = frameHeight / 2;
+    let expl = new PIXI.AnimatedSprite(explosionTextures);
+    expl.x = x - w2; // we want the explosions to appear at the center of the circle
+    expl.y = y - h2; // ditto
+    expl.animationSpeed = 1 / 7;
+    expl.loop = false;
+    expl.onComplete = e => gameScene.removeChild(expl);
+    explosions.push(expl);
+    gameScene.addChild(expl);
+    expl.play();
 }
