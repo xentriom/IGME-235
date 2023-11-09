@@ -6,7 +6,7 @@ function searchButtonClicked() {
     const pokeURL = "https://pokeapi.co/api/v2/pokemon/";
     let url = pokeURL;
 
-    let term = encodeURIComponent(document.querySelector("#searchterm").value.trim());
+    let term = encodeURIComponent(document.querySelector("#searchterm").value.trim().toLowerCase());
     displayTerm = term;
 
     if (term.length < 1) return;
@@ -33,7 +33,10 @@ function dataLoaded(e) {
 
     let response = JSON.parse(xhr.responseText);
 
-    showData(response);
+    pokeBasicInfo(response);
+    pokeStatGraph(response);
+    tempStats(response);
+    pokeAbilities(response);
 }
 
 // Function in case of error
@@ -41,48 +44,26 @@ function dataError(e) {
     console.log("An error occurred");
 }
 
-// Function to show data
-function showData(obj) {
+function pokeBasicInfo(response) {
     let pokeName = document.querySelector("#pokeName");
-    pokeName.innerHTML = obj.name;
-
-    let pokePic = document.querySelector("#pokePic");
-    pokePic.src = obj.sprites.front_default;
-
-    let pokeAbilities = document.querySelector("#pokeAbilities");
-    pokeAbilities.innerHTML = `Abilities: ${obj.abilities.filter(ability => !ability.is_hidden).map(ability => ability.ability.name).join(", ")}`;
-
-    let hidden = document.querySelector("#pokeHiddenAb");
-    let hiddenAbilities = obj.abilities.filter(ability => ability.is_hidden);
-    if (hiddenAbilities.length > 0) {
-        hidden.innerHTML = `Hidden: ${hiddenAbilities.map(ability => ability.ability.name).join(", ")}`;
-    } else {
-        hidden.innerHTML = "";
-    }
+    pokeName.innerHTML = response.name;
 
     let pokeType = document.querySelector("#pokeType");
-    pokeType.innerHTML = `Type: ${obj.types.map(type => type.type.name).join(", ")}`;
+    pokeType.innerHTML = `Type: ${response.types.map(type => type.type.name).join(", ")}`;
 
-    let pokeStats = document.querySelector("#pokeStats");
-    pokeStats.innerHTML = "Base Stats:<br>";
-    obj.stats.forEach(stat => {
-        pokeStats.innerHTML += `${stat.stat.name}: ${stat.base_stat}<br>`;
-    });
-
-    let statName = obj.stats.map(stat => stat.stat.name);
-    let statValue = obj.stats.map(stat => stat.base_stat);
-
-    displayStatGraph(statName, statValue);
+    let pokePic = document.querySelector("#pokePic");
+    pokePic.src = response.sprites.front_default;
 
     let pokeWeight = document.querySelector("#pokeWeight");
-    pokeWeight.innerHTML = `Weight: ${obj.weight} lbs`;
+    pokeWeight.innerHTML = `Weight: ${response.weight} lbs`;
 
     let pokeHeight = document.querySelector("#pokeHeight");
-    pokeHeight.innerHTML = `Height: ${obj.height} ft`;
-};
+    pokeHeight.innerHTML = `Height: ${response.height} ft`;
+}
 
-// Function to display the stat graph
-function displayStatGraph(statName, statValue) {
+function pokeStatGraph(response) {
+    let statName = response.stats.map(stat => stat.stat.name);
+    let statValue = response.stats.map(stat => stat.base_stat);
     let ctx = document.getElementById("statChart").getContext("2d");
 
     if (statGraph) {
@@ -111,4 +92,25 @@ function displayStatGraph(statName, statValue) {
             },
         },
     });
-};
+}
+
+function tempStats(response) {
+    let pokeStats = document.querySelector("#pokeStats");
+    pokeStats.innerHTML = "Base Stats:<br>";
+    response.stats.forEach(stat => {
+        pokeStats.innerHTML += `${stat.stat.name}: ${stat.base_stat}<br>`;
+    });
+}
+
+function pokeAbilities(response) {
+    let pokeAbilities = document.querySelector("#pokeAbilities");
+    pokeAbilities.innerHTML = `Abilities: ${response.abilities.filter(ability => !ability.is_hidden).map(ability => ability.ability.name).join(", ")}`;
+
+    let hidden = document.querySelector("#pokeHiddenAb");
+    let hiddenAbilities = response.abilities.filter(ability => ability.is_hidden);
+    if (hiddenAbilities.length > 0) {
+        hidden.innerHTML = `Hidden: ${hiddenAbilities.map(ability => ability.ability.name).join(", ")}`;
+    } else {
+        hidden.innerHTML = "";
+    }
+}
