@@ -23,8 +23,8 @@ function getData(url) {
             const response = JSON.parse(xhr.responseText);
             pokeBasicInfo(response);
             pokeStatGraph(response);
-            // tempStats(response);
             pokeAbilities(response);
+            pokeSpeciesInfo(response);
         } else {
             console.log("An error occurred");
         }
@@ -58,8 +58,6 @@ function pokeBasicInfo(response) {
 
     let pokeHeight = document.querySelector("#pokeHeight");
     pokeHeight.innerHTML = `Height: ${response.height} ft`;
-
-    pokeSpeciesInfo(response.name);
 }
 
 function pokeStatGraph(response) {
