@@ -1,8 +1,8 @@
 const poke_URL = "https://pokeapi.co/api/v2/pokemon/";
 const pokeSpecies_URL = "https://pokeapi.co/api/v2/pokemon-species/";
+let statGraph = null;
 let dexNumber;
 let pokeColor;
-let statGraph = null;
 
 const searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
@@ -101,7 +101,7 @@ function createStatGraph(statsData) {
 
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
-    const statContainer = document.getElementById("statContainer");
+    const statContainer = document.getElementById("results");
 
     if (statContainer) {
         const existingCanvas = statContainer.querySelector("canvas");

@@ -7,18 +7,15 @@ window.addEventListener('DOMContentLoaded', function () {
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
     const resultsElement = document.getElementById('results');
-    resultsElement.innerHTML = '';
-    destroyCanvas();
-    displayRandomPokemon();
-});
+    const canvas = resultsElement.querySelector('canvas');
 
-function destroyCanvas() {
-    const statContainer = document.getElementById('statContainer');
-    const canvas = statContainer.querySelector('canvas');
     if (canvas) {
         canvas.remove();
     }
-}
+
+    resultsElement.innerHTML = '';
+    displayRandomPokemon();
+});
 
 function showcasePOkemon(limit) {
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
