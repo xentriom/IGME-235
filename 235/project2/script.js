@@ -1,4 +1,5 @@
-document.querySelector("#search").onclick = searchButtonClicked
+document.querySelector("#search").onclick = searchButtonClicked;
+document.addEventListener('DOMContentLoaded', searchButtonClicked);
 
 let statGraph = null;
 
@@ -24,7 +25,7 @@ function getData(url) {
             pokeBasicInfo(response);
             pokeStatGraph(response);
             pokeAbilities(response);
-            pokeSpeciesInfo(response);
+            pokeSpeciesInfo(response.name);
         } else {
             console.log("An error occurred");
         }
