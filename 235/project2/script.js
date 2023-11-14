@@ -1,5 +1,5 @@
 document.querySelector("#search").onclick = searchButtonClicked;
-document.addEventListener('DOMContentLoaded', searchButtonClicked);
+document.addEventListener('DOMContentLoaded', getData(`https://pokeapi.co/api/v2/pokemon/${Math.floor(Math.random() * 898) + 1}`));
 
 let statGraph = null;
 
