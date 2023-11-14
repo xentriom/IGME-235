@@ -56,6 +56,7 @@ function formatString(str) {
 }
 
 function displayPokemon(data) {
+    const results = document.getElementById("results");
     const pokemonMap = new Map([
         ['Name', formatString(data.name)],
         ['Type', data.types.map((type) => formatString(type.type.name))],
@@ -75,6 +76,40 @@ function displayPokemon(data) {
         ['ShinyArtwork', data.sprites.other['official-artwork'].front_shiny]
     ]);
 
+    if (results) {
+        const existingCanvas = results.querySelector("canvas");
+        if (existingCanvas) {
+            existingCanvas.remove();
+        }
+    }
+
+    results.classList.remove('showcase');
+    results.classList.add('infographic');
+
+    let name = document.createElement("h1");
+    let image = document.createElement("img");
+    let type = document.createElement("p");
+    let ability = document.createElement("p");
+    let hiddenAbility = document.createElement("p");
+    let weight = document.createElement("p");
+    let height = document.createElement("p");
+
+    name.textContent = pokemonMap.get("Name");
+    image.src = pokemonMap.get("DefaultArtwork");
+    type.textContent = `Type: ${pokemonMap.get("Type")}`;
+    ability.textContent = `Ability: ${pokemonMap.get("Ability")}`;
+    hiddenAbility.textContent = `Hidden Ability: ${pokemonMap.get("HiddenAbility")}`;
+    weight.textContent = `Weight: ${pokemonMap.get("Weight")}`;
+    height.textContent = `Height: ${pokemonMap.get("Height")}`;
+
+    results.appendChild(name);
+    results.appendChild(image);
+    results.appendChild(type);
+    results.appendChild(ability);
+    results.appendChild(hiddenAbility);
+    results.appendChild(weight);
+    results.appendChild(height);
+    
     createStatGraph(data.stats);
 }
 
@@ -101,21 +136,13 @@ function createStatGraph(statsData) {
 
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
-    const statContainer = document.getElementById("results");
-
-    if (statContainer) {
-        const existingCanvas = statContainer.querySelector("canvas");
-        if (existingCanvas) {
-            existingCanvas.remove();
-        }
-    }
+    const results = document.getElementById("results");
 
     let canvas = document.createElement("canvas");
     canvas.id = "statChart";
-    statContainer.appendChild(canvas);
+    results.appendChild(canvas);
 
     let ctx = canvas.getContext("2d");
-
     statGraph = new Chart(ctx, {
         type: 'bar',
         data: {
