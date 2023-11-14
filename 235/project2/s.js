@@ -2,9 +2,18 @@ const poke_URL = "https://pokeapi.co/api/v2/pokemon/";
 const pokeSpecies_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let dexNumber;
 let pokeColor;
+let statGraph = null;
+
+// const searchButton = document.querySelector("#search");
+// searchButton.addEventListener("click", handleSearch);
 
 const searchButton = document.querySelector("#search");
-searchButton.addEventListener("click", handleSearch);
+
+searchButton.addEventListener("click", function () {
+    const resultsElement = document.getElementById("results");
+    resultsElement.innerHTML = ""; // Clear the content of the "results" element
+    handleSearch();
+});
 
 const searchInput = document.querySelector("#searchterm");
 searchInput.addEventListener("keydown", function (event) {
@@ -25,28 +34,13 @@ function handleSearch() {
 
 async function getPokemon(pokemon) {
     try {
-        const response = await fetch(`${pokeSpecies_URL}${pokemon}`);
-        if (response.ok) {
-            const data = await response.json();
-            dexNumber = data.pokedex_number;
-            displayPokemon(data);
-        } else {
-            console.log("An error occurred trying to fetch the data");
-        }
-    } catch (error) {
-        console.log(`An error occurred during getPokemon()\nError: ${error}`);
-    }
-}
-
-async function getPokemon(pokemon) {
-    try {
         const pokeSpecies_response = await fetch(`${pokeSpecies_URL}${pokemon}`);
         if (pokeSpecies_response.ok) {
             const pokeSpecies_data = await pokeSpecies_response.json();
-            dexNumber = pokeSpecies_data.pokedex_number;
+            dexNumber = pokeSpecies_data.id;
             displayPokemonSpecies(pokeSpecies_data)
 
-            const poke_response = await fetch(`${poke_URL}${pokemon}`);
+            const poke_response = await fetch(`${poke_URL}${dexNumber}`);
             if (poke_response.ok) {
                 const poke_data = await poke_response.json();
                 displayPokemon(poke_data);
@@ -80,8 +74,12 @@ function displayPokemon(data) {
         ['MaleDefaultImage', data.sprites.front_default],
         ['FemaleDefaultImage', data.sprites.front_female],
         ['MaleDefaultShinyImage', data.sprites.front_shiny],
-        ['FemaleShinyImage', data.sprites.front_shiny_female]
+        ['FemaleShinyImage', data.sprites.front_shiny_female],
+        ['DefaultArtwork', data.sprites.other['official-artwork'].front_default],
+        ['ShinyArtwork', data.sprites.other['official-artwork'].front_shiny]
     ]);
+
+    createStatGraph(data.stats);
 }
 
 function displayPokemonSpecies(data) {
@@ -89,6 +87,59 @@ function displayPokemonSpecies(data) {
         ['Color', formatString(data.color.name)],
         ['EggGroup', data.egg_groups.map((group) => formatString(group.name))]
     ]);
+}
 
-    pokeColor = pokemonMap.get('Color');
+function createStatGraph(statsData) {
+    const statNameMap = {
+        "hp": "HP",
+        "attack": "Atk",
+        "defense": "Def",
+        "special-attack": "SpA",
+        "special-defense": "SpD",
+        "speed": "Spe"
+    };
+
+    if (statGraph) {
+        statGraph.destroy();
+    }
+
+    let labels = statsData.map(stat => statNameMap[stat.stat.name]);
+    let values = statsData.map(stat => stat.base_stat);
+    const statContainer = document.getElementById("statContainer");
+
+    if (statContainer) {
+        const existingCanvas = statContainer.querySelector("canvas");
+        if (existingCanvas) {
+            existingCanvas.remove();
+        }
+    }
+
+    let canvas = document.createElement("canvas");
+    canvas.id = "statChart";
+    statContainer.appendChild(canvas);
+
+    let ctx = canvas.getContext("2d");
+
+    statGraph = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Base Stats',
+                data: values,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 }
