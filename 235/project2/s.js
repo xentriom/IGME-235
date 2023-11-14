@@ -4,14 +4,10 @@ let dexNumber;
 let pokeColor;
 let statGraph = null;
 
-// const searchButton = document.querySelector("#search");
-// searchButton.addEventListener("click", handleSearch);
-
 const searchButton = document.querySelector("#search");
-
 searchButton.addEventListener("click", function () {
     const resultsElement = document.getElementById("results");
-    resultsElement.innerHTML = ""; // Clear the content of the "results" element
+    resultsElement.innerHTML = "";
     handleSearch();
 });
 
