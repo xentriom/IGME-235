@@ -12,7 +12,6 @@ function searchButtonClicked() {
     if (term.length < 1) return;
     url += term;
 
-    console.log(url);
     getData(url);
 }
 
