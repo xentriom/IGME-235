@@ -52,17 +52,17 @@ loginButton.addEventListener("click", function () {
     const usernameInput = document.getElementById("login-username").value;
     const passwordInput = document.getElementById("login-password").value;
     const error = document.getElementById("login-error");
+    const user = document.getElementById("user");
 
     const storedPassword = localStorage.getItem(usernameInput);
-
     if (storedPassword !== null && storedPassword === passwordInput) {
         modal.style.display = "none";
+        user.innerHTML = `Welcome back, ${usernameInput}!`;
+    } else if (storedPassword === null) {
+        error.innerHTML = "Please register";
+        error.style.color = "red";
     } else {
-        if (storedPassword === null) {
-            error.innerHTML = "Please register";
-        } else {
-            error.innerHTML = "Password does not match";
-        }
+        error.innerHTML = "Password does not match";
         error.style.color = "red";
     }
 });
@@ -72,23 +72,28 @@ registerButton.addEventListener("click", function () {
     const passwordInput = document.getElementById("register-password").value;
     const error = document.getElementById("register-error");
 
-    const isUsernameExists = checkUsernameExists(usernameInput);
+    const notAllowedUsernames = ["s", "sp", "spk", "spkm", "spkm-", "xen", "xentrix", "xentriom"];
+    if (notAllowedUsernames.includes(usernameInput)) {
+        error.innerHTML = "Username not allowed";
+        error.style.color = "red";
+        return;
+    }
 
+    const isUsernameExists = checkUsernameExists(usernameInput);
     if (isUsernameExists) {
         error.innerHTML = "Please login";
         error.style.color = "red";
-    } else {
-        localStorage.setItem(usernameInput, passwordInput);
-
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                const ipAddress = data.ip;
-                localStorage.setItem(`${usernameInput}-ip`, ipAddress);
-            });
-
-        modal.style.display = "none";
+        return;
     }
+
+    localStorage.setItem(usernameInput, passwordInput);
+    fetch('https://api.ipify.org?format=json')
+        .then(response => response.json())
+        .then(data => {
+            const ipAddress = data.ip;
+            localStorage.setItem(`${usernameInput}-ip`, ipAddress);
+        });
+    modal.style.display = "none";
 });
 
 function checkUsernameExists(username) {

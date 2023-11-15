@@ -74,6 +74,7 @@ function clearResults() {
 function getPokemonInfo(data) {
     const pokemonMap = new Map([
         ['Name', formatString(data.name)],
+        ['Id', data.id],
         ['Type', data.types.map((type) => formatString(type.type.name))],
         ['Ability', data.abilities
             .filter((ability) => !ability.is_hidden)
@@ -114,6 +115,7 @@ function createInfographic(pokeMap, speciesMap) {
     const elementTypes = [
         { type: "h1", key: "Name" },
         { type: "img", key: "DefaultArtwork" },
+        { type: "p", key: "Id", prefix: "ID: " },
         { type: "p", key: "Type", prefix: "Type: " },
         { type: "p", key: "Ability", prefix: "Ability: " },
         { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: " },
@@ -134,6 +136,15 @@ function createInfographic(pokeMap, speciesMap) {
     });
 
     createStatGraph(infoMap.get("Stats"));
+
+    let saveButton = document.createElement("button");
+    saveButton.id = "save";
+    saveButton.textContent = "Save";
+    results.appendChild(saveButton);
+
+    saveButton.addEventListener("click", function () {
+        savePokemon(infoMap.get("Id"));
+    });
 }
 
 function createStatGraph(statsData) {
@@ -186,42 +197,6 @@ function createStatGraph(statsData) {
     });
 }
 
-// function createInfographic(pokeMap, speciesMap) {
-//     const results = document.getElementById("results");
-//     const infoMap = new Map([...pokeMap, ...speciesMap]);
+function savePokemon(id) {
 
-//     results.classList.remove('showcase');
-//     results.classList.add('infographic');
-
-//     let name = document.createElement("h1");
-//     let image = document.createElement("img");
-//     let type = document.createElement("p");
-//     let ability = document.createElement("p");
-//     let hiddenAbility = document.createElement("p");
-//     let weight = document.createElement("p");
-//     let height = document.createElement("p");
-//     let eggGroup = document.createElement("p");
-//     let color = document.createElement("p");
-
-//     name.textContent = infoMap.get("Name");
-//     image.src = infoMap.get("DefaultArtwork");
-//     type.textContent = `Type: ${infoMap.get("Type")}`;
-//     ability.textContent = `Ability: ${infoMap.get("Ability")}`;
-//     hiddenAbility.textContent = `Hidden Ability: ${infoMap.get("HiddenAbility")}`;
-//     weight.textContent = `Weight: ${infoMap.get("Weight")}`;
-//     height.textContent = `Height: ${infoMap.get("Height")}`;
-//     eggGroup.textContent = `Egg Group: ${infoMap.get("EggGroup")}`;
-//     color.textContent = `Color: ${infoMap.get("Color")}`;
-
-//     results.appendChild(name);
-//     results.appendChild(image);
-//     results.appendChild(type);
-//     results.appendChild(ability);
-//     results.appendChild(hiddenAbility);
-//     results.appendChild(weight);
-//     results.appendChild(height);
-//     results.appendChild(eggGroup);
-//     results.appendChild(color);
-
-//     createStatGraph(infoMap.get("Stats"));
-// }
+}
