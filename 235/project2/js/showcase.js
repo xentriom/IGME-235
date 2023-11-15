@@ -68,7 +68,6 @@ function getPokemonData(limit, offset, random) {
 
             fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${randomPokemonId}`);
         }
-        console.log(selectedPokemonIds);
         selectedPokemonIds = [];
     } else {
         const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
