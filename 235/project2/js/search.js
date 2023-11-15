@@ -34,12 +34,12 @@ async function getPokemon(pokemon) {
         if (pokeSpecies_response.ok) {
             const pokeSpecies_data = await pokeSpecies_response.json();
             dexNumber = pokeSpecies_data.id;
-            displayPokemonSpecies(pokeSpecies_data)
+            getSpeciesInfo(pokeSpecies_data)
 
             const poke_response = await fetch(`${poke_URL}${dexNumber}`);
             if (poke_response.ok) {
                 const poke_data = await poke_response.json();
-                displayPokemon(poke_data);
+                getPokemonInfo(poke_data);
             } else {
                 console.log(`An error occurred trying to fetch data from ${poke_URL}`);
             }
@@ -55,8 +55,7 @@ function formatString(str) {
     return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
-function displayPokemon(data) {
-    const results = document.getElementById("results");
+function getPokemonInfo(data) {
     const pokemonMap = new Map([
         ['Name', formatString(data.name)],
         ['Type', data.types.map((type) => formatString(type.type.name))],
@@ -80,7 +79,7 @@ function displayPokemon(data) {
     createStatGraph(data.stats);
 }
 
-function displayPokemonSpecies(data) {
+function getSpeciesInfo(data) {
     const pokemonMap = new Map([
         ['Color', formatString(data.color.name)],
         ['EggGroup', data.egg_groups.map((group) => formatString(group.name))]
