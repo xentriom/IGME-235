@@ -76,40 +76,7 @@ function displayPokemon(data) {
         ['ShinyArtwork', data.sprites.other['official-artwork'].front_shiny]
     ]);
 
-    if (results) {
-        const existingCanvas = results.querySelector("canvas");
-        if (existingCanvas) {
-            existingCanvas.remove();
-        }
-    }
-
-    results.classList.remove('showcase');
-    results.classList.add('infographic');
-
-    let name = document.createElement("h1");
-    let image = document.createElement("img");
-    let type = document.createElement("p");
-    let ability = document.createElement("p");
-    let hiddenAbility = document.createElement("p");
-    let weight = document.createElement("p");
-    let height = document.createElement("p");
-
-    name.textContent = pokemonMap.get("Name");
-    image.src = pokemonMap.get("DefaultArtwork");
-    type.textContent = `Type: ${pokemonMap.get("Type")}`;
-    ability.textContent = `Ability: ${pokemonMap.get("Ability")}`;
-    hiddenAbility.textContent = `Hidden Ability: ${pokemonMap.get("HiddenAbility")}`;
-    weight.textContent = `Weight: ${pokemonMap.get("Weight")}`;
-    height.textContent = `Height: ${pokemonMap.get("Height")}`;
-
-    results.appendChild(name);
-    results.appendChild(image);
-    results.appendChild(type);
-    results.appendChild(ability);
-    results.appendChild(hiddenAbility);
-    results.appendChild(weight);
-    results.appendChild(height);
-    
+    createElements(pokemonMap);
     createStatGraph(data.stats);
 }
 
@@ -165,4 +132,42 @@ function createStatGraph(statsData) {
             }
         }
     });
+}
+
+function createElements(pokemonMap) {
+    const results = document.getElementById("results");
+
+    if (results) {
+        const existingCanvas = results.querySelector("canvas");
+        if (existingCanvas) {
+            existingCanvas.remove();
+        }
+    }
+
+    results.classList.remove('showcase');
+    results.classList.add('infographic');
+
+    let name = document.createElement("h1");
+    let image = document.createElement("img");
+    let type = document.createElement("p");
+    let ability = document.createElement("p");
+    let hiddenAbility = document.createElement("p");
+    let weight = document.createElement("p");
+    let height = document.createElement("p");
+
+    name.textContent = pokemonMap.get("Name");
+    image.src = pokemonMap.get("DefaultArtwork");
+    type.textContent = `Type: ${pokemonMap.get("Type")}`;
+    ability.textContent = `Ability: ${pokemonMap.get("Ability")}`;
+    hiddenAbility.textContent = `Hidden Ability: ${pokemonMap.get("HiddenAbility")}`;
+    weight.textContent = `Weight: ${pokemonMap.get("Weight")}`;
+    height.textContent = `Height: ${pokemonMap.get("Height")}`;
+
+    results.appendChild(name);
+    results.appendChild(image);
+    results.appendChild(type);
+    results.appendChild(ability);
+    results.appendChild(hiddenAbility);
+    results.appendChild(weight);
+    results.appendChild(height);
 }
