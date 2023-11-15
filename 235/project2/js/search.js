@@ -28,18 +28,25 @@ function handleSearch() {
     }
 }
 
+function formatString(str) {
+    return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
 async function getPokemon(pokemon) {
     try {
         const pokeSpecies_response = await fetch(`${pokeSpecies_URL}${pokemon}`);
         if (pokeSpecies_response.ok) {
             const pokeSpecies_data = await pokeSpecies_response.json();
             dexNumber = pokeSpecies_data.id;
-            getSpeciesInfo(pokeSpecies_data)
 
             const poke_response = await fetch(`${poke_URL}${dexNumber}`);
             if (poke_response.ok) {
                 const poke_data = await poke_response.json();
-                getPokemonInfo(poke_data);
+                clearResults();
+                const pokemonInfo = getPokemonInfo(poke_data);
+                const speciesInfo = getSpeciesInfo(pokeSpecies_data);
+                createInfographic(pokemonInfo, speciesInfo);
+
             } else {
                 console.log(`An error occurred trying to fetch data from ${poke_URL}`);
             }
@@ -51,8 +58,17 @@ async function getPokemon(pokemon) {
     }
 }
 
-function formatString(str) {
-    return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
+function clearResults() {
+    const results = document.getElementById("results");
+
+    if (results) {
+        const existingCanvas = results.querySelector("canvas");
+        if (existingCanvas) {
+            existingCanvas.remove();
+        }
+    }
+
+    results.innerHTML = "";
 }
 
 function getPokemonInfo(data) {
@@ -67,6 +83,7 @@ function getPokemonInfo(data) {
             .map((ability) => formatString(ability.ability.name))],
         ['Weight', data.weight],
         ['Height', data.height],
+        ['Stats', data.stats],
         ['MaleDefaultImage', data.sprites.front_default],
         ['FemaleDefaultImage', data.sprites.front_female],
         ['MaleDefaultShinyImage', data.sprites.front_shiny],
@@ -75,8 +92,7 @@ function getPokemonInfo(data) {
         ['ShinyArtwork', data.sprites.other['official-artwork'].front_shiny]
     ]);
 
-    createElements(pokemonMap);
-    createStatGraph(data.stats);
+    return pokemonMap;
 }
 
 function getSpeciesInfo(data) {
@@ -84,6 +100,40 @@ function getSpeciesInfo(data) {
         ['Color', formatString(data.color.name)],
         ['EggGroup', data.egg_groups.map((group) => formatString(group.name))]
     ]);
+
+    return pokemonMap;
+}
+
+function createInfographic(pokeMap, speciesMap) {
+    const results = document.getElementById("results");
+    const infoMap = new Map([...pokeMap, ...speciesMap]);
+
+    results.classList.remove('showcase');
+    results.classList.add('infographic');
+
+    const elementTypes = [
+        { type: "h1", key: "Name" },
+        { type: "img", key: "DefaultArtwork" },
+        { type: "p", key: "Type", prefix: "Type: " },
+        { type: "p", key: "Ability", prefix: "Ability: " },
+        { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: " },
+        { type: "p", key: "Weight", prefix: "Weight: " },
+        { type: "p", key: "Height", prefix: "Height: " },
+        { type: "p", key: "EggGroup", prefix: "Egg Group: " },
+        { type: "p", key: "Color", prefix: "Color: " }
+    ];
+
+    elementTypes.forEach(({ type, key, prefix = "" }) => {
+        const element = document.createElement(type);
+        if (type === "img") {
+            element.src = infoMap.get(key);
+        } else {
+            element.textContent = `${prefix}${infoMap.get(key)}`;
+        }
+        results.appendChild(element);
+    });
+
+    createStatGraph(infoMap.get("Stats"));
 }
 
 function createStatGraph(statsData) {
@@ -104,9 +154,12 @@ function createStatGraph(statsData) {
     let values = statsData.map(stat => stat.base_stat);
     const results = document.getElementById("results");
 
+    let div = document.createElement("div");
+    div.id = "stats";
     let canvas = document.createElement("canvas");
     canvas.id = "statChart";
-    results.appendChild(canvas);
+    results.appendChild(div);
+    div.appendChild(canvas);
 
     let ctx = canvas.getContext("2d");
     statGraph = new Chart(ctx, {
@@ -133,40 +186,42 @@ function createStatGraph(statsData) {
     });
 }
 
-function createElements(pokemonMap) {
-    const results = document.getElementById("results");
+// function createInfographic(pokeMap, speciesMap) {
+//     const results = document.getElementById("results");
+//     const infoMap = new Map([...pokeMap, ...speciesMap]);
 
-    if (results) {
-        const existingCanvas = results.querySelector("canvas");
-        if (existingCanvas) {
-            existingCanvas.remove();
-        }
-    }
+//     results.classList.remove('showcase');
+//     results.classList.add('infographic');
 
-    results.classList.remove('showcase');
-    results.classList.add('infographic');
+//     let name = document.createElement("h1");
+//     let image = document.createElement("img");
+//     let type = document.createElement("p");
+//     let ability = document.createElement("p");
+//     let hiddenAbility = document.createElement("p");
+//     let weight = document.createElement("p");
+//     let height = document.createElement("p");
+//     let eggGroup = document.createElement("p");
+//     let color = document.createElement("p");
 
-    let name = document.createElement("h1");
-    let image = document.createElement("img");
-    let type = document.createElement("p");
-    let ability = document.createElement("p");
-    let hiddenAbility = document.createElement("p");
-    let weight = document.createElement("p");
-    let height = document.createElement("p");
+//     name.textContent = infoMap.get("Name");
+//     image.src = infoMap.get("DefaultArtwork");
+//     type.textContent = `Type: ${infoMap.get("Type")}`;
+//     ability.textContent = `Ability: ${infoMap.get("Ability")}`;
+//     hiddenAbility.textContent = `Hidden Ability: ${infoMap.get("HiddenAbility")}`;
+//     weight.textContent = `Weight: ${infoMap.get("Weight")}`;
+//     height.textContent = `Height: ${infoMap.get("Height")}`;
+//     eggGroup.textContent = `Egg Group: ${infoMap.get("EggGroup")}`;
+//     color.textContent = `Color: ${infoMap.get("Color")}`;
 
-    name.textContent = pokemonMap.get("Name");
-    image.src = pokemonMap.get("DefaultArtwork");
-    type.textContent = `Type: ${pokemonMap.get("Type")}`;
-    ability.textContent = `Ability: ${pokemonMap.get("Ability")}`;
-    hiddenAbility.textContent = `Hidden Ability: ${pokemonMap.get("HiddenAbility")}`;
-    weight.textContent = `Weight: ${pokemonMap.get("Weight")}`;
-    height.textContent = `Height: ${pokemonMap.get("Height")}`;
+//     results.appendChild(name);
+//     results.appendChild(image);
+//     results.appendChild(type);
+//     results.appendChild(ability);
+//     results.appendChild(hiddenAbility);
+//     results.appendChild(weight);
+//     results.appendChild(height);
+//     results.appendChild(eggGroup);
+//     results.appendChild(color);
 
-    results.appendChild(name);
-    results.appendChild(image);
-    results.appendChild(type);
-    results.appendChild(ability);
-    results.appendChild(hiddenAbility);
-    results.appendChild(weight);
-    results.appendChild(height);
-}
+//     createStatGraph(infoMap.get("Stats"));
+// }

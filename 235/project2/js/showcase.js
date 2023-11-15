@@ -2,7 +2,7 @@ const selectedPokemonIds = [];
 const displayLimit = 20;
 
 window.addEventListener('DOMContentLoaded', function () {
-    displayPOkemon(displayLimit);
+    displayPokemon(displayLimit);
 });
 
 const randomizerButton = document.getElementById('randomizer');
@@ -18,7 +18,7 @@ randomizerButton.addEventListener('click', function () {
     displayRandomPokemon(displayLimit);
 });
 
-function displayPOkemon(limit) {
+function displayPokemon(limit) {
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
         .then(response => response.json())
         .then(data => {
