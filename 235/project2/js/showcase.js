@@ -1,5 +1,5 @@
-const selectedPokemonIds = [];
 const displayLimit = 20;
+let selectedPokemonIds = [];
 let offset = 20;
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -57,7 +57,6 @@ function getPokemonData(limit, offset, random) {
     const getRandomPokemonId = () => Math.floor(Math.random() * 1015) + 1;
 
     if (random) {
-        const selectedPokemonIds = [];
         for (let i = 0; i < limit; i++) {
             let randomPokemonId = getRandomPokemonId();
 
@@ -69,6 +68,8 @@ function getPokemonData(limit, offset, random) {
 
             fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${randomPokemonId}`);
         }
+        console.log(selectedPokemonIds);
+        selectedPokemonIds = [];
     } else {
         const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
         fetch(url)
@@ -90,13 +91,13 @@ function getPokemonData(limit, offset, random) {
 function fetchPokemonData(pokemonUrl) {
     fetch(pokemonUrl)
         .then(response => response.json())
-        .then(pokemonData => { logPokemonData(pokemonData); })
+        .then(pokemonData => { createShowcase(pokemonData); })
         .catch(error => {
             console.log(`An error occurred while fetching Pokémon data\nError: ${error}`);
         });
 }
 
-function logPokemonData(pokemonData) {
+function createShowcase(pokemonData) {
     const pokemonName = pokemonData.name;
     const pokemonSprite = pokemonData.sprites.front_default;
     const pokemonId = pokemonData.id;
@@ -111,6 +112,7 @@ function logPokemonData(pokemonData) {
     const spriteElement = document.createElement('img');
     spriteElement.src = pokemonSprite;
     spriteElement.alt = pokemonName;
+    spriteElement.classList.add('cursorChange');
 
     spriteElement.addEventListener('click', function () {
         resultsElement.innerHTML = '';

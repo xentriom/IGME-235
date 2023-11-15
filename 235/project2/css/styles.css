@@ -2,3 +2,12 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.cursorChange {
+    cursor: pointer;
+}
+
+
+
+
+

@@ -7,6 +7,7 @@
     <title>Pokédex</title>
     <link rel="icon" type="image/png" href="media/favicon.ico" sizes="16x16" />
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
@@ -16,12 +17,42 @@
     <button type="button" id="previous-button">Previous</button>
     <button type="button" id="next-button">Next</button>
 
+    <button id="account">Account</button>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="login-form" class="form">
+                <h1>Login Form</h1>
+                <div class="form-switch">
+                    <div class="box active" id="login-box">Login</div>
+                    <div class="box" id="register-box">Register</div>
+                </div>
+                <input type="text" placeholder="Username" class="modal-input" id="login-username">
+                <input type="password" placeholder="Password" class="modal-input" id="login-password">
+                <p id="login-error"></p>
+                <button id="login-button" class="form-button">Login</button>
+            </div>
+            <div id="register-form" class="form">
+                <h1>Registration Form</h1>
+                <div class="form-switch">
+                    <div class="box" id="login-box-register">Login</div>
+                    <div class="box active" id="register-box-register">Register</div>
+                </div>
+                <input type="text" placeholder="Username" class="modal-input" id="register-username">
+                <input type="password" placeholder="Password" class="modal-input" id="register-password">
+                <p id="register-error"></p>
+                <button id="register-button" class="form-button">Register</button>
+            </div>
+        </div>
+    </div>
+
     <div id="results"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
     <script src="js/search.js"></script>
     <script src="js/showcase.js"></script>
     <script src="js/storage.js"></script>
+    <script src="js/login.js"></script>
 </body>
 
 </html>
