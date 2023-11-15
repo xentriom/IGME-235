@@ -1,12 +1,48 @@
 const selectedPokemonIds = [];
 const displayLimit = 20;
+let offset = 20;
 
 window.addEventListener('DOMContentLoaded', function () {
-    displayPokemon(displayLimit);
+    getPokemonData(displayLimit, offset, false);
+});
+
+const previousButton = document.getElementById('previous-button');
+previousButton.addEventListener('click', () => {
+    if (offset >= 0) {
+        offset -= 20;
+        disableButtons();
+        clearResults();
+        getPokemonData(displayLimit, offset, false);
+    }
+});
+
+const nextButton = document.getElementById('next-button');
+nextButton.addEventListener('click', () => {
+    if (offset <= 1015) {
+        offset += 20;
+        disableButtons();
+        clearResults();
+        getPokemonData(displayLimit, offset, false);
+    }
 });
 
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
+    clearResults();
+    getPokemonData(displayLimit, 0, true);
+});
+
+function disableButtons() {
+    previousButton.disabled = true;
+    nextButton.disabled = true;
+}
+
+function enableButtons() {
+    previousButton.disabled = false;
+    nextButton.disabled = false;
+}
+
+function clearResults() {
     const resultsElement = document.getElementById('results');
     const canvas = resultsElement.querySelector('canvas');
 
@@ -15,47 +51,49 @@ randomizerButton.addEventListener('click', function () {
     }
 
     resultsElement.innerHTML = '';
-    displayRandomPokemon(displayLimit);
-});
-
-function displayPokemon(limit) {
-    fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`)
-        .then(response => response.json())
-        .then(data => {
-            const pokemonList = data.results;
-            pokemonList.forEach(pokemon => {
-                fetch(pokemon.url)
-                    .then(response => response.json())
-                    .then(pokemonData => { logPokemonData(pokemonData); })
-                    .catch(error => {
-                        console.log(`An error occurred while fetching Pokémon data\nError: ${error}`);
-                    });
-            });
-        })
-        .catch(error => {
-            console.log(`An error occurred while fetching Pokémon list\nError: ${error}`);
-        });
 }
 
-function displayRandomPokemon(limit) {
+function getPokemonData(limit, offset, random) {
     const getRandomPokemonId = () => Math.floor(Math.random() * 1015) + 1;
 
-    for (let i = 0; i < limit; i++) {
-        let randomPokemonId = getRandomPokemonId();
+    if (random) {
+        const selectedPokemonIds = [];
+        for (let i = 0; i < limit; i++) {
+            let randomPokemonId = getRandomPokemonId();
 
-        while (selectedPokemonIds.includes(randomPokemonId)) {
-            randomPokemonId = getRandomPokemonId();
+            while (selectedPokemonIds.includes(randomPokemonId)) {
+                randomPokemonId = getRandomPokemonId();
+            }
+
+            selectedPokemonIds.push(randomPokemonId);
+
+            fetchPokemonData(`https://pokeapi.co/api/v2/pokemon/${randomPokemonId}`);
         }
-
-        selectedPokemonIds.push(randomPokemonId);
-
-        fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemonId}`)
+    } else {
+        const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
+        fetch(url)
             .then(response => response.json())
-            .then(pokemonData => { logPokemonData(pokemonData); })
+            .then(data => {
+                const pokemonList = data.results;
+                pokemonList.forEach(pokemon => {
+                    fetchPokemonData(pokemon.url);
+                });
+            })
             .catch(error => {
-                console.log(`An error occurred while fetching Pokémon data: ${error}`);
+                console.log(`An error occurred while fetching Pokémon list\nError: ${error}`);
             });
     }
+
+    enableButtons();
+}
+
+function fetchPokemonData(pokemonUrl) {
+    fetch(pokemonUrl)
+        .then(response => response.json())
+        .then(pokemonData => { logPokemonData(pokemonData); })
+        .catch(error => {
+            console.log(`An error occurred while fetching Pokémon data\nError: ${error}`);
+        });
 }
 
 function logPokemonData(pokemonData) {
@@ -74,7 +112,7 @@ function logPokemonData(pokemonData) {
     spriteElement.src = pokemonSprite;
     spriteElement.alt = pokemonName;
 
-    spriteElement.addEventListener('click', function() {
+    spriteElement.addEventListener('click', function () {
         resultsElement.innerHTML = '';
         getPokemon(pokemonName);
     });
