@@ -6,6 +6,13 @@ const registerForm = document.getElementById("register-form");
 const loginBox = document.getElementById("login-box");
 const registerBox = document.getElementById("register-box");
 
+document.addEventListener("DOMContentLoaded", function () {
+    const username = "Lillian";
+    const password = "@aosdijf";
+
+    localStorage.setItem(username, password);
+});
+
 accountButton.addEventListener("click", function () {
     modal.style.display = "block";
     loginForm.style.display = "block";
@@ -46,8 +53,6 @@ window.onclick = function (event) {
 }
 
 const loginButton = document.getElementById("login-button");
-const registerButton = document.getElementById("register-button");
-
 loginButton.addEventListener("click", function () {
     const usernameInput = document.getElementById("login-username").value;
     const passwordInput = document.getElementById("login-password").value;
@@ -67,6 +72,7 @@ loginButton.addEventListener("click", function () {
     }
 });
 
+const registerButton = document.getElementById("register-button");
 registerButton.addEventListener("click", function () {
     const usernameInput = document.getElementById("register-username").value;
     const passwordInput = document.getElementById("register-password").value;
@@ -81,7 +87,7 @@ registerButton.addEventListener("click", function () {
 
     const isUsernameExists = checkUsernameExists(usernameInput);
     if (isUsernameExists) {
-        error.innerHTML = "Please login";
+        error.innerHTML = "Username already exists";
         error.style.color = "red";
         return;
     }
