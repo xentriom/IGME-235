@@ -1,3 +1,5 @@
+window.accountName;
+
 const accountButton = document.getElementById("account");
 const modal = document.getElementById("modal");
 const closeButton = document.getElementsByClassName("close")[0];
@@ -62,7 +64,8 @@ loginButton.addEventListener("click", function () {
     const storedPassword = localStorage.getItem(usernameInput);
     if (storedPassword !== null && storedPassword === passwordInput) {
         modal.style.display = "none";
-        user.innerHTML = `Welcome back, ${usernameInput}!`;
+        accountName = usernameInput;
+        user.innerHTML = `Welcome back, ${accountName}!`;
     } else if (storedPassword === null) {
         error.innerHTML = "Please register";
         error.style.color = "red";
@@ -93,12 +96,7 @@ registerButton.addEventListener("click", function () {
     }
 
     localStorage.setItem(usernameInput, passwordInput);
-    fetch('https://api.ipify.org?format=json')
-        .then(response => response.json())
-        .then(data => {
-            const ipAddress = data.ip;
-            localStorage.setItem(`${usernameInput}-ip`, ipAddress);
-        });
+    localStorage.setItem(`${usernameInput}-fav-pkm`, "");
     modal.style.display = "none";
 });
 

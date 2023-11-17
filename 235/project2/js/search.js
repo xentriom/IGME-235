@@ -196,7 +196,3 @@ function createStatGraph(statsData) {
         }
     });
 }
-
-function savePokemon(id) {
-
-}
