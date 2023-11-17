@@ -136,7 +136,7 @@ function createInfographic(pokeMap, speciesMap) {
         { type: "p", key: "Height", prefix: "Height: ", div: "aboutSection" },
         { type: "p", key: "EggGroup", prefix: "Egg Group: ", div: "aboutSection" },
         { type: "p", key: "Color", prefix: "Color: ", div: "aboutSection" },
-        { type: "p", key: "Type", div: "battleSection" },
+        { type: "p", key: "Type", div: "aboutSection" },
         { type: "img", key: "DefaultArtwork", div: "graphicsSection" },
         { type: "button", key: "Favorite", div: "graphicsSection" }
     ];
@@ -247,7 +247,7 @@ function createStatGraph(statsData) {
     });
 }
 
-function ApplyStyles(infoMap){
+function ApplyStyles(infoMap) {
     const results = document.getElementById("results");
     const infoSectionDiv = document.querySelector('.infoSection');
     const titleSectionDiv = document.querySelector('.titleSection');

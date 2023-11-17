@@ -8,18 +8,24 @@
     <link rel="icon" type="image/png" href="media/favicon.ico" sizes="16x16" />
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/login.css">
-    <link rel="stylesheet" href="css/infographic.css">
+    <link rel="stylesheet" href="css/layout.css">
 </head>
 
 <body>
-    <div id="user">Hello!</div>
-    <input id="searchterm" type="text" size="20" autofocus value="pikachu" spellcheck="false" />
-    <button type="button" id="search">Search</button>
-    <button type="button" id="randomizer">Randomizer</button>
-    <button type="button" id="previous-button">Previous</button>
-    <button type="button" id="next-button">Next</button>
-    <button type="button" id="account">Account</button>
-    <button type="button" id="favorite">Favorite Pokemons</button>
+    <div class="container">
+        <div class="navBar">
+            <div id="user">Hello!</div>
+            <input id="searchterm" type="text" size="20" autofocus value="pikachu" spellcheck="false" />
+            <button type="button" id="search">Search</button>
+            <button type="button" id="randomizer">Randomizer</button>
+            <button type="button" id="previous-button">Previous</button>
+            <button type="button" id="next-button">Next</button>
+            <button type="button" id="account">Account</button>
+            <button type="button" id="favorite">Favorite Pokemons</button>
+        </div>
+
+        <div id="results"></div>
+    </div>
 
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -48,8 +54,6 @@
             </div>
         </div>
     </div>
-
-    <div id="results"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
     <script src="js/account.js"></script>
