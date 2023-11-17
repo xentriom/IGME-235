@@ -69,8 +69,8 @@ loginButton.addEventListener("click", function () {
 
     const storedPassword = localStorage.getItem(usernameInput);
     if (storedPassword !== null && storedPassword === passwordInput) {
-        accountName = usernameInput;
         modal.style.display = "none";
+        accountName = usernameInput;
         user.innerHTML = `Welcome back, ${accountName}!`;
         alert(`Login successful!\nWelcome back, ${accountName}!`);
     } else if (storedPassword === null) {
