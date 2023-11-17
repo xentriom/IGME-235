@@ -3,7 +3,7 @@ let selectedPokemonIds = [];
 let offset = 20;
 
 window.addEventListener('DOMContentLoaded', function () {
-    getPokemonData(displayLimit, offset, false);
+    getPokemonData(displayLimit, 0, false);
 });
 
 const previousButton = document.getElementById('previous-button');
@@ -90,7 +90,9 @@ function getPokemonData(limit, offset, random) {
 function fetchPokemonData(pokemonUrl) {
     fetch(pokemonUrl)
         .then(response => response.json())
-        .then(pokemonData => { createShowcase(pokemonData); })
+        .then(pokemonData => { 
+            createShowcase(pokemonData);
+        })
         .catch(error => {
             console.log(`An error occurred while fetching Pokémon data\nError: ${error}`);
         });

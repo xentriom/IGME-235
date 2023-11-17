@@ -141,30 +141,6 @@ function createInfographic(pokeMap, speciesMap) {
         { type: "button", key: "Favorite", div: "graphicsSection" }
     ];
 
-    // elementTypes.forEach(({ type, key, prefix = "", div }) => {
-    //     const element = document.createElement(type);
-    //     if (type === "img") {
-    //         element.src = infoMap.get(key);
-    //     } else {
-    //         element.textContent = `${prefix}${infoMap.get(key)}`;
-    //     }
-
-    //     let targetDiv;
-    //     if (div === "titleSection") {
-    //         targetDiv = titleSectionDiv;
-    //     } else if (div === "aboutSection") {
-    //         targetDiv = aboutSectionDiv;
-    //     } else if (div === "battleSection") {
-    //         targetDiv = battleSectionDiv;
-    //     } else if (div === "infoSection") {
-    //         targetDiv = infoSectionDiv;
-    //     } else {
-    //         targetDiv = graphicsSectionDiv;
-    //     }
-
-    //     targetDiv.appendChild(element);
-    // });
-
     elementTypes.forEach(({ type, key, prefix = "", div }) => {
         const element = document.createElement(type);
         if (type === "img") {
@@ -203,15 +179,6 @@ function createInfographic(pokeMap, speciesMap) {
     infoSectionDiv.appendChild(battleSectionDiv);
 
     createStatGraph(infoMap.get("Stats"));
-
-    // let saveButton = document.createElement("button");
-    // saveButton.id = "save";
-    // saveButton.textContent = "Favorite";
-    // graphicsSectionDiv.appendChild(saveButton);
-
-    // saveButton.addEventListener("click", function () {
-    //     savePokemon(infoMap.get("Id"));
-    // });
 }
 
 function createStatGraph(statsData) {
