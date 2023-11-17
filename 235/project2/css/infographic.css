@@ -1,7 +1,7 @@
 .infographic {
     display: grid;
     grid-auto-columns: 1fr;
-    grid-template-columns: 1.3fr 0.7fr;
+    grid-template-columns: 1.1fr 0.9fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-template-areas:
@@ -17,16 +17,27 @@
         "titleSection titleSection"
         "aboutSection battleSection";
     grid-area: infoSection;
+    margin: 2% 2% 2% 2%;
 }
 
 .titleSection {
     grid-area: titleSection;
     display: flex;
     justify-content: center;
+    margin: 2px 2% 2px 2%;
+    border-radius: 5em;
+    background-color: lightgrey;
+}
+
+.titleSection h1 {
+    margin: 0px;
+    align-self: center;
+    color: black;
 }
 
 .aboutSection {
     grid-area: aboutSection;
+    margin-left: 2%;
 }
 
 .battleSection {
@@ -40,9 +51,6 @@
     grid-area: graphicSection;
     display: flex;
     flex-wrap: wrap;
-}
-
-#save {
-    width: 20px;
-    height: 10px;
+    justify-content: center;
+    margin-top: 10%;
 }

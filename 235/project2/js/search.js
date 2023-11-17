@@ -108,7 +108,6 @@ function getSpeciesInfo(data) {
 function createInfographic(pokeMap, speciesMap) {
     const results = document.getElementById("results");
     const infoMap = new Map([...pokeMap, ...speciesMap]);
-    console.log(infoMap);
 
     results.classList.remove('showcase');
     results.classList.add('infographic');
@@ -195,6 +194,7 @@ function createInfographic(pokeMap, speciesMap) {
     infoSectionDiv.appendChild(battleSectionDiv);
 
     createStatGraph(infoMap.get("Stats"));
+    ApplyStyles(infoMap);
 }
 
 function createStatGraph(statsData) {
@@ -245,4 +245,13 @@ function createStatGraph(statsData) {
             }
         }
     });
+}
+
+function ApplyStyles(infoMap){
+    const results = document.getElementById("results");
+    const infoSectionDiv = document.querySelector('.infoSection');
+    const titleSectionDiv = document.querySelector('.titleSection');
+    const aboutSectionDiv = document.querySelector('.aboutSection');
+    const battleSectionDiv = document.querySelector('.battleSection');
+    const graphicsSectionDiv = document.querySelector('.graphicsSection');
 }

@@ -124,5 +124,6 @@ function createShowcase(pokemonData) {
     pokemonDiv.appendChild(spriteElement);
 
     resultsElement.appendChild(pokemonDiv);
+    resultsElement.classList.remove('infographic');
     resultsElement.classList.add('showcase');
 }
