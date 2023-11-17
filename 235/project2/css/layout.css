@@ -1,6 +1,5 @@
-.container {
+/* .container {
     display: grid;
-    /* grid-auto-columns: 1fr; */
     grid-template-columns: 1fr;
     grid-template-rows: 0.3fr 1.7fr;
     gap: 0px 0px;
@@ -17,7 +16,6 @@
 
 .infographic {
     display: grid;
-    /* grid-auto-columns: 1fr; */
     grid-template-columns: 1.1fr 0.9fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
@@ -72,4 +70,65 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 10%;
+} */
+
+
+html {
+    margin: 0px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 1.8fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "navBar"
+        "infographic";
+}
+
+.navBar {
+    grid-area: navBar;
+}
+
+.infographic {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "infoSection graphicSection";
+    grid-area: infographic;
+}
+
+.infoSection {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.3fr 1.4fr 1.3fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "titleSection"
+        "aboutSection"
+        "stats";
+    grid-area: infoSection;
+}
+
+.titleSection {
+    grid-area: titleSection;
+}
+
+.aboutSection {
+    grid-area: aboutSection;
+}
+
+.stats {
+    grid-area: stats;
+}
+
+.graphicSection {
+    grid-area: graphicSection;
 }

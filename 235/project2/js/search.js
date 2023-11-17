@@ -191,7 +191,7 @@ function createInfographic(pokeMap, speciesMap) {
 
     infoSectionDiv.appendChild(titleSectionDiv);
     infoSectionDiv.appendChild(aboutSectionDiv);
-    infoSectionDiv.appendChild(battleSectionDiv);
+    // infoSectionDiv.appendChild(battleSectionDiv);
 
     createStatGraph(infoMap.get("Stats"));
     ApplyStyles(infoMap);
@@ -213,7 +213,7 @@ function createStatGraph(statsData) {
 
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
-    const infoSectionDiv = document.querySelector('.battleSection');
+    const infoSectionDiv = document.querySelector('.infoSection');
 
     let div = document.createElement("div");
     div.classList.add("stats");
