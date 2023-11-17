@@ -90,7 +90,7 @@ registerButton.addEventListener("click", function () {
     const invalidPhrase = ["-fav-pkm"];
     const invalidEnd = invalidPhrase.some((suffix) => usernameInput.endsWith(suffix));
     if (invalidEnd) {
-        error.innerHTML = "Invalid username";
+        error.innerHTML = "Username cannot end with -fav-pkm";
         error.style.color = "red";
         return;
     }
