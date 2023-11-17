@@ -108,6 +108,7 @@ function getSpeciesInfo(data) {
 function createInfographic(pokeMap, speciesMap) {
     const results = document.getElementById("results");
     const infoMap = new Map([...pokeMap, ...speciesMap]);
+    console.log(infoMap);
 
     results.classList.remove('showcase');
     results.classList.add('infographic');
@@ -136,25 +137,12 @@ function createInfographic(pokeMap, speciesMap) {
         { type: "p", key: "Height", prefix: "Height: ", div: "aboutSection" },
         { type: "p", key: "EggGroup", prefix: "Egg Group: ", div: "aboutSection" },
         { type: "p", key: "Color", prefix: "Color: ", div: "aboutSection" },
-        { type: "p", key: "Type", prefix: "Type: ", div: "battleSection" },
+        { type: "p", key: "Type", div: "battleSection" },
         { type: "img", key: "DefaultArtwork", div: "graphicsSection" },
         { type: "button", key: "Favorite", div: "graphicsSection" }
     ];
 
     elementTypes.forEach(({ type, key, prefix = "", div }) => {
-        const element = document.createElement(type);
-        if (type === "img") {
-            element.src = infoMap.get(key);
-        } else if (type === "button") {
-            element.id = "save";
-            element.textContent = "Favorite";
-            element.addEventListener("click", function () {
-                savePokemon(infoMap.get("Id"));
-            });
-        } else {
-            element.textContent = `${prefix}${infoMap.get(key)}`;
-        }
-
         let targetDiv;
         if (div === "titleSection") {
             targetDiv = titleSectionDiv;
@@ -168,7 +156,35 @@ function createInfographic(pokeMap, speciesMap) {
             targetDiv = graphicsSectionDiv;
         }
 
-        targetDiv.appendChild(element);
+        if (type === "img") {
+            const element = document.createElement(type);
+            element.src = infoMap.get(key);
+            targetDiv.appendChild(element);
+        } else if (type === "button") {
+            const element = document.createElement(type);
+            element.id = "save";
+            element.textContent = "Favorite";
+            element.addEventListener("click", function () {
+                savePokemon(infoMap.get("Id"));
+            });
+            targetDiv.appendChild(element);
+        } else if (type === "p" && key === "Type") {
+            const types = infoMap.get(key);
+            if (types.length >= 1) {
+                const element1 = document.createElement(type);
+                element1.textContent = `${types[0]}`;
+                targetDiv.appendChild(element1);
+            }
+            if (types.length >= 2) {
+                const element2 = document.createElement(type);
+                element2.textContent = `${types[1]}`;
+                targetDiv.appendChild(element2);
+            }
+        } else {
+            const element = document.createElement(type);
+            element.textContent = `${prefix}${infoMap.get(key)}`;
+            targetDiv.appendChild(element);
+        }
     });
 
     results.appendChild(infoSectionDiv);
