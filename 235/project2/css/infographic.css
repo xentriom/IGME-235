@@ -1,0 +1,48 @@
+.infographic {
+    display: grid; 
+    grid-auto-columns: 1fr; 
+    grid-template-columns: 1.3fr 0.7fr; 
+    grid-template-rows: 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "infoSection graphicSection"; 
+  }
+
+.infoSection {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    grid-template-rows: 0.3fr 1.7fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      "titleSection titleSection"
+      "aboutSection battleSection"; 
+    grid-area: infoSection; 
+  }
+
+.titleSection {
+    grid-area: titleSection;
+    display: flex;
+    justify-content: center;
+}
+
+.aboutSection {
+    grid-area: aboutSection;
+}
+
+.battleSection {
+    grid-area: battleSection;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+}
+
+.graphicSection {
+    grid-area: graphicSection;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#save {
+    width: 20px;
+    height: 10px;
+}

@@ -3,6 +3,17 @@ storageButton.addEventListener("click", function () {
     loadSavedPokemon();
 });
 
+function createFavoriteButton() {
+    let saveButton = document.createElement("button");
+    saveButton.id = "save";
+    saveButton.textContent = "Favorite";
+    graphicsSectionDiv.appendChild(saveButton);
+    
+    saveButton.addEventListener("click", function () {
+        savePokemon(infoMap.get("Id"));
+    });
+}
+
 function savePokemon(id) {
     if (window.accountName === undefined) {
         alert("You must be logged in to save a Pokemon!");

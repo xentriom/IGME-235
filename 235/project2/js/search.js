@@ -112,39 +112,106 @@ function createInfographic(pokeMap, speciesMap) {
     results.classList.remove('showcase');
     results.classList.add('infographic');
 
+    const infoSectionDiv = document.createElement('div');
+    infoSectionDiv.classList.add('infoSection');
+
+    const titleSectionDiv = document.createElement('div');
+    titleSectionDiv.classList.add('titleSection');
+
+    const aboutSectionDiv = document.createElement('div');
+    aboutSectionDiv.classList.add('aboutSection');
+
+    const battleSectionDiv = document.createElement('div');
+    battleSectionDiv.classList.add('battleSection');
+
+    const graphicsSectionDiv = document.createElement('div');
+    graphicsSectionDiv.classList.add('graphicsSection');
+
     const elementTypes = [
-        { type: "h1", key: "Name" },
-        { type: "img", key: "DefaultArtwork" },
-        { type: "p", key: "Id", prefix: "ID: " },
-        { type: "p", key: "Type", prefix: "Type: " },
-        { type: "p", key: "Ability", prefix: "Ability: " },
-        { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: " },
-        { type: "p", key: "Weight", prefix: "Weight: " },
-        { type: "p", key: "Height", prefix: "Height: " },
-        { type: "p", key: "EggGroup", prefix: "Egg Group: " },
-        { type: "p", key: "Color", prefix: "Color: " }
+        { type: "h1", key: "Name", div: "titleSection" },
+        { type: "p", key: "Id", prefix: "ID: ", div: "aboutSection" },
+        { type: "p", key: "Ability", prefix: "Ability: ", div: "aboutSection" },
+        { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: ", div: "aboutSection" },
+        { type: "p", key: "Weight", prefix: "Weight: ", div: "aboutSection" },
+        { type: "p", key: "Height", prefix: "Height: ", div: "aboutSection" },
+        { type: "p", key: "EggGroup", prefix: "Egg Group: ", div: "aboutSection" },
+        { type: "p", key: "Color", prefix: "Color: ", div: "aboutSection" },
+        { type: "p", key: "Type", prefix: "Type: ", div: "battleSection" },
+        { type: "img", key: "DefaultArtwork", div: "graphicsSection" },
+        { type: "button", key: "Favorite", div: "graphicsSection" }
     ];
 
-    elementTypes.forEach(({ type, key, prefix = "" }) => {
+    // elementTypes.forEach(({ type, key, prefix = "", div }) => {
+    //     const element = document.createElement(type);
+    //     if (type === "img") {
+    //         element.src = infoMap.get(key);
+    //     } else {
+    //         element.textContent = `${prefix}${infoMap.get(key)}`;
+    //     }
+
+    //     let targetDiv;
+    //     if (div === "titleSection") {
+    //         targetDiv = titleSectionDiv;
+    //     } else if (div === "aboutSection") {
+    //         targetDiv = aboutSectionDiv;
+    //     } else if (div === "battleSection") {
+    //         targetDiv = battleSectionDiv;
+    //     } else if (div === "infoSection") {
+    //         targetDiv = infoSectionDiv;
+    //     } else {
+    //         targetDiv = graphicsSectionDiv;
+    //     }
+
+    //     targetDiv.appendChild(element);
+    // });
+
+    elementTypes.forEach(({ type, key, prefix = "", div }) => {
         const element = document.createElement(type);
         if (type === "img") {
             element.src = infoMap.get(key);
+        } else if (type === "button") {
+            element.id = "save";
+            element.textContent = "Favorite";
+            element.addEventListener("click", function () {
+                savePokemon(infoMap.get("Id"));
+            });
         } else {
             element.textContent = `${prefix}${infoMap.get(key)}`;
         }
-        results.appendChild(element);
+
+        let targetDiv;
+        if (div === "titleSection") {
+            targetDiv = titleSectionDiv;
+        } else if (div === "aboutSection") {
+            targetDiv = aboutSectionDiv;
+        } else if (div === "battleSection") {
+            targetDiv = battleSectionDiv;
+        } else if (div === "infoSection") {
+            targetDiv = infoSectionDiv;
+        } else {
+            targetDiv = graphicsSectionDiv;
+        }
+
+        targetDiv.appendChild(element);
     });
+
+    results.appendChild(infoSectionDiv);
+    results.appendChild(graphicsSectionDiv);
+
+    infoSectionDiv.appendChild(titleSectionDiv);
+    infoSectionDiv.appendChild(aboutSectionDiv);
+    infoSectionDiv.appendChild(battleSectionDiv);
 
     createStatGraph(infoMap.get("Stats"));
 
-    let saveButton = document.createElement("button");
-    saveButton.id = "save";
-    saveButton.textContent = "Save";
-    results.appendChild(saveButton);
+    // let saveButton = document.createElement("button");
+    // saveButton.id = "save";
+    // saveButton.textContent = "Favorite";
+    // graphicsSectionDiv.appendChild(saveButton);
 
-    saveButton.addEventListener("click", function () {
-        savePokemon(infoMap.get("Id"));
-    });
+    // saveButton.addEventListener("click", function () {
+    //     savePokemon(infoMap.get("Id"));
+    // });
 }
 
 function createStatGraph(statsData) {
@@ -163,13 +230,13 @@ function createStatGraph(statsData) {
 
     let labels = statsData.map(stat => statNameMap[stat.stat.name]);
     let values = statsData.map(stat => stat.base_stat);
-    const results = document.getElementById("results");
+    const infoSectionDiv = document.querySelector('.battleSection');
 
     let div = document.createElement("div");
-    div.id = "stats";
+    div.classList.add("stats");
     let canvas = document.createElement("canvas");
     canvas.id = "statChart";
-    results.appendChild(div);
+    infoSectionDiv.appendChild(div);
     div.appendChild(canvas);
 
     let ctx = canvas.getContext("2d");
