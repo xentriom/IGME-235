@@ -61,6 +61,12 @@ loginButton.addEventListener("click", function () {
     const error = document.getElementById("login-error");
     const user = document.getElementById("user");
 
+    if (usernameInput.endsWith("-fav-pkm")) {
+        error.innerHTML = "Invalid username";
+        error.style.color = "red";
+        return;
+    }
+
     const storedPassword = localStorage.getItem(usernameInput);
     if (storedPassword !== null && storedPassword === passwordInput) {
         modal.style.display = "none";
@@ -81,8 +87,16 @@ registerButton.addEventListener("click", function () {
     const passwordInput = document.getElementById("register-password").value;
     const error = document.getElementById("register-error");
 
-    const notAllowedUsernames = ["s", "sp", "spk", "spkm", "spkm-", "xen", "xentrix", "xentriom"];
-    if (notAllowedUsernames.includes(usernameInput)) {
+    const invalidPhrase = ["-fav-pkm"];
+    const invalidEnd = invalidPhrase.some((suffix) => usernameInput.endsWith(suffix));
+    if (invalidEnd) {
+        error.innerHTML = "Invalid username";
+        error.style.color = "red";
+        return;
+    }
+
+    const invalidUsername = ["xen", "xentrix", "xentriom"];
+    if (invalidUsername.includes(usernameInput)) {
         error.innerHTML = "Username not allowed";
         error.style.color = "red";
         return;

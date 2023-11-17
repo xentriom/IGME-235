@@ -9,24 +9,42 @@ function savePokemon(id) {
         return;
     }
 
-    console.log(`Saving Pokemon ${id} for ${window.accountName}`);
-    // Retrieve the existing value of the key
-    let existingValue = localStorage.getItem(`${accountName}-fav-pkm`);
+    if (AlreadySaved(id)) {
+        alert("This Pokemon is already saved!");
+        return;
+    }
 
-    // Handle the case if the existing value is null
+    let existingValue = localStorage.getItem(`${accountName}-fav-pkm`);
     if (existingValue === null) {
         existingValue = "";
     }
 
-    // Append the new ID to the existing value
     existingValue += `${id}|`;
-
-    // Update the value of the favorite Pokemon key
     localStorage.setItem(`${accountName}-fav-pkm`, existingValue);
+}
+
+function AlreadySaved(id) {
+    if (window.accountName === undefined) {
+        alert("You must be logged in to check saved Pokemon!");
+        return false;
+    }
+
+    let existingValue = localStorage.getItem(`${accountName}-fav-pkm`);
+    if (existingValue === null) {
+        existingValue = "";
+    }
+
+    const savedIds = existingValue.split("|");
+    if (savedIds.includes(id.toString())) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function loadSavedPokemon() {
     if (window.accountName === undefined) {
+        alert("You must be logged in to load saved Pokemon!");
         return;
     }
 
