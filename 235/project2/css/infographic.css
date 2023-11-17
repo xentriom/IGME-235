@@ -10,12 +10,13 @@
 
 .infoSection {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 0.3fr 1.7fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 1.4fr 1.4fr;
     gap: 0px 0px;
     grid-template-areas:
-        "titleSection titleSection"
-        "aboutSection battleSection";
+        "titleSection"
+        "aboutSection"
+        "battleSection";
     grid-area: infoSection;
     margin: 2% 2% 2% 2%;
 }
