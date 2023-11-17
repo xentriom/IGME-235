@@ -69,9 +69,10 @@ loginButton.addEventListener("click", function () {
 
     const storedPassword = localStorage.getItem(usernameInput);
     if (storedPassword !== null && storedPassword === passwordInput) {
-        modal.style.display = "none";
         accountName = usernameInput;
+        modal.style.display = "none";
         user.innerHTML = `Welcome back, ${accountName}!`;
+        alert(`Login successful!\nWelcome back, ${accountName}!`);
     } else if (storedPassword === null) {
         error.innerHTML = "Please register";
         error.style.color = "red";
@@ -112,6 +113,7 @@ registerButton.addEventListener("click", function () {
     localStorage.setItem(usernameInput, passwordInput);
     localStorage.setItem(`${usernameInput}-fav-pkm`, "");
     modal.style.display = "none";
+    alert(`Registration successful!\nPlease login to continue!`);
 });
 
 function checkUsernameExists(username) {
