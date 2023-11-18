@@ -1,4 +1,14 @@
-/* .container {
+html {
+    margin: 0px;
+}
+
+body {
+    max-height: 80vh;
+    width: auto;
+    overflow: auto;
+}
+
+.container {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 0.3fr 1.7fr;
@@ -12,6 +22,7 @@
     grid-area: navBar;
     display: flex;
     justify-content: space-evenly;
+
 }
 
 .infographic {
@@ -20,8 +31,13 @@
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-template-areas:
-        "infoSection graphicSection";
+        "infoSection graphicsSection";
     grid-area: infographic;
+}
+
+.graphicsSection img {
+    width: 45vw;
+    height: auto;
 }
 
 .infoSection {
@@ -32,9 +48,11 @@
     grid-template-areas:
         "titleSection"
         "aboutSection"
-        "battleSection";
+        "stats";
     grid-area: infoSection;
     margin: 2% 2% 2% 2%;
+    width: 90%;
+    height: auto;
 }
 
 .titleSection {
@@ -55,80 +73,30 @@
 .aboutSection {
     grid-area: aboutSection;
     margin-left: 2%;
-}
-
-.battleSection {
-    grid-area: battleSection;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: center;
-}
-
-.graphicSection {
-    grid-area: graphicSection;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 10%;
-} */
-
-
-html {
-    margin: 0px;
-}
-
-.container {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 1.8fr;
-    grid-auto-columns: 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "navBar"
-        "infographic";
-}
-
-.navBar {
-    grid-area: navBar;
-}
-
-.infographic {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr;
-    grid-template-rows: 1fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "infoSection graphicSection";
-    grid-area: infographic;
-}
-
-.infoSection {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.3fr 1.4fr 1.3fr;
-    gap: 0px 0px;
-    grid-auto-flow: row;
-    grid-template-areas:
-        "titleSection"
-        "aboutSection"
-        "stats";
-    grid-area: infoSection;
-}
-
-.titleSection {
-    grid-area: titleSection;
-}
-
-.aboutSection {
-    grid-area: aboutSection;
+    width: 90%;
+    height: auto;
+    justify-content: right;
+    line-height: -1vh;
+    width: 90%;
+    height: auto;
 }
 
 .stats {
     grid-area: stats;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    margin-top: -4vh;
+    width: 90%;
+    height: auto;
 }
 
-.graphicSection {
-    grid-area: graphicSection;
+.graphicsSection {
+    grid-area: graphicsSection;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10%;
+    width: 90%;
+    height: auto;
 }
