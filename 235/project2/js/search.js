@@ -112,47 +112,66 @@ function createInfographic(pokeMap, speciesMap) {
     results.classList.remove('showcase');
     results.classList.add('infographic');
 
-    const infoSectionDiv = document.createElement('div');
-    infoSectionDiv.classList.add('infoSection');
-
-    const titleSectionDiv = document.createElement('div');
-    titleSectionDiv.classList.add('titleSection');
-
-    const aboutSectionDiv = document.createElement('div');
-    aboutSectionDiv.classList.add('aboutSection');
-
-    const battleSectionDiv = document.createElement('div');
-    battleSectionDiv.classList.add('battleSection');
-
-    const graphicsSectionDiv = document.createElement('div');
-    graphicsSectionDiv.classList.add('graphicsSection');
+    const infoSectionDiv = createDivWithClass('infoSection');
+    const titleSectionDiv = createDivWithClass('titleSection');
+    const aboutSectionDiv = createDivWithClass('aboutSection');
+    const graphicsSectionDiv = createDivWithClass('graphicsSection');
+    const dexSectionDiv = createDivWithClass('dexSection');
+    const typeSectionDiv = createDivWithClass('typeSection');
+    const descriptionSectionDiv = createDivWithClass('descriptionSection');
+    const abilitySectionDiv = createDivWithClass('abilitySection');
+    const hiddenSectionDiv = createDivWithClass('hiddenSection');
+    const massSectionDiv = createDivWithClass('massSection');
+    const eggSectionDiv = createDivWithClass('eggSection');
 
     const elementTypes = [
         { type: "h1", key: "Name", div: "titleSection" },
-        { type: "p", key: "Id", prefix: "ID: ", div: "aboutSection" },
-        { type: "p", key: "Ability", prefix: "Ability: ", div: "aboutSection" },
-        { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: ", div: "aboutSection" },
-        { type: "p", key: "Weight", prefix: "Weight: ", div: "aboutSection" },
-        { type: "p", key: "Height", prefix: "Height: ", div: "aboutSection" },
-        { type: "p", key: "EggGroup", prefix: "Egg Group: ", div: "aboutSection" },
-        { type: "p", key: "Color", prefix: "Color: ", div: "aboutSection" },
-        { type: "p", key: "Type", div: "aboutSection" },
+        { type: "p", key: "Id", prefix: "ID: ", div: "dexSection" },
+        { type: "p", key: "Ability", prefix: "Ability: ", div: "abilitySection" },
+        { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: ", div: "hiddenSection" },
+        { type: "p", key: "Weight", prefix: "Weight: ", div: "massSection" },
+        { type: "p", key: "Height", prefix: "Height: ", div: "massSection" },
+        { type: "p", key: "EggGroup", prefix: "Egg Group: ", div: "eggSection" },
+        { type: "p", key: "Type", div: "typeSection" },
         { type: "img", key: "DefaultArtwork", div: "graphicsSection" },
         { type: "button", key: "Favorite", div: "graphicsSection" }
     ];
 
     elementTypes.forEach(({ type, key, prefix = "", div }) => {
         let targetDiv;
-        if (div === "titleSection") {
-            targetDiv = titleSectionDiv;
-        } else if (div === "aboutSection") {
-            targetDiv = aboutSectionDiv;
-        } else if (div === "battleSection") {
-            targetDiv = battleSectionDiv;
-        } else if (div === "infoSection") {
-            targetDiv = infoSectionDiv;
-        } else {
-            targetDiv = graphicsSectionDiv;
+        switch (div) {
+            case "titleSection":
+                targetDiv = titleSectionDiv;
+                break;
+            case "aboutSection":
+                targetDiv = aboutSectionDiv;
+                break;
+            case "infoSection":
+                targetDiv = infoSectionDiv;
+                break;
+            case "dexSection":
+                targetDiv = dexSectionDiv;
+                break;
+            case "descriptionSection":
+                targetDiv = descriptionSectionDiv;
+                break;
+            case "abilitySection":
+                targetDiv = abilitySectionDiv;
+                break;
+            case "hiddenSection":
+                targetDiv = hiddenSectionDiv;
+                break;
+            case "massSection":
+                targetDiv = massSectionDiv;
+                break;
+            case "eggSection":
+                targetDiv = eggSectionDiv;
+                break;
+            case "typeSection":
+                targetDiv = typeSectionDiv;
+                break;
+            default:
+                targetDiv = graphicsSectionDiv;
         }
 
         if (type === "img") {
@@ -191,10 +210,25 @@ function createInfographic(pokeMap, speciesMap) {
 
     infoSectionDiv.appendChild(titleSectionDiv);
     infoSectionDiv.appendChild(aboutSectionDiv);
-    // infoSectionDiv.appendChild(battleSectionDiv);
+
+    aboutSectionDiv.appendChild(dexSectionDiv);
+    aboutSectionDiv.appendChild(descriptionSectionDiv);
+
+    dexSectionDiv.appendChild(typeSectionDiv);
+
+    descriptionSectionDiv.appendChild(abilitySectionDiv);
+    descriptionSectionDiv.appendChild(hiddenSectionDiv);
+    descriptionSectionDiv.appendChild(massSectionDiv);
+    descriptionSectionDiv.appendChild(eggSectionDiv);
 
     createStatGraph(infoMap.get("Stats"));
     ApplyStyles(infoMap);
+}
+
+function createDivWithClass(className) {
+    const div = document.createElement('div');
+    div.classList.add(className);
+    return div;
 }
 
 function createStatGraph(statsData) {
