@@ -1,3 +1,7 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
+
 .showcase {
     display: flex;
     flex-wrap: wrap;
@@ -5,4 +9,58 @@
 
 .cursorChange {
     cursor: pointer;
+}
+
+.titleSection h1 {
+    margin: 0px;
+    align-self: center;
+    color: black;
+    width: 20%;
+}
+
+.typeSection {
+    display: flex;
+    justify-content: space-between;
+}
+
+.typeSection p {
+    margin: 0px;
+    padding: 0px;
+    margin-right: 10px;
+    border-radius: 2em;
+    background-color: lightgrey;
+    width: 40%;
+}
+
+.graphicsSection img {
+    aspect-ratio: 1/1;
+    /* width: 45vw; */
+    /* height: auto; */
+    margin-bottom: 10px;
+    border-radius: 2em;
+    border: 1px solid lightgrey;
+}
+
+.graphicsSection button {
+    margin: 2%;
+    width: 40%;
+    height: 8%;
+    margin-bottom: 20px;
+    border-radius: 2em;
+    font-size: 20px;
+}
+
+.graphicsSection button:hover {
+    background-color: lightgrey;
+}
+
+.dexSection p {
+    background-color: lightgrey;
+    border-radius: 2em;
+    width: 20%;
+}
+
+.massSection p {
+    width: 100%;
+    height: 30%;
 }

@@ -221,7 +221,7 @@ function createInfographic(pokeMap, speciesMap) {
     descriptionSectionDiv.appendChild(massSectionDiv);
     descriptionSectionDiv.appendChild(eggSectionDiv);
 
-    createStatGraph(infoMap.get("Stats"));
+    createStatGraph(infoMap.get("Stats"), infoMap.get("Color"));
     ApplyStyles(infoMap);
 }
 
@@ -231,7 +231,7 @@ function createDivWithClass(className) {
     return div;
 }
 
-function createStatGraph(statsData) {
+function createStatGraph(statsData, pokeColor) {
     const statNameMap = {
         "hp": "HP",
         "attack": "Atk",
@@ -264,8 +264,10 @@ function createStatGraph(statsData) {
             datasets: [{
                 label: 'Base Stats',
                 data: values,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
+                // backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                backgroundColor: convertColorToRGBA(pokeColor, 0.2),
+                // borderColor: 'rgba(75, 192, 192, 1)',
+                borderColor: convertColorToRGBA(pokeColor, 1),
                 borderWidth: 1
             }]
         },
@@ -279,6 +281,15 @@ function createStatGraph(statsData) {
             }
         }
     });
+}
+
+function convertColorToRGBA(color, alpha) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, 1, 1);
+    const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
 function ApplyStyles(infoMap) {

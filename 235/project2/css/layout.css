@@ -12,7 +12,7 @@ body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 0.3fr 1.7fr;
-    gap: 0px 0px;
+    gap: 5% 0px;
     grid-template-areas:
         "navBar"
         "infographic";
@@ -35,17 +35,10 @@ body {
     grid-area: infographic;
 }
 
-.graphicsSection img {
-    aspect-ratio: 1/1;
-    /* width: 45vw; */
-    /* height: auto; */
-    margin-bottom: 10px;
-}
-
 .infoSection {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 1.4fr 1.4fr;
+    grid-template-rows: 0.2fr 1.3fr 1.5fr;
     gap: 0px 0px;
     grid-template-areas:
         "titleSection"
@@ -66,16 +59,10 @@ body {
     background-color: lightgrey;
 }
 
-.titleSection h1 {
-    margin: 0px;
-    align-self: center;
-    color: black;
-}
-
 .aboutSection {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 0.6fr 1.4fr;
+    grid-template-rows: 0.4fr 1.6fr;
     gap: 0px 0px;
     grid-template-areas:
         "dexSection"
@@ -92,6 +79,8 @@ body {
 
 .dexSection {
     grid-area: dexSection;
+    display: flex;
+    justify-content: space-between;
 }
 
 .descriptionSection {
@@ -106,18 +95,39 @@ body {
 
 .abilitySection {
     grid-area: abilitySection;
+    margin: 4%;
+    padding: 4%;
+    background-color: lightgrey;
+    border-radius: 2em;
 }
 
 .hiddenSection {
     grid-area: hiddenSection;
+    margin: 4%;
+    padding: 4%;
+    background-color: lightgrey;
+    border-radius: 2em;
 }
 
 .massSection {
     grid-area: massSection;
+    margin: 4%;
+    padding: 4%;
+    background-color: lightgrey;
+    border-radius: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center
 }
 
 .eggSection {
     grid-area: eggSection;
+    margin: 4%;
+    padding: 4%;
+    background-color: lightgrey;
+    border-radius: 2em;
 }
 
 .stats {
@@ -125,9 +135,13 @@ body {
     display: flex;
     flex-direction: column-reverse;
     justify-content: center;
-    margin-top: -4vh;
+    /* margin-top: -2vh; */
     width: 90%;
     height: auto;
+    background-color: lightgrey;
+    border-radius: 2em;
+    margin-left: 2%;
+    padding: 2%;
 }
 
 .graphicsSection {
@@ -138,12 +152,4 @@ body {
     margin-top: 10%;
     width: 90%;
     height: auto;
-}
-
-.graphicsSection button {
-    margin: 2%;
-    width: 60%;
-    height: 10%;
-    margin-bottom: 20px;
-    border-radius: 2em;
 }
