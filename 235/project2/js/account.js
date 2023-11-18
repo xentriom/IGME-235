@@ -9,10 +9,11 @@ const loginBox = document.getElementById("login-box");
 const registerBox = document.getElementById("register-box");
 
 document.addEventListener("DOMContentLoaded", function () {
-    const username = "Lillian";
-    const password = "@aosdijf";
+    const username = "lillian";
+    const password = "!mop12";
 
     localStorage.setItem(username, password);
+    localStorage.setItem(`${username}-fav-pkm`, "494|384|176|");
 });
 
 accountButton.addEventListener("click", function () {
@@ -56,7 +57,7 @@ window.onclick = function (event) {
 
 const loginButton = document.getElementById("login-button");
 loginButton.addEventListener("click", function () {
-    const usernameInput = document.getElementById("login-username").value;
+    const usernameInput = document.getElementById("login-username").value.toLowerCase();
     const passwordInput = document.getElementById("login-password").value;
     const error = document.getElementById("login-error");
     const user = document.getElementById("user");
@@ -68,7 +69,7 @@ loginButton.addEventListener("click", function () {
     }
 
     const storedPassword = localStorage.getItem(usernameInput);
-    if (storedPassword !== null && storedPassword === passwordInput) {
+    if (storedPassword !== null && storedPassword === passwordInput.toLowerCase()) {
         modal.style.display = "none";
         accountName = usernameInput;
         user.innerHTML = `Welcome back, ${accountName}!`;
@@ -84,7 +85,7 @@ loginButton.addEventListener("click", function () {
 
 const registerButton = document.getElementById("register-button");
 registerButton.addEventListener("click", function () {
-    const usernameInput = document.getElementById("register-username").value;
+    const usernameInput = document.getElementById("register-username").value.toLowerCase();
     const passwordInput = document.getElementById("register-password").value;
     const error = document.getElementById("register-error");
 

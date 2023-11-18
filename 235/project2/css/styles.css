@@ -20,31 +20,6 @@ body {
     cursor: pointer;
 }
 
-.infographic {
-    background-color: #b33222;
-}
-
-.titleSection h1 {
-    margin: 0px;
-    align-self: center;
-    color: black;
-    width: 20%;
-}
-
-.typeSection {
-    display: flex;
-    justify-content: space-between;
-}
-
-.typeSection p {
-    margin: 0px;
-    padding: 0px;
-    margin-right: 10px;
-    border-radius: 2em;
-    background-color: lightgrey;
-    width: 40%;
-}
-
 .graphicsSection img {
     margin-bottom: 10px;
     border-radius: 2em;
@@ -67,12 +42,34 @@ body {
     background-color: lightgrey;
 }
 
+.titleSection h1 {
+    margin: 0px;
+    align-self: center;
+    color: black;
+    width: 20%;
+}
+
 .dexSection p {
     background-color: lightgrey;
-    border-radius: 2em;
+    border-radius: 1em;
     width: 25%;
     padding: 1%;
     padding-left: 2%;
+}
+
+.dexSection>.typeSection {
+    display: flex;
+    justify-content: space-between;
+    width: 25%;
+    height: auto;
+    padding: 0px;
+}
+
+.dexSection>.typeSection p {
+    background-color: lightgrey;
+    width: 100%;
+    margin-left: 4%;
+    padding: 4%;
 }
 
 .massSection p {

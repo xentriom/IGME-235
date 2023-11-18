@@ -264,9 +264,7 @@ function createStatGraph(statsData, pokeColor) {
             datasets: [{
                 label: 'Base Stats',
                 data: values,
-                // backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 backgroundColor: convertColorToRGBA(pokeColor, 0.2),
-                // borderColor: 'rgba(75, 192, 192, 1)',
                 borderColor: convertColorToRGBA(pokeColor, 1),
                 borderWidth: 1
             }]
@@ -290,13 +288,4 @@ function convertColorToRGBA(color, alpha) {
     ctx.fillRect(0, 0, 1, 1);
     const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-}
-
-function ApplyStyles(infoMap) {
-    const results = document.getElementById("results");
-    const infoSectionDiv = document.querySelector('.infoSection');
-    const titleSectionDiv = document.querySelector('.titleSection');
-    const aboutSectionDiv = document.querySelector('.aboutSection');
-    const battleSectionDiv = document.querySelector('.battleSection');
-    const graphicsSectionDiv = document.querySelector('.graphicsSection');
 }

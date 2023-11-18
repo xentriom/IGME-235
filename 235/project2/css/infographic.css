@@ -23,6 +23,7 @@
     grid-template-areas:
         "infoSection graphicsSection";
     grid-area: infographic;
+    background-color: #b33222;
 }
 
 .infoSection {
