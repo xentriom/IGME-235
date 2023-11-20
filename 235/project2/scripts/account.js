@@ -1,4 +1,5 @@
 const accountButton = document.getElementById("account");
+const logoutButton = document.getElementById("logout");
 const modal = document.getElementById("modal");
 const closeButton = document.getElementsByClassName("close")[0];
 const loginForm = document.getElementById("login-form");
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     localStorage.setItem(username, password);
     localStorage.setItem(`${username}-fav-pkm`, "494|384|176|");
+    logoutButton.style.display = "none";
 });
 
 accountButton.addEventListener("click", function () {
@@ -20,6 +22,11 @@ accountButton.addEventListener("click", function () {
     registerForm.style.display = "none";
     loginBox.classList.add("active");
     registerBox.classList.remove("active");
+});
+
+logoutButton.addEventListener("click", function () {
+    accountName = undefined;
+    user.innerHTML = "Hello!";
 });
 
 closeButton.addEventListener("click", function () {
@@ -72,6 +79,8 @@ loginButton.addEventListener("click", function () {
         accountName = usernameInput;
         user.innerHTML = `Welcome back, ${accountName}!`;
         alert(`Login successful!\nWelcome back, ${accountName}!`);
+        accountButton.style.display = "none";
+        logoutButton.style.display = "block";
     } else if (storedPassword === null) {
         error.innerHTML = "Please register";
         error.style.color = "red";
