@@ -167,13 +167,18 @@ function createInfographic(pokeMap, speciesMap) {
             element.src = infoMap.get(key);
             targetDiv.appendChild(element);
         } else if (type === "button") {
-            const element = document.createElement(type);
-            element.id = "save";
-            element.textContent = "Favorite";
-            element.addEventListener("click", function () {
-                savePokemon(infoMap.get("Id"));
-            });
-            targetDiv.appendChild(element);
+            if (window.accountName === undefined) {
+                const element = document.createElement("p");
+                element.textContent = "*You must be logged in to save a Pokemon!";
+                element.style.color = "blue";
+                targetDiv.appendChild(element);
+            }
+            else if (!AlreadySaved(infoMap.get("Id"))) {
+                createButton(targetDiv, "save", infoMap.get("Id"));
+            }
+            else if (AlreadySaved(infoMap.get("Id"))) {
+                createButton(targetDiv, "unsave", infoMap.get("Id"));
+            }
         } else if (type === "p" && key === "Type") {
             const types = infoMap.get(key);
             if (types.length >= 1) {
