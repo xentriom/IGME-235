@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 0.1fr 1.9fr;
-    gap: 4% 0px;
+    gap: 0px 0px;
     grid-template-areas:
         "navBar"
         "infographic";
@@ -13,6 +13,7 @@
     grid-area: navBar;
     display: flex;
     justify-content: space-evenly;
+    background-color: aliceblue;
 }
 
 .infographic {

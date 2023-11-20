@@ -1,45 +1,66 @@
-const displayLimit = 50;
+const displayLimit = 32;
 let selectedPokemonIds = [];
-let offset = 50;
+let mode = "normal";
+let offset = 32;
 
 window.addEventListener('DOMContentLoaded', function () {
     getPokemonData(displayLimit, 0, false);
 });
 
+const homeButton = document.getElementById('home');
+homeButton.addEventListener('click', function () {
+    clearResults();
+    disableButtons();
+    getPokemonData(displayLimit, 0, false);
+});
+
 const previousButton = document.getElementById('previous-button');
 previousButton.addEventListener('click', () => {
-    if (offset >= 0) {
+    disableButtons();
+    clearResults();
+
+    if (mode === "normal" && offset >= 0) {
         offset -= 20;
-        disableButtons();
-        clearResults();
         getPokemonData(displayLimit, offset, false);
+    }
+    else {
+        getPokemonData(displayLimit, 0, true);
     }
 });
 
 const nextButton = document.getElementById('next-button');
 nextButton.addEventListener('click', () => {
-    if (offset <= 1015) {
+    disableButtons();
+    clearResults();
+
+    if (mode === "normal" && offset <= 1015) {
         offset += 20;
-        disableButtons();
-        clearResults();
         getPokemonData(displayLimit, offset, false);
+    }
+    else {
+        getPokemonData(displayLimit, 0, true);
     }
 });
 
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
     clearResults();
+    disableButtons();
     getPokemonData(displayLimit, 0, true);
 });
 
 function disableButtons() {
     previousButton.disabled = true;
+    previousButton.style.display = 'none';
     nextButton.disabled = true;
+    nextButton.style.display = 'none';
 }
 
 function enableButtons() {
     previousButton.disabled = false;
+    previousButton.style.display = 'block';
     nextButton.disabled = false;
+    nextButton.style.display = 'block';
 }
 
 function clearResults() {
@@ -57,6 +78,7 @@ function getPokemonData(limit, offset, random) {
     const getRandomPokemonId = () => Math.floor(Math.random() * 1015) + 1;
 
     if (random) {
+        mode = 'random';
         for (let i = 0; i < limit; i++) {
             let randomPokemonId = getRandomPokemonId();
 
@@ -70,6 +92,7 @@ function getPokemonData(limit, offset, random) {
         }
         selectedPokemonIds = [];
     } else {
+        mode = 'normal';
         const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
         fetch(url)
             .then(response => response.json())
@@ -90,7 +113,7 @@ function getPokemonData(limit, offset, random) {
 function fetchPokemonData(pokemonUrl) {
     fetch(pokemonUrl)
         .then(response => response.json())
-        .then(pokemonData => { 
+        .then(pokemonData => {
             createShowcase(pokemonData);
         })
         .catch(error => {
@@ -106,6 +129,7 @@ function createShowcase(pokemonData) {
 
     const pokemonDiv = document.createElement('div');
     pokemonDiv.id = `pokemon${pokemonId}`;
+    pokemonDiv.classList.add('pokemon');
 
     const nameElement = document.createElement('h2');
     nameElement.textContent = pokemonName;

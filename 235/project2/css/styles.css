@@ -9,11 +9,16 @@ html {
 
 body {
     margin: 0px;
+    background-color: #b33222;
 }
 
 .showcase {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .cursorChange {
@@ -75,4 +80,12 @@ body {
 .massSection p {
     width: 100%;
     height: 30%;
+}
+
+.ui_b {
+    background-color: lightgrey;
+    border-radius: 1em;
+    padding: 2%;
+    margin: auto 0px;
+    height: 20%;
 }
