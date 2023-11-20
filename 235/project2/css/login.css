@@ -60,15 +60,18 @@
 }
 
 .modal-input {
-    width: 90%;
-    margin-bottom: 10%;
+    width: 80%;
     line-height: 10%;
+    height: 25px;
+    margin: 10px 0px 10px 25px;
 }
 
 button.form-button {
     display: block;
     margin: 0 auto;
     width: 50%;
+    height: 30px;
+    margin-top: 30px;
 }
 
 .box.active {
@@ -76,19 +79,7 @@ button.form-button {
     background-image: linear-gradient(lightyellow, lightblue);
 }
 
-.box.active#login-box,
-.box.active#login-box-register,
-.box.active#register-box,
-.box.active#register-box-register {
-    border-color: black;
-}
-
 #login-form h1,
 #register-form h1 {
     text-align: center;
-}
-
-form input[type="text"],
-form input[type="password"] {
-    height: 40px;
 }
