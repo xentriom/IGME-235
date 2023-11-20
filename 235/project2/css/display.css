@@ -12,22 +12,30 @@
 }
 
 .pokemon {
-    background-color: white;
-    border: 3px solid lightgray;
-    border-radius: 0.5em;
-    width: 11%;
-    height: 22%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    background-color: white;
+    border: 3px solid lightgray;
+    border-radius: 0.5em;
+    transition: border 0.3s ease;
+
+    width: 11%;
+    height: 22%;
 }
 
 .pokemon:hover {
-    border: 3px solid gray;
+    border: 3px solid black;
 }
 
 .pokemon h2 {
 
     border-bottom: 2px solid lightgray;
+    transition: border-bottom 0.3s ease;
+}
+
+.pokemon h2:hover {
+    border-bottom: 2px solid black;
 }
