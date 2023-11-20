@@ -13,7 +13,7 @@
     grid-area: navBar;
     display: flex;
     justify-content: space-evenly;
-    background-color: aliceblue;
+    background-color: lightgray;
 }
 
 .infographic {

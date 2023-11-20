@@ -38,7 +38,6 @@ body {
     margin: 0px;
     align-self: center;
     color: black;
-    width: 20%;
 }
 
 .dexSection p {
@@ -70,7 +69,7 @@ body {
 }
 
 .ui_b {
-    background-color: lightgrey;
+    background-color: white;
     border-radius: 1em;
     padding: 2%;
     margin: auto 0px;

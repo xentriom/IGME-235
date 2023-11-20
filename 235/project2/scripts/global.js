@@ -12,8 +12,7 @@ homeButton.addEventListener('click', function () {
 
 const searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
-    const resultsElement = document.getElementById("results");
-    resultsElement.innerHTML = "";
+    clearResults();
     handleSearch();
 });
 
@@ -36,17 +35,23 @@ previousButton.addEventListener('click', () => {
     disableButtons();
     clearResults();
 
-    if (mode === "normal" && offset >= 0) {
-        offset -= 20;
-        getPokemonData(displayLimit, offset, false);
+    if (mode === "normal") {
+        if (mode === "normal" && offset >= 0) {
+            offset -= offset;
+            getPokemonData(displayLimit, offset, false);
+        }
     }
     else if (mode === "random") {
         getPokemonData(displayLimit, 0, true);
     }
     else if (mode === "infographic") {
-        const resultsElement = document.getElementById("results");
-        resultsElement.innerHTML = "";
-        getPokemon(currentID - 1);
+        if (currentID === 1) {
+            currentID = 1018;
+            getPokemon(currentID - 1);
+        }
+        else {
+            getPokemon(currentID - 1);
+        }
     }
 });
 
@@ -55,7 +60,7 @@ nextButton.addEventListener('click', () => {
     disableButtons();
     clearResults();
 
-    if (mode === "normal" && offset <= 1015) {
+    if (mode === "normal" && offset <= 1017) {
         offset += 20;
         getPokemonData(displayLimit, offset, false);
     }
@@ -63,9 +68,12 @@ nextButton.addEventListener('click', () => {
         getPokemonData(displayLimit, 0, true);
     }
     else if (mode === "infographic") {
-        const resultsElement = document.getElementById("results");
-        resultsElement.innerHTML = "";
-        getPokemon(currentID + 1);
+        if (currentID === 1017) {
+            currentID = 0;
+            getPokemon(currentID + 1);
+        } else {
+            getPokemon(currentID + 1);
+        }
     }
 });
 
