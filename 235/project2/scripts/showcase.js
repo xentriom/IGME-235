@@ -1,6 +1,6 @@
 const displayLimit = 32;
+let offset = 0;
 let selectedPokemonIds = [];
-let offset = 32;
 
 window.addEventListener('DOMContentLoaded', function () {
     getPokemonData(displayLimit, 0, false);
