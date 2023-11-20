@@ -35,11 +35,9 @@ previousButton.addEventListener('click', () => {
     disableButtons();
     clearResults();
 
-    if (mode === "normal") {
-        if (mode === "normal" && offset >= 0) {
-            offset -= offset;
-            getPokemonData(displayLimit, offset, false);
-        }
+    if (mode === "normal" && offset >= 0) {
+        offset -= displayLimit;
+        getPokemonData(displayLimit, offset, false);
     }
     else if (mode === "random") {
         getPokemonData(displayLimit, 0, true);
@@ -61,7 +59,7 @@ nextButton.addEventListener('click', () => {
     clearResults();
 
     if (mode === "normal" && offset <= 1017) {
-        offset += 20;
+        offset += displayLimit;
         getPokemonData(displayLimit, offset, false);
     }
     else if (mode === "random") {
