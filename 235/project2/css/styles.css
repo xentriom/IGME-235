@@ -15,10 +15,10 @@ body {
 .graphicsSection img {
     margin-bottom: 10px;
     border-radius: 2em;
-    /* width: fit-content; */
-    /* height: auto; */
     border: 10px solid lightgrey;
     background-color: white;
+    width: 100%;
+    height: auto;
 }
 
 .graphicsSection button {
@@ -74,4 +74,26 @@ body {
     padding: 2%;
     margin: auto 0px;
     height: 20%;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+}
+
+.pn_buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.safe {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: .2%;
+}
+
+.safe button {
+    height: auto;
 }

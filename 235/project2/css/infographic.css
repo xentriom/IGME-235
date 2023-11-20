@@ -12,8 +12,10 @@
 .navBar {
     grid-area: navBar;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     background-color: lightgray;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 .infographic {
@@ -25,6 +27,8 @@
         "infoSection graphicsSection";
     grid-area: infographic;
     background-color: #b33222;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .infoSection {
@@ -127,5 +131,6 @@
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 10%;
-    width: 100%;
+    margin-left: 5%;
+    margin-right: 5%;
 }

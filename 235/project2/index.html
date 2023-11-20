@@ -18,16 +18,29 @@
 <body>
     <div class="container">
         <div class="navBar">
-            <div id="user">Hello!</div>
-            <button type="button" id="home" class="ui_b">Home</button>
-            <input id="searchterm" type="text" size="20" autofocus value="pikachu" spellcheck="false" />
-            <button type="button" id="search" class="ui_b">Search</button>
-            <button type="button" id="randomizer" class="ui_b">Randomizer</button>
-            <button type="button" id="previous-button" class="ui_b">Previous</button>
-            <button type="button" id="next-button" class="ui_b">Next</button>
-            <button type="button" id="favorite" class="ui_b">Favorite Pokemons</button>
-            <button type="button" id="account" class="ui_b">Account</button>
-            <button type="button" id="logout" class="ui_b">Logout</button>
+            <div id="homeBar">
+                <div id="user">Hello!</div>
+                <button type="button" id="home" class="ui_b">Home</button>
+            </div>
+
+            <div id="searchBar">
+                <input id="searchterm" type="text" size="20" autofocus value="pikachu" spellcheck="false" />
+                <button type="button" id="search" class="ui_b">Search</button>
+            </div>
+
+            <div class="controls">
+                <button type="button" id="randomizer" class="ui_b">Randomizer</button>
+                <div class="pn_buttons">
+                    <button type="button" id="previous-button" class="ui_b">Previous</button>
+                    <button type="button" id="next-button" class="ui_b">Next</button>
+                </div>
+            </div>
+
+            <div class="safe">
+                <button type="button" id="account" class="ui_b">Account</button>
+                <button type="button" id="logout" class="ui_b">Logout</button>
+                <button type="button" id="favorite" class="ui_b">Favorites</button>
+            </div>
         </div>
 
         <div id="results"></div>
