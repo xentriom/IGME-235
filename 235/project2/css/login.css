@@ -73,6 +73,7 @@ button.form-button {
 
 .box.active {
     border: 1px solid black;
+    background-image: linear-gradient(lightyellow, lightblue);
 }
 
 .box.active#login-box,
