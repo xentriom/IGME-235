@@ -87,16 +87,16 @@ function createShowcase(pokemonData) {
     const pokemonDiv = document.createElement('div');
     pokemonDiv.id = `pokemon${pokemonId}`;
     pokemonDiv.classList.add('pokemon');
+    pokemonDiv.classList.add('cursorChange');
 
     const nameElement = document.createElement('h2');
-    nameElement.textContent = pokemonName;
+    nameElement.textContent = formatString(pokemonName);
 
     const spriteElement = document.createElement('img');
     spriteElement.src = pokemonSprite;
     spriteElement.alt = pokemonName;
-    spriteElement.classList.add('cursorChange');
 
-    spriteElement.addEventListener('click', function () {
+    pokemonDiv.addEventListener('click', function () {
         resultsElement.innerHTML = '';
         getPokemon(pokemonName);
     });

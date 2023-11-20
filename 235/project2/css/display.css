@@ -1,6 +1,33 @@
+.showcase {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin-top: 1%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.cursorChange {
+    cursor: pointer;
+}
+
 .pokemon {
     background-color: white;
     border: 3px solid lightgray;
+    border-radius: 0.5em;
     width: 11%;
     height: 22%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemon:hover {
+    border: 3px solid gray;
+}
+
+.pokemon h2 {
+
+    border-bottom: 2px solid lightgray;
 }

@@ -12,19 +12,6 @@ body {
     background-color: #b33222;
 }
 
-.showcase {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    margin-top: 1%;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-.cursorChange {
-    cursor: pointer;
-}
-
 .graphicsSection img {
     margin-bottom: 10px;
     border-radius: 2em;
