@@ -1,8 +1,3 @@
-const storageButton = document.querySelector("#favorite");
-storageButton.addEventListener("click", function () {
-    loadSavedPokemon();
-});
-
 function createFavoriteButton() {
     let saveButton = document.createElement("button");
     saveButton.id = "save";

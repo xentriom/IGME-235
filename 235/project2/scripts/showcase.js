@@ -1,52 +1,9 @@
 const displayLimit = 32;
 let selectedPokemonIds = [];
-let mode = "normal";
 let offset = 32;
 
 window.addEventListener('DOMContentLoaded', function () {
     getPokemonData(displayLimit, 0, false);
-});
-
-const homeButton = document.getElementById('home');
-homeButton.addEventListener('click', function () {
-    clearResults();
-    disableButtons();
-    getPokemonData(displayLimit, 0, false);
-});
-
-const previousButton = document.getElementById('previous-button');
-previousButton.addEventListener('click', () => {
-    disableButtons();
-    clearResults();
-
-    if (mode === "normal" && offset >= 0) {
-        offset -= 20;
-        getPokemonData(displayLimit, offset, false);
-    }
-    else {
-        getPokemonData(displayLimit, 0, true);
-    }
-});
-
-const nextButton = document.getElementById('next-button');
-nextButton.addEventListener('click', () => {
-    disableButtons();
-    clearResults();
-
-    if (mode === "normal" && offset <= 1015) {
-        offset += 20;
-        getPokemonData(displayLimit, offset, false);
-    }
-    else {
-        getPokemonData(displayLimit, 0, true);
-    }
-});
-
-const randomizerButton = document.getElementById('randomizer');
-randomizerButton.addEventListener('click', function () {
-    clearResults();
-    disableButtons();
-    getPokemonData(displayLimit, 0, true);
 });
 
 function disableButtons() {

@@ -2,21 +2,6 @@ const poke_URL = "https://pokeapi.co/api/v2/pokemon/";
 const pokeSpecies_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 let statGraph = null;
 let dexNumber;
-let pokeColor;
-
-const searchButton = document.querySelector("#search");
-searchButton.addEventListener("click", function () {
-    const resultsElement = document.getElementById("results");
-    resultsElement.innerHTML = "";
-    handleSearch();
-});
-
-const searchInput = document.querySelector("#searchterm");
-searchInput.addEventListener("keydown", function (event) {
-    if (event.key === "Enter") {
-        handleSearch();
-    }
-});
 
 function handleSearch() {
     const searchInput = document.querySelector("#searchterm");
@@ -106,6 +91,9 @@ function getSpeciesInfo(data) {
 }
 
 function createInfographic(pokeMap, speciesMap) {
+    mode = 'infographic';
+    currentID = pokeMap.get("Id");
+
     const results = document.getElementById("results");
     const infoMap = new Map([...pokeMap, ...speciesMap]);
 
@@ -222,7 +210,7 @@ function createInfographic(pokeMap, speciesMap) {
     descriptionSectionDiv.appendChild(eggSectionDiv);
 
     createStatGraph(infoMap.get("Stats"), infoMap.get("Color"));
-    ApplyStyles(infoMap);
+    enableButtons();
 }
 
 function createDivWithClass(className) {

@@ -1,5 +1,3 @@
-window.accountName;
-
 const accountButton = document.getElementById("account");
 const modal = document.getElementById("modal");
 const closeButton = document.getElementsByClassName("close")[0];
