@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     localStorage.setItem(username, password);
     localStorage.setItem(`${username}-fav-pkm`, "494|384|176|");
-    logoutButton.style.display = "none";
+    // logoutButton.style.display = "none";
 });
 
 accountButton.addEventListener("click", function () {
@@ -25,8 +25,14 @@ accountButton.addEventListener("click", function () {
 });
 
 logoutButton.addEventListener("click", function () {
+    if (window.accountName === undefined) {
+        alert("You must be logged in to log out!");
+        return;
+    }
+
     accountName = undefined;
     user.innerHTML = "Hello!";
+    alert("Logout successful!");
 });
 
 closeButton.addEventListener("click", function () {
@@ -79,8 +85,8 @@ loginButton.addEventListener("click", function () {
         accountName = usernameInput;
         user.innerHTML = `Welcome back, ${accountName}!`;
         alert(`Login successful!\nWelcome back, ${accountName}!`);
-        accountButton.style.display = "none";
-        logoutButton.style.display = "block";
+        // accountButton.style.display = "none";
+        // logoutButton.style.display = "block";
     } else if (storedPassword === null) {
         error.innerHTML = "Please register";
         error.style.color = "red";
