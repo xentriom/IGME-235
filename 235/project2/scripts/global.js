@@ -25,6 +25,13 @@ searchInput.addEventListener("keydown", function (event) {
 
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
+    if (mode === "infographic") {
+        clearResults();
+        disableButtons();
+        getPokemon(Math.floor(Math.random() * (1017 - 1 + 1)) + 1)
+        return;
+    }
+
     clearResults();
     disableButtons();
     getPokemonData(displayLimit, 0, true);

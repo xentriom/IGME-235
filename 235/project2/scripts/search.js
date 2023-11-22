@@ -94,6 +94,8 @@ function createInfographic(pokeMap, speciesMap) {
     mode = 'infographic';
     currentID = pokeMap.get("Id");
 
+    changeFocus(pokeMap.get("Name"));
+
     const results = document.getElementById("results");
     const infoMap = new Map([...pokeMap, ...speciesMap]);
 
@@ -216,6 +218,11 @@ function createInfographic(pokeMap, speciesMap) {
 
     createStatGraph(infoMap.get("Stats"), infoMap.get("Color"));
     enableButtons();
+}
+
+function changeFocus(pokemonName) {
+    const focus = document.getElementById("searchterm");
+    focus.value = pokemonName;
 }
 
 function createDivWithClass(className) {
