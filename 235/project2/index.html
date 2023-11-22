@@ -18,38 +18,31 @@
 <body>
     <div class="container">
         <div class="navBar">
-            <div id="homeBar">
-                <div id="user">Hello!</div>
-                <button type="button" id="home" class="ui_b">Home</button>
+            <div class="firstSection">
+                <img src="media/favicon.ico" alt="pokeball" id="home">
             </div>
 
-            <div id="searchBar">
-                <input id="searchterm" type="text" size="20" autofocus value="pikachu" spellcheck="false" />
-                <button type="button" id="search" class="ui_b">Search</button>
-            </div>
+            <div class="secondSection">
+                <div class="searchPlace">
+                    <button type="button" id="randomizer" class="">🔄</button>
+                    <input id="searchterm" type="text" size="20" autofocus value="pikachu" spellcheck="false" />
+                    <button type="button" id="search" class="">🔎</button>
+                </div>
 
-            <div class="controls">
-                <button type="button" id="randomizer" class="ui_b">Randomizer</button>
-                <div class="pn_buttons">
-                    <button type="button" id="previous-button" class="ui_b">Previous</button>
-                    <button type="button" id="next-button" class="ui_b">Next</button>
+                <div class="controlsPlace">
+                    <button type="button" id="previous-button" class="ui_b">&lt;&lt; Previous</button>
+                    <button type="button" id="next-button" class="ui_b">&gt;&gt; Next</button>
                 </div>
             </div>
-
-            <!-- <div class="safe">
-                <button type="button" id="account" class="ui_b">Account</button>
-                <button type="button" id="logout" class="ui_b">Logout</button>
-                <button type="button" id="favorite" class="ui_b">Favorites</button>
-            </div> -->
 
             <div class="dropdown">
                 <button class="dropbtn">☰</button>
                 <div class="dropdown-content">
-                  <p id="account">Account</p>
-                  <p id="favorite">Favorites</p>
-                  <p id="logout">Log out</p>
+                    <p id="account">Account</p>
+                    <p id="favorite">Favorites</p>
+                    <p id="logout">Log out</p>
                 </div>
-              </div>
+            </div>
         </div>
 
         <div id="results"></div>
