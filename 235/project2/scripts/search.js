@@ -187,16 +187,98 @@ function createInfographic(pokeMap, speciesMap) {
         } else if (type === "p" && key === "Type") {
             const types = infoMap.get(key);
             if (types.length >= 1) {
-                const element1 = document.createElement(type);
-                element1.textContent = `${types[0]}`;
-                targetDiv.appendChild(element1);
+                const element = document.createElement(type);
+                element.textContent = `${types[0]}`;
+                targetDiv.appendChild(element);
             }
             if (types.length >= 2) {
-                const element2 = document.createElement(type);
-                element2.textContent = `${types[1]}`;
-                targetDiv.appendChild(element2);
+                const element = document.createElement(type);
+                element.textContent = `${types[1]}`;
+                targetDiv.appendChild(element);
             }
-        } else {
+        } else if (key === "EggGroup") {
+            const title = document.createElement("h3");
+            title.textContent = "Egg Group";
+            targetDiv.appendChild(title);
+
+            const eggG = infoMap.get(key);
+            if (eggG.length >= 1) {
+                const subject = document.createElement(type);
+                subject.textContent = `${eggG[0]}`;
+                if (eggG[0] === "No Eggs") {
+                    subject.textContent = "None";
+                }
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+            if (eggG.length >= 2) {
+                const subject = document.createElement(type);
+                subject.textContent = `${eggG[1]}`;
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+        }
+        else if (key === "Ability") {
+            const title = document.createElement("h3");
+            title.textContent = "Ability";
+            targetDiv.appendChild(title);
+
+            const ability = infoMap.get(key);
+            if (ability.length >= 1) {
+                const subject = document.createElement(type);
+                subject.textContent = `${ability[0]}`;
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+            if (ability.length >= 2) {
+                const subject = document.createElement(type);
+                subject.textContent = `${ability[1]}`;
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+        }
+        else if (key === "HiddenAbility") {
+            const title = document.createElement("h3");
+            title.textContent = "Hidden Ability";
+            targetDiv.appendChild(title);
+
+            const ability = infoMap.get(key);
+            if (ability.length === 0) {
+                const subject = document.createElement(type);
+                subject.textContent = "None";
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+            if (ability.length >= 1) {
+                const subject = document.createElement(type);
+                subject.textContent = `${ability[0]}`;
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+            if (ability.length >= 2) {
+                const subject = document.createElement(type);
+                subject.textContent = `${ability[1]}`;
+                subject.classList.add("bubble");
+                targetDiv.appendChild(subject);
+            }
+        }
+        else if (key === "Weight") {
+            const title = document.createElement("h3");
+            title.textContent = "Mass";
+            targetDiv.appendChild(title);
+
+            const element = document.createElement(type);
+            element.textContent = `${infoMap.get(key)} lbs`;
+            element.classList.add("bubble");
+            targetDiv.appendChild(element);
+        }
+        else if (key === "Height") {
+            const element = document.createElement(type);
+            element.textContent = `${infoMap.get(key)} ft`;
+            element.classList.add("bubble");
+            targetDiv.appendChild(element);
+        }
+        else {
             const element = document.createElement(type);
             element.textContent = `${prefix}${infoMap.get(key)}`;
             targetDiv.appendChild(element);
