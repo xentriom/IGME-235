@@ -80,6 +80,12 @@ body {
     height: auto;
 }
 
+.firstSection {
+    display: flex;
+    align-items: center;
+    margin-right: 0px;
+}
+
 .secondSection {
     display: flex;
     justify-content: space-evenly;

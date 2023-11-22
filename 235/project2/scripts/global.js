@@ -10,6 +10,11 @@ homeButton.addEventListener('click', function () {
     getPokemonData(displayLimit, 0, false);
 });
 
+const aboutButton = document.getElementById('about');
+aboutButton.addEventListener('click', function () {
+    window.location.href = 'docs.html';
+});
+
 const searchButton = document.querySelector("#search");
 searchButton.addEventListener("click", function () {
     clearResults();

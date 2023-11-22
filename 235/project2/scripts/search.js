@@ -36,7 +36,10 @@ async function getPokemon(pokemon) {
                 console.log(`An error occurred trying to fetch data from ${poke_URL}`);
             }
         } else {
-            console.log(`An error occurred trying to fetch data from ${pokeSpecies_URL}`);
+            alert(`An error occurred trying to retrive "${pokemon}".\nPlease check your spelling/id and try again.\n\nNOTE: Pokemon with multiple forms like Aegislash are not supported.`);
+            clearResults();
+            disableButtons();
+            getPokemonData(displayLimit, 0, false);
         }
     } catch (error) {
         console.log(`An error occurred during getPokemon()\nError: ${error}`);
