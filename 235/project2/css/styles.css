@@ -164,56 +164,16 @@ body {
 
 @media screen and (max-width: 650px) {
     .dexSection>.typeSection {
-        display: flex;
-        justify-content: space-between;
         width: 35%;
-        height: auto;
-        padding: 0px;
         align-items: center;
-    }
-
-    .dexSection>.typeSection p {
-        background-color: lightgrey;
-        width: 100%;
-        margin-left: 4%;
-        padding: 4%;
-    }
-
-    .firstSection {
-        display: flex;
-        align-items: center;
-        margin-right: 0px;
     }
     
     .secondSection {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
         margin-left: 2%;
         margin-right: 2%;
     }
-    
-    .secondSection .searchPlace {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    .secondSection .searchPlace input {
-        width: 100%;
-    }
-    
-    .secondSection .controlsPlace {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-left: 5%;
-    }
 
     .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: #f1f1f1;
         min-width: 20px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
@@ -221,18 +181,10 @@ body {
     }
 
     .dropdown-content p {
-        color: black;
         padding: 6px 16px;
-        text-decoration: none;
-        display: block;
     }
 
     .graphicsSection img {
-        margin-bottom: 10px;
-        border-radius: 2em;
-        border: 10px solid lightgrey;
         background-color: rgb(246, 246, 246);
-        width: 100%;
-        height: auto;
     }
 }

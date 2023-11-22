@@ -31,7 +31,6 @@
 }
 
 .pokemon h2 {
-
     border-bottom: 2px solid lightgray;
     transition: border-bottom 0.3s ease;
 }
@@ -42,8 +41,6 @@
 
 @media screen and (max-width: 650px) {
     .showcase {
-        display: flex;
-        flex-wrap: wrap;
         justify-content: center;
         margin-top: 2%;
         margin-left: 2%;
@@ -51,15 +48,8 @@
     }
 
     .pokemon {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
         background-color: white;
         border: 2px solid lightgray;
-        border-radius: 0.5em;
-        transition: border 0.3s ease;
 
         width: 30%;
         height: auto;
@@ -74,12 +64,5 @@
 
     .pokemon h2 {
         font-size: 16px;
-        border-bottom: 2px solid lightgray;
-        transition: border-bottom 0.3s ease;
     }
-
-    .pokemon h2:hover {
-        border-bottom: 2px solid black;
-    }
-    
 }

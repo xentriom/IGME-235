@@ -137,124 +137,61 @@
 
 @media screen and (max-width: 650px) {
     .navBar {
-        grid-area: navBar;
-        display: flex;
-        justify-content: space-between;
-        background-color: lightgray;
         padding: 0px;
     }
 
     .infographic {
-        display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
-        gap: 0px 0px;
         grid-template-areas:
             "infoSection"
             "graphicsSection";
-        grid-area: infographic;
-        background-color: #b33222;
         margin: 0px;
     }
 
     .infoSection {
-        display: grid;
-        grid-template-columns: 1fr;
         grid-template-rows: 0.3fr 1.0fr 1.0fr;
         gap: 0% 0px;
-        grid-template-areas:
-            "titleSection"
-            "aboutSection"
-            "stats";
-        grid-area: infoSection;
         margin: 0px;
     }
 
     .titleSection {
-        grid-area: titleSection;
-        display: flex;
-        justify-content: center;
         margin-top: 3%;
         margin-left: 2%;
         margin-right: 2%;
-        border-radius: 5em;
-        background-color: lightgrey;
     }
 
     .aboutSection {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: 0.4fr 1.6fr;
         gap: 0px 0px;
-        grid-template-areas:
-            "dexSection"
-            "descriptionSection";
-        grid-area: aboutSection;
-        margin-left: 2%;
         margin-right: 2%;
-        justify-content: right;
     }
 
     .descriptionSection {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-template-rows: 1fr;
         gap: 0px 1%;
-        grid-template-areas:
-            "abilitySection hiddenSection massSection eggSection";
-        grid-area: descriptionSection;
         padding-bottom: 3%;
     }
 
     .abilitySection {
-        grid-area: abilitySection;
-        padding: 5%;
-        background-color: lightgrey;
         border-radius: 1em;
     }
 
     .hiddenSection {
-        grid-area: hiddenSection;
-        padding: 5%;
-        background-color: lightgrey;
         border-radius: 1em;
     }
 
     .massSection {
-        grid-area: massSection;
-        padding: 5%;
-        background-color: lightgrey;
         border-radius: 1em;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center
     }
 
     .eggSection {
-        grid-area: eggSection;
-        padding: 5%;
-        background-color: lightgrey;
         border-radius: 1em;
     }
 
     .stats {
-        grid-area: stats;
-        display: flex;
-        flex-direction: column-reverse;
-        justify-content: center;
-        background-color: lightgrey;
-        border-radius: 2em;
-        margin-left: 2%;
         margin-right: 2%;
-        padding: 2%;
     }
 
     .graphicsSection {
-        grid-area: graphicsSection;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
         margin-top: 2%;
         margin-left: 4%;
         margin-right: 4%;
