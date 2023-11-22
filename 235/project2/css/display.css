@@ -45,9 +45,9 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        margin-top: 1%;
+        margin-top: 2%;
         margin-left: 2%;
-        margin-right: 2%;
+        margin-right: 0%;
     }
 
     .pokemon {
@@ -61,8 +61,11 @@
         border-radius: 0.5em;
         transition: border 0.3s ease;
 
-        width: fit-content;
+        width: 30%;
         height: auto;
+
+        margin-bottom: 2%;
+        margin-right: 2%;
     }
 
     .pokemon:hover {
@@ -70,7 +73,7 @@
     }
 
     .pokemon h2 {
-
+        font-size: 16px;
         border-bottom: 2px solid lightgray;
         transition: border-bottom 0.3s ease;
     }
