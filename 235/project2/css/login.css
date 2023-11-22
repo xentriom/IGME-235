@@ -89,4 +89,9 @@ button.form-button {
         width: 70vw;
         height: 50%;
     }
+
+    #login-form h1,
+    #register-form h1 {
+        font-size: 1.5em;
+    }
 }

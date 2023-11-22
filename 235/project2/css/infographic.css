@@ -160,7 +160,7 @@
     .infoSection {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 0.3fr 1.0fr 1.7fr;
+        grid-template-rows: 0.3fr 1.0fr 1.0fr;
         gap: 0% 0px;
         grid-template-areas:
             "titleSection"
@@ -219,7 +219,7 @@
         background-color: lightgrey;
         border-radius: 1em;
     }
-    
+
     .massSection {
         grid-area: massSection;
         padding: 5%;
@@ -230,7 +230,7 @@
         flex-direction: column;
         align-items: center
     }
-    
+
     .eggSection {
         grid-area: eggSection;
         padding: 5%;
@@ -255,5 +255,8 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        margin-top: 2%;
+        margin-left: 4%;
+        margin-right: 4%;
     }
 }
