@@ -86,8 +86,7 @@ button.form-button {
 
 @media screen and (max-width: 650px) {
     .modal-content {
-        width: 75%;
+        width: 70vw;
         height: 50%;
     }
-    
 }
