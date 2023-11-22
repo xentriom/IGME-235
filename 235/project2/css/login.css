@@ -83,3 +83,11 @@ button.form-button {
 #register-form h1 {
     text-align: center;
 }
+
+@media screen and (max-width: 650px) {
+    .modal-content {
+        width: 75%;
+        height: 50%;
+    }
+    
+}

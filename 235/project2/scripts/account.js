@@ -85,8 +85,6 @@ loginButton.addEventListener("click", function () {
         accountName = usernameInput;
         user.innerHTML = `Welcome back, ${accountName}!`;
         alert(`Login successful!\nWelcome back, ${accountName}!`);
-        // accountButton.style.display = "none";
-        // logoutButton.style.display = "block";
     } else if (storedPassword === null) {
         error.innerHTML = "Please register";
         error.style.color = "red";
@@ -102,33 +100,62 @@ registerButton.addEventListener("click", function () {
     const passwordInput = document.getElementById("register-password").value;
     const error = document.getElementById("register-error");
 
+    if (ValidateRegistry(usernameInput, passwordInput, error)) {
+        localStorage.setItem(usernameInput, passwordInput);
+        localStorage.setItem(`${usernameInput}-fav-pkm`, "");
+        modal.style.display = "none";
+        alert(`Registration successful!\nPlease login to continue!`);
+    }
+});
+
+function ValidateRegistry(username, password, error) {
+    const noInput = [""];
+    if (noInput.includes(username)) {
+        error.innerHTML = "Please enter a username";
+        error.style.color = "red";
+        return false;
+    } else if (noInput.includes(password)) {
+        error.innerHTML = "Please enter a password";
+        error.style.color = "red";
+        return false;
+    }
+
     const invalidPhrase = ["-fav-pkm"];
-    const invalidEnd = invalidPhrase.some((suffix) => usernameInput.endsWith(suffix));
+    const invalidEnd = invalidPhrase.some((suffix) => username.endsWith(suffix));
     if (invalidEnd) {
         error.innerHTML = "Username cannot end with -fav-pkm";
         error.style.color = "red";
-        return;
+        return false;
     }
 
     const invalidUsername = ["xen", "xentrix", "xentriom"];
-    if (invalidUsername.includes(usernameInput)) {
+    if (invalidUsername.includes(username)) {
         error.innerHTML = "Username not allowed";
         error.style.color = "red";
-        return;
+        return false;
     }
 
-    const isUsernameExists = checkUsernameExists(usernameInput);
+    const isUsernameExists = checkUsernameExists(username);
     if (isUsernameExists) {
         error.innerHTML = "Username already exists";
         error.style.color = "red";
-        return;
+        return false;
     }
 
-    localStorage.setItem(usernameInput, passwordInput);
-    localStorage.setItem(`${usernameInput}-fav-pkm`, "");
-    modal.style.display = "none";
-    alert(`Registration successful!\nPlease login to continue!`);
-});
+    if (password.length < 2) {
+        error.innerHTML = "Password must be at least 2 characters";
+        error.style.color = "red";
+        return false;
+    }
+
+    if (username.length > 8) {
+        error.innerHTML = "User cannot be longer than 8 characters";
+        error.style.color = "red";
+        return false;
+    }
+
+    return true;
+}
 
 function checkUsernameExists(username) {
     const storedData = localStorage.getItem(username);

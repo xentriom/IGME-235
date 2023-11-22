@@ -141,8 +141,6 @@
         display: flex;
         justify-content: space-between;
         background-color: lightgray;
-        /* padding-left: 6%;
-        padding-right: 6%; */
         padding: 0px;
     }
 
@@ -206,6 +204,38 @@
             "abilitySection hiddenSection massSection eggSection";
         grid-area: descriptionSection;
         padding-bottom: 3%;
+    }
+
+    .abilitySection {
+        grid-area: abilitySection;
+        padding: 5%;
+        background-color: lightgrey;
+        border-radius: 1em;
+    }
+
+    .hiddenSection {
+        grid-area: hiddenSection;
+        padding: 5%;
+        background-color: lightgrey;
+        border-radius: 1em;
+    }
+    
+    .massSection {
+        grid-area: massSection;
+        padding: 5%;
+        background-color: lightgrey;
+        border-radius: 1em;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center
+    }
+    
+    .eggSection {
+        grid-area: eggSection;
+        padding: 5%;
+        background-color: lightgrey;
+        border-radius: 1em;
     }
 
     .stats {
