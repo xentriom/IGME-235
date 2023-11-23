@@ -174,7 +174,7 @@ h3 {
     font-size: 15px;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 1000px) {
     .dexSection>.typeSection {
         width: 35%;
         align-items: center;
@@ -215,5 +215,15 @@ h3 {
 
     .dropdown {
         margin-right: 1%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .dropdown-content {
+        min-width: 50px;
+    }
+
+    .dropdown-content p {
+        padding: 8px 16px;
     }
 }
