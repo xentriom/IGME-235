@@ -34,7 +34,7 @@
 .infoSection {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 0.3fr 1.0fr 1.7fr;
+    grid-template-rows: 0.2fr 1.0fr 1.8fr;
     gap: 2% 0px;
     grid-template-areas:
         "titleSection"
@@ -57,7 +57,7 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 0.4fr 1.6fr;
-    gap: 2% 0px;
+    gap: 0px 0px;
     grid-template-areas:
         "dexSection"
         "descriptionSection";
@@ -120,6 +120,7 @@
     border-radius: 2em;
     margin-left: 2%;
     padding: 2%;
+    margin-bottom: 6%;
 }
 
 .graphicsSection {
@@ -159,7 +160,6 @@
     }
 
     .aboutSection {
-        gap: 0px 0px;
         margin-right: 2%;
     }
 
