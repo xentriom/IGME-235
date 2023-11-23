@@ -44,9 +44,11 @@ body {
 .dexSection p {
     background-color: lightgrey;
     border-radius: 1em;
-    width: 25%;
-    padding: 1%;
-    padding-left: 2%;
+    width: 22%;
+    /* padding: 1%;
+    padding-left: 2%; */
+    text-align: center;
+    padding-top: 1%;
 }
 
 .dexSection>.typeSection {
@@ -178,6 +180,10 @@ h3 {
     .dexSection>.typeSection {
         width: 35%;
         align-items: center;
+    }
+
+    .dexSection p {
+        padding-top: 1.5%;
     }
     
     .secondSection {

@@ -119,7 +119,7 @@ function createInfographic(pokeMap, speciesMap) {
 
     const elementTypes = [
         { type: "h1", key: "Name", div: "titleSection" },
-        { type: "p", key: "Id", prefix: "Pokedex Entry: ", div: "dexSection" },
+        { type: "p", key: "Id", prefix: "Dex #: ", div: "dexSection" },
         { type: "p", key: "Ability", prefix: "Ability: ", div: "abilitySection" },
         { type: "p", key: "HiddenAbility", prefix: "Hidden Ability: ", div: "hiddenSection" },
         { type: "p", key: "Weight", prefix: "Weight: ", div: "massSection" },
