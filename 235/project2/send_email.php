@@ -6,5 +6,8 @@ if(isset($_POST['subject'])) {
     $message .= 'Subject: ' . $subject;
 
     mail($to, $subject, $message);
+
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
 }
 ?>
