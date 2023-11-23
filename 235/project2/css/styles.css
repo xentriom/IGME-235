@@ -207,4 +207,12 @@ h3 {
     .bubble {
         font-size: 10px;
     }
+
+    .secondSection .controlsPlace {
+        margin-left: 2%;
+    }
+
+    .dropdown {
+        margin-right: 1%;
+    }
 }
