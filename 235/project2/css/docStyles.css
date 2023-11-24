@@ -36,7 +36,15 @@ section {
     background-color: lightblue;
     width: 100vw;
     height: 100vh;
-    margin-top: -20px;
+}
+
+.box {
+    padding: 10%;
+    padding-top: 2.5%;
+}
+
+.box h2 {
+    font-size: 50px;
 }
 
 #myBtn {
