@@ -106,8 +106,42 @@ Info Section
 Feature Section
 ========================================== */
 .featureBox {
-    padding: 10%;
-    padding-top: 2.5%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas: 
+        "feature1 . ."
+        "feature1 feature2 ."
+        ". feature2 feature3"
+        ". . feature3";
+    column-gap: 5%;
+    padding: 8%;
+    padding-top: 5%;
+}
+
+.featureBox h3 {
+    font-size: 35px;
+    margin-bottom: 2%;
+}
+
+.featureBox p {
+    font-size: 19px;
+    line-height: 1.75;
+    margin-top: 0px;
+    margin-bottom: 5px;
+
+}
+
+.feature1 {
+    grid-area: feature1;
+}
+
+.feature2 {
+    grid-area: feature2;
+}
+
+.feature3 {
+    grid-area: feature3;
 }
 
 /* ==========================================
@@ -126,17 +160,17 @@ Documentation Section
 }
 
 .docuBox h3 {
-    font-size: 40px;
+    font-size: 35px;
     margin-bottom: 2%;
 }
 
 .docuBox h4 {
-    font-size: 20px;
+    font-size: 19px;
     font-weight: normal;
 }
 
 .docuBox p {
-    font-size: 20px;
+    font-size: 19px;
     line-height: 1.75;
     margin-top: 0px;
     margin-bottom: 5px;
@@ -151,7 +185,7 @@ Documentation Section
 }
 
 .docuRes li {
-    font-size: 20px;
+    font-size: 19px;
     line-height: 1.5;
     margin-top: 0px;
     margin-bottom: 0px;
