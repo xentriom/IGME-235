@@ -2,10 +2,12 @@ const displayLimit = 32;
 let offset = 0;
 let selectedPokemonIds = [];
 
+// Display the initial pokemon list when the page loads
 window.addEventListener('DOMContentLoaded', function () {
     getPokemonData(displayLimit, 0, false);
 });
 
+// Helper function to disable the previous and next buttons
 function disableButtons() {
     previousButton.disabled = true;
     previousButton.style.display = 'none';
@@ -13,6 +15,7 @@ function disableButtons() {
     nextButton.style.display = 'none';
 }
 
+// Helper function to enable the previous and next buttons
 function enableButtons() {
     previousButton.disabled = false;
     previousButton.style.display = 'block';
@@ -20,6 +23,7 @@ function enableButtons() {
     nextButton.style.display = 'block';
 }
 
+// Helper function to clear the results div
 function clearResults() {
     const resultsElement = document.getElementById('results');
     const canvas = resultsElement.querySelector('canvas');
@@ -31,6 +35,7 @@ function clearResults() {
     resultsElement.innerHTML = '';
 }
 
+// Fetch the pokemon data from the API depending on the mode
 function getPokemonData(limit, offset, random) {
     const getRandomPokemonId = () => Math.floor(Math.random() * 1015) + 1;
 
@@ -67,6 +72,7 @@ function getPokemonData(limit, offset, random) {
     enableButtons();
 }
 
+// Fetch the data using the url provided and call the createShowcase function
 function fetchPokemonData(pokemonUrl) {
     fetch(pokemonUrl)
         .then(response => response.json())
@@ -78,6 +84,7 @@ function fetchPokemonData(pokemonUrl) {
         });
 }
 
+// Create the showcase for the pokemon
 function createShowcase(pokemonData) {
     const pokemonName = pokemonData.name;
     const pokemonSprite = pokemonData.sprites.front_default;

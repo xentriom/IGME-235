@@ -176,6 +176,9 @@ h3 {
     font-size: 15px;
 }
 
+/* ==========================================
+Tablet Adjustments
+========================================== */
 @media screen and (max-width: 1100px) {
     .dexSection>.typeSection {
         width: 35%;
@@ -224,6 +227,9 @@ h3 {
     }
 }
 
+/* ==========================================
+Mobile Adjustments
+========================================== */
 @media screen and (max-width: 500px) {
     .dropdown-content {
         min-width: 50px;

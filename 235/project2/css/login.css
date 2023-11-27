@@ -84,6 +84,9 @@ button.form-button {
     text-align: center;
 }
 
+/* ==========================================
+Tablet Adjustments
+========================================== */
 @media screen and (max-width: 1100px) {
     .modal-content {
         width: 45vw;
@@ -96,6 +99,9 @@ button.form-button {
     }
 }
 
+/* ==========================================
+Mobile Adjustments
+========================================== */
 @media screen and (max-width: 500px) {
     .modal-content {
         width: 70vw;

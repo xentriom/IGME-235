@@ -3,6 +3,7 @@ let mode = "normal";
 let currentID;
 let pokeColor;
 
+// When the user clicks the home button, display the initial pokemon list
 const homeButton = document.getElementById('home');
 homeButton.addEventListener('click', function () {
     clearResults();
@@ -10,9 +11,10 @@ homeButton.addEventListener('click', function () {
     getPokemonData(displayLimit, 0, false);
 });
 
+// When the user clicks the about button, redirect to the about page
 const aboutButton = document.getElementById('about');
 aboutButton.addEventListener('click', function () {
-    window.location.href = 'docs.html';
+    window.location.href = 'about.html';
 });
 
 const searchButton = document.querySelector("#search");
@@ -28,6 +30,7 @@ searchInput.addEventListener("keydown", function (event) {
     }
 });
 
+// When the user clicks the randomizer button, display random pokemon or infographic
 const randomizerButton = document.getElementById('randomizer');
 randomizerButton.addEventListener('click', function () {
     if (mode === "infographic") {
@@ -47,6 +50,9 @@ previousButton.addEventListener('click', () => {
     disableButtons();
     clearResults();
 
+    // If the user is in normal mode, display the previous page of pokemon
+    // If the user is in random mode, display a random page of pokemon
+    // If the user is in infographic mode, display the previous pokemon
     if (mode === "normal") {
         if (offset > 0) {
             offset -= displayLimit;
@@ -76,6 +82,9 @@ nextButton.addEventListener('click', () => {
     disableButtons();
     clearResults();
 
+    // If the user is in normal mode, display the next page of pokemon
+    // If the user is in random mode, display a random page of pokemon
+    // If the user is in infographic mode, display the next pokemon
     if (mode === "normal") {
         console.log(offset);
         if (offset < 1017 - displayLimit) {

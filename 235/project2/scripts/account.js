@@ -7,13 +7,13 @@ const registerForm = document.getElementById("register-form");
 const loginBox = document.getElementById("login-box");
 const registerBox = document.getElementById("register-box");
 
+// Create a test account for the user when the page loads
 document.addEventListener("DOMContentLoaded", function () {
     const username = "lillian";
     const password = "!mop12";
 
     localStorage.setItem(username, password);
     localStorage.setItem(`${username}-fav-pkm`, "494|384|176|");
-    // logoutButton.style.display = "none";
 });
 
 accountButton.addEventListener("click", function () {
@@ -73,12 +73,14 @@ loginButton.addEventListener("click", function () {
     const error = document.getElementById("login-error");
     const user = document.getElementById("user");
 
+    // Make sure the username is not a storage key
     if (usernameInput.endsWith("-fav-pkm")) {
         error.innerHTML = "Invalid username";
         error.style.color = "red";
         return;
     }
 
+    // Check if the username and password match the stored data, if so, login
     const storedPassword = localStorage.getItem(usernameInput);
     if (storedPassword !== null && storedPassword === passwordInput.toLowerCase()) {
         modal.style.display = "none";
@@ -100,6 +102,7 @@ registerButton.addEventListener("click", function () {
     const passwordInput = document.getElementById("register-password").value;
     const error = document.getElementById("register-error");
 
+    // Validate the username and password, if valid, store the data in the local storage
     if (ValidateRegistry(usernameInput, passwordInput, error)) {
         localStorage.setItem(usernameInput, passwordInput);
         localStorage.setItem(`${usernameInput}-fav-pkm`, "");
@@ -108,6 +111,7 @@ registerButton.addEventListener("click", function () {
     }
 });
 
+// Checks if the password is valid, returns true if valid, false otherwise
 function ValidateRegistry(username, password, error) {
     const noInput = [""];
     if (noInput.includes(username)) {
@@ -157,6 +161,7 @@ function ValidateRegistry(username, password, error) {
     return true;
 }
 
+// Checks if the username exists in the local storage
 function checkUsernameExists(username) {
     const storedData = localStorage.getItem(username);
     return storedData !== null;

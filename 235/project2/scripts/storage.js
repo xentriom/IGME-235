@@ -42,6 +42,7 @@ function createButton(div, current, id) {
     }
 }
 
+// Save the pokemon to local storage if the user is logged in and the pokemon is not already saved
 function savePokemon(id) {
     if (window.accountName === undefined) {
         alert("You must be logged in to save a Pokemon!");
@@ -62,6 +63,7 @@ function savePokemon(id) {
     localStorage.setItem(`${accountName}-fav-pkm`, existingValue);
 }
 
+// Remove the pokemon from local storage if the user is logged in and the pokemon is already saved
 function removePokemon(id) {
     if (window.accountName === undefined) {
         alert("You must be logged in to unsave a Pokemon!");
@@ -89,6 +91,7 @@ function removePokemon(id) {
     localStorage.setItem(`${accountName}-fav-pkm`, updatedValue);
 }
 
+// Helper function to check if the pokemon is already saved
 function AlreadySaved(id) {
     if (window.accountName === undefined) {
         alert("You must be logged in to check saved Pokemon!");
@@ -101,6 +104,7 @@ function AlreadySaved(id) {
     return savedIds.includes(id.toString());
 }
 
+// Load the saved pokemon from local storage if the user is logged in
 function loadSavedPokemon() {
     if (window.accountName === undefined) {
         alert("You must be logged in to load saved Pokemon!");

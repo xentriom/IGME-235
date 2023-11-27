@@ -13,10 +13,12 @@ function handleSearch() {
     }
 }
 
+// Helper function to format the pokemon name
 function formatString(str) {
     return str.replace(/-/g, ' ').replace(/\b\w/g, (match) => match.toUpperCase());
 }
 
+// Create two fetch requests to get the pokemon and species data, then create the infographic
 async function getPokemon(pokemon) {
     try {
         const pokeSpecies_response = await fetch(`${pokeSpecies_URL}${pokemon}`);
@@ -46,6 +48,7 @@ async function getPokemon(pokemon) {
     }
 }
 
+// Helper function to clear the results div
 function clearResults() {
     const results = document.getElementById("results");
 
@@ -59,6 +62,7 @@ function clearResults() {
     results.innerHTML = "";
 }
 
+// Helper function to get all revelant pokemon data
 function getPokemonInfo(data) {
     const pokemonMap = new Map([
         ['Name', formatString(data.name)],
@@ -84,6 +88,7 @@ function getPokemonInfo(data) {
     return pokemonMap;
 }
 
+// Helper function to get all revelant species data
 function getSpeciesInfo(data) {
     const pokemonMap = new Map([
         ['Color', formatString(data.color.name)],
@@ -93,6 +98,7 @@ function getSpeciesInfo(data) {
     return pokemonMap;
 }
 
+// Create the infographic by combining the pokemon and species data and adding it to the results div
 function createInfographic(pokeMap, speciesMap) {
     mode = 'infographic';
     currentID = pokeMap.get("Id");
@@ -105,6 +111,7 @@ function createInfographic(pokeMap, speciesMap) {
     results.classList.remove('showcase');
     results.classList.add('infographic');
 
+    // Create sections for the infographic
     const infoSectionDiv = createDivWithClass('infoSection');
     const titleSectionDiv = createDivWithClass('titleSection');
     const aboutSectionDiv = createDivWithClass('aboutSection');
@@ -117,6 +124,7 @@ function createInfographic(pokeMap, speciesMap) {
     const massSectionDiv = createDivWithClass('massSection');
     const eggSectionDiv = createDivWithClass('eggSection');
 
+    // Create elements for the infographic
     const elementTypes = [
         { type: "h1", key: "Name", div: "titleSection" },
         { type: "p", key: "Id", prefix: "Dex #", div: "dexSection" },
@@ -130,6 +138,7 @@ function createInfographic(pokeMap, speciesMap) {
         { type: "button", key: "Favorite", div: "graphicsSection" }
     ];
 
+    // Set the target div for each element
     elementTypes.forEach(({ type, key, prefix = "", div }) => {
         let targetDiv;
         switch (div) {
@@ -167,6 +176,7 @@ function createInfographic(pokeMap, speciesMap) {
                 targetDiv = graphicsSectionDiv;
         }
 
+        // Create the element and add it to the target div
         if (type === "img") {
             const element = document.createElement(type);
             element.src = infoMap.get(key);
@@ -285,6 +295,7 @@ function createInfographic(pokeMap, speciesMap) {
         }
     });
 
+    // Append the sections to the correct divs
     results.appendChild(infoSectionDiv);
     results.appendChild(graphicsSectionDiv);
 
@@ -301,6 +312,7 @@ function createInfographic(pokeMap, speciesMap) {
     descriptionSectionDiv.appendChild(massSectionDiv);
     descriptionSectionDiv.appendChild(eggSectionDiv);
 
+    // Create the stat graph and enable the buttons
     createStatGraph(infoMap.get("Stats"), infoMap.get("Color"));
     enableButtons();
 }
@@ -310,12 +322,14 @@ function changeFocus(pokemonName) {
     focus.value = pokemonName;
 }
 
+// Helper function to create a div with a class
 function createDivWithClass(className) {
     const div = document.createElement('div');
     div.classList.add(className);
     return div;
 }
 
+// Create stat graph using Chart.js
 function createStatGraph(statsData, pokeColor) {
     const statNameMap = {
         "hp": "HP",
@@ -366,6 +380,7 @@ function createStatGraph(statsData, pokeColor) {
     });
 }
 
+// Helper function to convert a hex color to rgba
 function convertColorToRGBA(color, alpha) {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');

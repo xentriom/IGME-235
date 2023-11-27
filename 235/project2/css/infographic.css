@@ -134,6 +134,9 @@
     margin-right: 5%;
 }
 
+/* ==========================================
+Tablet Adjustments
+========================================== */
 @media screen and (max-width: 1100px) {
     .navBar {
         padding: 0px;
@@ -193,6 +196,9 @@
     }
 }
 
+/* ==========================================
+Mobile Adjustments
+========================================== */
 @media screen and (max-width: 500px) {
     .infographic {
         grid-template-columns: 1fr;
