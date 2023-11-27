@@ -6,7 +6,7 @@ body {
     margin: 0px;
 }
 
-ul.navBar {
+nav {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -16,11 +16,11 @@ ul.navBar {
     width: 100%;
 }
 
-.navBar li {
+nav a {
     float: left;
 }
 
-.navBar li a {
+nav a {
     display: block;
     color: white;
     text-align: center;
@@ -28,7 +28,7 @@ ul.navBar {
     text-decoration: none;
 }
 
-.navBar li a:hover {
+nav a:hover {
     background-color: #111;
 }
 
@@ -37,7 +37,7 @@ ul.navBar {
 }
 
 .full {
-    background-color: #ee8679;
+    background-color: rgb(198, 218, 255);
     width: 100vw;
     height: 100vh;
 }
@@ -113,22 +113,35 @@ input[type=submit]:hover {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    gap: 0px 0px;
     grid-template-areas: "homeInfo homeImage";
-    height: max-content;
+    padding: 5%;
 }
 
 .homeInfo {
     grid-area: homeInfo;
+    padding-top: 10%;
 }
 
 .homeInfo h1 {
-    font-size: 60px;
+    font-size: 6vw;
     font-weight: bolder;
+    margin-bottom: 2%;
 }
 
 .homeInfo p {
     font-size: 20px;
+    line-height: 2;
+    margin-bottom: 5%;
+}
+
+.homeInfo button {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
 }
 
 .homeImage {
@@ -136,6 +149,7 @@ input[type=submit]:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 15%;
 }
 
 .homeImage img {
