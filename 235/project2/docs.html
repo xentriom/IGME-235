@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Pokédex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/docStyles.css">
 </head>
 
@@ -14,42 +17,67 @@
         <li><a href="#showcase">Showcase</a></li>
         <li><a href="#infographic">Infographic</a></li>
         <li><a href="#favorite">Favorite</a></li>
+        <li><a href="#docu">Documentation</a></li>
         <li><a href="#contact">Contact</a></li>
         <li style="float:right"><a class="active" href="index.html">Back to Pokédex</a></li>
     </ul>
 
-    <section id="home">
-        <div class="box">
-            <h2>The Pokédex</h1>
-            <h3>WIP documentation showing / list features for portfolio</h3>
-            <p>The Pokédex is created as a school project utilizing an API of our choice.</p>
-        </div>
-    </section>
+    <div id="home" class="full">
+        <div class="box homeFlex">
+            <section class="homeInfo">
+                <h1 class="center">The Pokédex</h1>
+                <p>Explore the world of Pokémon through my interactive website! Create an account to save your favorite
+                    Pokémon, search for any Pokémon to get detailed infographics, and browse through the Pokédex with
+                    ease using the next, previous, and randomize buttons. Catch 'em all and embark on an exciting
+                    journey!</p>
 
-    <section id="showcase">
+                <p>Discover the magic of Pokémon and experience the ultimate Pokémon journey with my feature-packed
+                    website! Our platform offers it all - create an account to save your Pokémon companions, explore
+                    captivating infographics, and let the randomize button surprise you with new Pokémon every time!
+                    Unleash your inner trainer and dive into the world of Pokémon like never before!</p>
+
+                <p>Discover the magic of Pokémon and experience the ultimate Pokémon journey with my feature-packed
+                    website! Create an account to save your Pokémon companions, explore captivating infographics, and
+                    let the randomize button surprise you with new Pokémon every time. Get ready to unleash your inner
+                    trainer and become the very best!</p>
+            </section>
+            <div class="homeImage">
+                <img src="media/rwd.png" alt="pokedex">
+            </div>
+        </div>
+    </div>
+
+    <div id="showcase" class="full">
         <div class="box">
             <h2>The Display</h2>
             <p>
                 Showcase the Pokémon in a nice way when first entering the site. It shows the first 32 Pokémon.
             </p>
         </div>
-    </section>
+    </div>
 
-    <section id="infographic">
+    <div id="infographic" class="full">
         <div class="box">
             <h2>Infographic</h2>
             <p>I started by using XMLHttpRequest but soon changed over to using Fetch.</p>
         </div>
-    </section>
+    </div>
 
-    <section id="favorite">
+    <div id="favorite" class="full">
         <div class="box">
             <h2>Account</h2>
             <p>Getting the desktop made infographic to show up nicely in mobile view was the challenging part.</p>
         </div>
-    </section>
+    </div>
 
-    <section>
+    <div id="docu" class="full">
+        <div class="box">
+            <h2>Documentation</h2>
+            <p>The design process and how I went about coding this.</p>
+        </div>
+    </div>
+
+    <div class="full">
         <div class="box">
             <h2 class="center">Contact Me</h2>
             <div id="contact" class="container">
@@ -68,7 +96,7 @@
                 </form>
             </div>
         </div>
-    </section>
+    </div>
 
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
@@ -92,6 +120,11 @@
         document.querySelector('a[href="#favorite"]').addEventListener('click', function (event) {
             event.preventDefault();
             document.getElementById('favorite').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#docu"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('docu').scrollIntoView({ behavior: 'smooth' });
         });
 
         document.querySelector('a[href="#contact"]').addEventListener('click', function (event) {

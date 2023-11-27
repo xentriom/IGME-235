@@ -1,3 +1,7 @@
+* {
+    font-family: 'Lato', sans-serif;
+}
+
 body {
     margin: 0px;
 }
@@ -32,8 +36,8 @@ ul.navBar {
     text-align: center;
 }
 
-section {
-    background-color: lightblue;
+.full {
+    background-color: #ee8679;
     width: 100vw;
     height: 100vh;
 }
@@ -103,4 +107,38 @@ input[type=submit]:hover {
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
+}
+
+.homeFlex {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas: "homeInfo homeImage";
+    height: max-content;
+}
+
+.homeInfo {
+    grid-area: homeInfo;
+}
+
+.homeInfo h1 {
+    font-size: 60px;
+    font-weight: bolder;
+}
+
+.homeInfo p {
+    font-size: 20px;
+}
+
+.homeImage {
+    grid-area: homeImage;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeImage img {
+    width: 100%;
+    height: auto;
 }
