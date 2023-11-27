@@ -1,9 +1,9 @@
 <?php
 if(isset($_POST['subject'])) {
     $to = 'jc5892@rit.edu';
-    $subject = $_POST['subject'];
-    $message = 'Name: ' . $_POST['firstname'] . ' ' . $_POST['lastname'] . "\r\n\r\n";
-    $message .= 'Subject: ' . $subject;
+    $subject = 'Contact via Pokemon Website';
+    $message = 'Name: ' . $_POST['fullname'] . ' / ' . $_POST['email'] . "\r\n\r\n";
+    $message .= 'Subject: ' . $_POST['subject'];
 
     mail($to, $subject, $message);
 

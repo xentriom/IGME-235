@@ -14,9 +14,8 @@
 <body>
     <nav>
         <a href="#home">Home</a>
-        <a href="#showcase">Showcase</a>
-        <a href="#infographic">Infographic</a>
-        <a href="#favorite">Favorite</a>
+        <a href="#info">Information</a>
+        <a href="#feature">Features</a>
         <a href="#docu">Documentation</a>
         <a href="#contact">Contact</a>
         <a href="index.html" style="float:right">Visit Pokédex</a>
@@ -38,26 +37,19 @@
         </div>
     </div>
 
-    <div id="showcase" class="full">
+    <div id="info" class="full">
         <div class="box">
-            <h2>The Display</h2>
+            <h2>About the Pokédex</h2>
             <p>
-                Showcase the Pokémon in a nice way when first entering the site. It shows the first 32 Pokémon.
+                Generalized informaion like API used, languages used, etc.
             </p>
         </div>
     </div>
 
-    <div id="infographic" class="full">
+    <div id="feature" class="full">
         <div class="box">
-            <h2>Infographic</h2>
-            <p>I started by using XMLHttpRequest but soon changed over to using Fetch.</p>
-        </div>
-    </div>
-
-    <div id="favorite" class="full">
-        <div class="box">
-            <h2>Account</h2>
-            <p>Getting the desktop made infographic to show up nicely in mobile view was the challenging part.</p>
+            <h2>Features</h2>
+            <p>I will discuss all the features available</p>
         </div>
     </div>
 
@@ -73,13 +65,13 @@
             <h2 class="center">Contact Me</h2>
             <div id="contact" class="container">
                 <form action="send_email.php" method="POST">
-                    <label for="fname">First Name</label>
-                    <input type="text" id="fname" name="firstname" placeholder="Your name.." required>
+                    <label for="fname">Full Name</label>
+                    <input type="text" id="fname" name="fullname" placeholder="Your name.." required>
 
-                    <label for="lname">Last Name</label>
-                    <input type="text" id="lname" name="lastname" placeholder="Your last name.." required>
+                    <label for="eaddress">Email Address</label>
+                    <input type="text" id="eaddress" name="email" placeholder="Your email.." required>
 
-                    <label for="subject">Subject</label>
+                    <label for="subject">Message</label>
                     <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"
                         required></textarea>
 
@@ -98,19 +90,14 @@
             document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
         });
 
-        document.querySelector('a[href="#showcase"]').addEventListener('click', function (event) {
+        document.querySelector('a[href="#info"]').addEventListener('click', function (event) {
             event.preventDefault();
-            document.getElementById('showcase').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('info').scrollIntoView({ behavior: 'smooth' });
         });
 
-        document.querySelector('a[href="#infographic"]').addEventListener('click', function (event) {
+        document.querySelector('a[href="#feature"]').addEventListener('click', function (event) {
             event.preventDefault();
-            document.getElementById('infographic').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        document.querySelector('a[href="#favorite"]').addEventListener('click', function (event) {
-            event.preventDefault();
-            document.getElementById('favorite').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('feature').scrollIntoView({ behavior: 'smooth' });
         });
 
         document.querySelector('a[href="#docu"]').addEventListener('click', function (event) {
