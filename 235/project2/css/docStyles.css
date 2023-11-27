@@ -114,8 +114,51 @@ Feature Section
 Documentation Section
 ========================================== */
 .docuBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "docuWhy docuHow"
+        "docuRes docuHow";
+    column-gap: 8%;
     padding: 10%;
-    padding-top: 2.5%;
+    padding-top: 6%;
+}
+
+.docuBox h3 {
+    font-size: 40px;
+    margin-bottom: 2%;
+}
+
+.docuBox h4 {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.docuBox p {
+    font-size: 20px;
+    line-height: 1.75;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+.docuWhy {
+    grid-area: docuWhy;
+}
+
+.docuRes {
+    grid-area: docuRes;
+}
+
+.docuRes li {
+    font-size: 20px;
+    line-height: 1.5;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.docuHow {
+    grid-area: docuHow;
 }
 
 /* ==========================================
