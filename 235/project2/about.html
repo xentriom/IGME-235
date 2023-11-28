@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Pokédex</title>
+    <meta property="og:title" content="About the Pokédex">
+    <meta property="og:site_name" content="The Pokédex">
+    <meta property="og:url" content=https://people.rit.edu/jc5892/235/project2/about.html>
+    <meta property="og:description"
+        content="Discover further insights into the unparalleled Pokédex and gain an exclusive glimpse into the inner workings of the website.">
+    <meta property="og:type" content=website>
+    <meta property="og:image" content=https://people.rit.edu/jc5892/235/project2/media/PokemonLogo.png>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
@@ -14,10 +23,9 @@
 <body>
     <nav>
         <a href="#home">Home</a>
-        <a href="#info">Information</a>
+        <a href="#info">About</a>
         <a href="#feature">Features</a>
         <a href="#docu">Documentation</a>
-        <a href="#contact">Contact</a>
         <a href="index.html" style="float:right">Visit Pokédex</a>
     </nav>
 
@@ -39,34 +47,39 @@
 
     <div id="info" class="full">
         <div class="infoBox">
-            <h2>About the Pokédex</h2>
-            <p>
-                Generalized informaion like API used, languages used, etc.
-            </p>
+            <section>
+                <h3 class="center">About the Pokédex</h3>
+                <p>The Pokedex has been meticulously developed as a distinguished project for academic purposes. It
+                    seamlessly integrates with the PokiAPI, leveraging its extensive repository of Pokémon data to offer
+                    users a refined and comprehensive experience. The objective is to create a site that provides basic yet
+                    insightful knowledge at a glance, catering to all Pokemon enthusiasts.</p>
+            </section>
         </div>
     </div>
 
     <div id="feature" class="full">
         <div class="featureBox">
-            <div class="feature1">
+            <section class="feature1">
                 <h3>Account System</h3>
                 <p>Users are able to create and register their own accounts to save various Pokemons. There is no limit
                     to the amount of Pokemons you can save per account and each account has their own storage!</p>
                 <p>NOTE: Due to project requirement, the accounts are saved in local storage rather than utilizing a
                     database like mySQL. Using local storage is <b>NOT</b> secure and recommened.</p>
-            </div>
-            <div class="feature2">
+            </section>
+            <section class="feature2">
                 <h3>Showcase Display</h3>
                 <p>View up to 32 Pokemons generated randomly or by pokedex number! Each are displayed with their name
                     and an image of the Pokemon. Hovering over the Pokemon will outline the box they are in to give the
                     user a clear indication. Lastly, the user can press on the Pokemon and it will generate an
                     infographic and show that to the user.</p>
-            </div>
-            <div class="feature3">
+            </section>
+            <section class="feature3">
                 <h3>Create Infographics</h3>
-                <p>Generates an infographic showcasing various information regarding the searched / selected Pokemon. The infographic contains many informaion such as the Pokemon's name, type, height, weight, and more! Try it out and see for yourself!
+                <p>Generates an infographic showcasing various information regarding the searched / selected Pokemon.
+                    The infographic contains many informaion such as the Pokemon's name, type, height, weight, and more!
+                    Try it out and see for yourself!
                 </p>
-            </div>
+            </section>
         </div>
     </div>
 
@@ -109,25 +122,8 @@
         </div>
     </div>
 
-    <div class="full">
-        <div class="contactBox">
-            <h2 class="center">Contact Me</h2>
-            <div id="contact" class="container">
-                <form action="send_email.php" method="POST">
-                    <label for="fname">Full Name</label>
-                    <input type="text" id="fname" name="fullname" placeholder="Your name.." required>
+    <div id="end" class="full">
 
-                    <label for="eaddress">Email Address</label>
-                    <input type="text" id="eaddress" name="email" placeholder="Your email.." required>
-
-                    <label for="subject">Message</label>
-                    <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"
-                        required></textarea>
-
-                    <input type="submit" value="Submit">
-                </form>
-            </div>
-        </div>
     </div>
 
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
@@ -152,11 +148,6 @@
         document.querySelector('a[href="#docu"]').addEventListener('click', function (event) {
             event.preventDefault();
             document.getElementById('docu').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        document.querySelector('a[href="#contact"]').addEventListener('click', function (event) {
-            event.preventDefault();
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
         });
 
         let mybutton = document.getElementById("myBtn");

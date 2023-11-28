@@ -41,6 +41,7 @@ nav a {
 
 nav a:hover {
     background-color: #111;
+    border-bottom: 1px solid white;
 }
 
 /* ==========================================
@@ -99,7 +100,20 @@ Info Section
 ========================================== */
 .infoBox {
     padding: 10%;
-    padding-top: 2.5%;
+    padding-top: 20%;
+
+}
+
+.infoBox h3 {
+    font-size: 40px;
+    margin-bottom: 2%;
+}
+
+.infoBox p {
+    font-size: 25px;
+    line-height: 1.75;
+    margin-top: 0px;
+    margin-bottom: 5px;
 }
 
 /* ==========================================
@@ -196,13 +210,8 @@ Documentation Section
 }
 
 /* ==========================================
-Contact Section
+Back to Top Button
 ========================================== */
-.contactBox {
-    padding: 10%;
-    padding-top: 2.5%;
-}
-
 #myBtn {
     display: none;
     position: fixed;
@@ -220,40 +229,5 @@ Contact Section
 }
 
 #myBtn:hover {
-    background-color: #111;
-}
-
-.container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-
-input[type=text],
-select,
-textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-top: 6px;
-    margin-bottom: 16px;
-    resize: vertical
-}
-
-input[type=submit] {
-    background-color: #333;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-input[type=submit]:hover {
     background-color: #111;
 }
