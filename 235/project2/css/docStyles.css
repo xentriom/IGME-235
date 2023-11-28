@@ -171,6 +171,7 @@ Documentation Section
     column-gap: 8%;
     padding: 10%;
     padding-top: 6%;
+    padding-bottom: 0px;
 }
 
 .docuBox h3 {
