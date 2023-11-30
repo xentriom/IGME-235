@@ -32,6 +32,19 @@ const settingsButton = createButton('Settings', `./media/icons/Gear.png`, 700, (
 });
 mainScene.addChild(settingsButton);
 
+async function playBackgroundMusic() {
+    try {
+        const backgroundMusic = new Howl({
+            src: ['./media/audio/main_bgm.mp3'],
+            loop: true,
+            volume: 0.5,
+        });
+        await backgroundMusic.play();
+    } catch (error) {
+        console.error('Error playing background music:', error.message);
+    }
+}
+
 function createButton(text, iconPath, y, onClick) {
     const button = new PIXI.Container();
 
@@ -58,22 +71,12 @@ function createButton(text, iconPath, y, onClick) {
 
     button.interactive = true;
     button.buttonMode = true;
+
+    button.on('pointerover', () => { buttonBg.tint = 0x777777; });
+    button.on('pointerout', () => { buttonBg.tint = 0x555555; });
     button.on('pointerdown', onClick);
 
     return button;
-}
-
-async function playBackgroundMusic() {
-    try {
-        const backgroundMusic = new Howl({
-            src: ['./media/audio/main_bgm.mp3'],
-            loop: true,
-            volume: 0.5,
-        });
-        await backgroundMusic.play();
-    } catch (error) {
-        console.error('Error playing background music:', error.message);
-    }
 }
 
 function loadScene(sceneName) {
