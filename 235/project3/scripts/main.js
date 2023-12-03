@@ -73,28 +73,52 @@ class SceneManager {
 
         this.switchToScene('main');
     }
-
-    initGameScene() {
-        const background = new PIXI.Graphics();
-        background.beginFill(0x000000);
-        background.drawRect(0, 0, this.app.screen.width, this.app.screen.height);
-        background.endFill();
-        this.addToScene('game', background);
     
+    initGameScene() {
         const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
         }, 20);
         this.addToScene('game', backButton);
+
+        const fruitNames = ['Apple', 'Banana', 'Cherry', 'Grape', 'Mango', 'Orange', 'Strawberry', 'Watermelon'];
+        const fruitSprites = [];
     
-        const scoreBackground = new PIXI.Graphics();
-        scoreBackground.beginFill(0xFFFFFF);
-        scoreBackground.drawRect(this.app.screen.width - 160, 20, 140, 40);
-        scoreBackground.endFill();
-        this.addToScene('game', scoreBackground);
+        fruitNames.forEach((fruitName) => {
+            const path = `./media/fruits/${fruitName}.png`;
+            const fruitSprite = PIXI.Sprite.from(path);
+
+            if (fruitName === 'Watermelon') { fruitSprite.scale.set(2, 2); }
+
+
+            fruitSprite.visible = false;
+            fruitSprites.push(fruitSprite);
+
+            this.addToScene('game', fruitSprite);
+        });
     
+        const ticker = new PIXI.Ticker();
+        ticker.add(() => {
+            fruitSprites.forEach((fruitSprite) => {
+                if (fruitSprite.visible) {
+                    fruitSprite.y += 5;
+    
+                    if (fruitSprite.y > this.app.screen.height) {
+                        fruitSprite.y = -fruitSprite.height;
+                        fruitSprite.x = Math.random() * (this.app.screen.width - fruitSprite.width);
+                    }
+                } else {
+                    if (Math.random() < 0.02) {
+                        fruitSprite.visible = true;
+                        fruitSprite.x = Math.random() * (this.app.screen.width - fruitSprite.width);
+                    }
+                }
+            });
+        });
+    
+        ticker.start();
         this.switchToScene('game');
-    }
+    }    
     
     initGameOverScene() {
         const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
