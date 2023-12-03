@@ -16,8 +16,12 @@ class SceneManager {
             instruction: new PIXI.Container(),
             settings: new PIXI.Container(),
         };
+
         this.currentScene = null;
         this.initScenes();
+
+        this.trailGraphics = new PIXI.Graphics();
+        this.app.stage.addChild(this.trailGraphics);
     }
 
     initScenes() {
@@ -73,39 +77,55 @@ class SceneManager {
 
         this.switchToScene('main');
     }
-    
+
     initGameScene() {
-        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20, 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
         }, 20);
         this.addToScene('game', backButton);
 
+        const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
+        const trailGraphics = new PIXI.Graphics();
+        this.app.stage.addChild(trailGraphics);
+
+        // Set initial alpha value for the trail
+        let trailAlpha = 1;
+
         const fruitNames = ['Apple', 'Banana', 'Cherry', 'Grape', 'Mango', 'Orange', 'Strawberry', 'Watermelon'];
         const fruitSprites = [];
-    
+
         fruitNames.forEach((fruitName) => {
             const path = `./media/fruits/${fruitName}.png`;
             const fruitSprite = PIXI.Sprite.from(path);
 
             if (fruitName === 'Watermelon') { fruitSprite.scale.set(2, 2); }
 
-
             fruitSprite.visible = false;
             fruitSprites.push(fruitSprite);
 
             this.addToScene('game', fruitSprite);
         });
-    
+
         const ticker = new PIXI.Ticker();
         ticker.add(() => {
             fruitSprites.forEach((fruitSprite) => {
+                // Update the position of visible fruits
                 if (fruitSprite.visible) {
-                    fruitSprite.y += 5;
-    
+                    fruitSprite.y += 5; // Adjust the speed of falling fruits
+
+                    // Check if the fruit has reached the bottom of the screen
                     if (fruitSprite.y > this.app.screen.height) {
+                        // Reset the position at the top and randomize X
                         fruitSprite.y = -fruitSprite.height;
                         fruitSprite.x = Math.random() * (this.app.screen.width - fruitSprite.width);
+                    }
+
+                    // Check for collisions with the mouse position
+                    const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
+                    if (this.hitTestRectangle(mousePosition, fruitSprite)) {
+                        // Fruit is sliced
+                        this.sliceFruit(fruitSprite);
                     }
                 } else {
                     if (Math.random() < 0.02) {
@@ -115,13 +135,13 @@ class SceneManager {
                 }
             });
         });
-    
+
         ticker.start();
         this.switchToScene('game');
-    }    
-    
+    }
+
     initGameOverScene() {
-        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20, 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
         }, 20);
@@ -131,7 +151,7 @@ class SceneManager {
     }
 
     initShopScene() {
-        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20, 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
         }, 20);
@@ -141,7 +161,7 @@ class SceneManager {
     }
 
     initInstructionScene() {
-        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20, 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
         }, 20);
@@ -151,13 +171,29 @@ class SceneManager {
     }
 
     initSettingsScene() {
-        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20, 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
         }, 20);
         this.addToScene('settings', backButton);
 
         this.switchToScene('settings');
+    }
+
+    hitTestRectangle(point, sprite) {
+        return (
+            point.x > sprite.x &&
+            point.x < sprite.x + sprite.width &&
+            point.y > sprite.y &&
+            point.y < sprite.y + sprite.height
+        );
+    }
+
+    sliceFruit(fruitSprite) {
+        // Add your logic for the slicing effect here
+        // For example, you can make the fruit disappear, play a slicing sound, etc.
+        fruitSprite.visible = false;
+        // Add additional slicing effect logic as needed
     }
 }
 
