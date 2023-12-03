@@ -119,7 +119,7 @@ class SceneManager {
 
                     const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
                     if (this.hitTestRectangle(mousePosition, fruitSprite)) {
-                        this.sliceFruit(fruitSprite);
+                        fruitSprite.visible = false;
                         score += 10;
                         scoreText.text = `Score: ${score}`;
                     }
@@ -186,10 +186,6 @@ class SceneManager {
             point.y > sprite.y &&
             point.y < sprite.y + sprite.height
         );
-    }
-
-    sliceFruit(fruitSprite) {
-        fruitSprite.visible = false;
     }
 }
 
