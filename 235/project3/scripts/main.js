@@ -51,23 +51,23 @@ class SceneManager {
         title.y = 200;
         this.addToScene('main', title);
 
-        const startButton = createButton('Start', `./media/icons/Play.png`, 400, () => {
+        const startButton = createButton(300, 75, 'Start', 30, `./media/icons/Play.png`, 40, 400, () => {
             this.initGameScene();
         });
         this.addToScene('main', startButton);
 
-        const instructionButton = createButton('Instruction', `./media/icons/Instruction.png`, 500, () => {
+        const instructionButton = createButton(300, 75, 'Instruction', 30, `./media/icons/Instruction.png`, 40, 500, () => {
             this.initInstructionScene();
         });
         this.addToScene('main', instructionButton);
 
-        const shopButton = createButton('Shop', `./media/icons/Shop.png`, 600, () => {
+        const shopButton = createButton(300, 75, 'Shop', 30, `./media/icons/Shop.png`, 40, 600, () => {
             this.initShopScene();
         });
         this.addToScene('main', shopButton);
 
-        const settingsButton = createButton('Settings', `./media/icons/Gear.png`, 700, () => {
-            console.log('Settings button clicked');
+        const settingsButton = createButton(300, 75, 'Settings', 30, `./media/icons/Gear.png`, 40, 700, () => {
+            this.initSettingsScene();
         });
         this.addToScene('main', settingsButton);
 
@@ -81,15 +81,15 @@ class SceneManager {
         background.endFill();
         this.addToScene('game', background);
     
-        const backButton = createButton('Back', `./media/icons/Home.png`, 10, () => {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
             console.log('Back button clicked');
             this.initMainScene();
-        });
+        }, 20);
         this.addToScene('game', backButton);
     
         const scoreBackground = new PIXI.Graphics();
         scoreBackground.beginFill(0xFFFFFF);
-        scoreBackground.drawRect(this.app.screen.width - 150, 10, 140, 40);
+        scoreBackground.drawRect(this.app.screen.width - 160, 20, 140, 40);
         scoreBackground.endFill();
         this.addToScene('game', scoreBackground);
     
@@ -97,15 +97,43 @@ class SceneManager {
     }
     
     initGameOverScene() {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+            console.log('Back button clicked');
+            this.initMainScene();
+        }, 20);
+        this.addToScene('gameOver', backButton);
+
         this.switchToScene('gameOver');
     }
 
     initShopScene() {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+            console.log('Back button clicked');
+            this.initMainScene();
+        }, 20);
+        this.addToScene('shop', backButton);
+
         this.switchToScene('shop');
     }
 
     initInstructionScene() {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+            console.log('Back button clicked');
+            this.initMainScene();
+        }, 20);
+        this.addToScene('instruction', backButton);
+
         this.switchToScene('instruction');
+    }
+
+    initSettingsScene() {
+        const backButton = createButton(40, 40, '', 20, `./media/icons/Home.png`, 20 , 20, () => {
+            console.log('Back button clicked');
+            this.initMainScene();
+        }, 20);
+        this.addToScene('settings', backButton);
+
+        this.switchToScene('settings');
     }
 }
 
@@ -127,28 +155,28 @@ async function playBackgroundMusic() {
     }
 }
 
-function createButton(text, iconPath, y, onClick) {
+function createButton(buttonWidth, buttonHeight, text, textSize, iconPath, iconSize, y, onClick, x = null) {
     const button = new PIXI.Container();
 
     const buttonBg = new PIXI.Sprite(PIXI.Texture.WHITE);
-    buttonBg.width = 300;
-    buttonBg.height = 75;
+    buttonBg.width = buttonWidth;
+    buttonBg.height = buttonHeight;
     buttonBg.tint = 0x555555;
     button.addChild(buttonBg);
 
-    const buttonText = new PIXI.Text(text, { fontSize: 30, fill: 'white' });
+    const buttonText = new PIXI.Text(text, { fontSize: textSize, fill: 'white' });
     buttonText.x = buttonBg.width / 2 - buttonText.width / 2;
     buttonText.y = buttonBg.height / 2 - buttonText.height / 2;
     button.addChild(buttonText);
 
     const icon = new PIXI.Sprite.from(iconPath);
-    icon.width = 40;
-    icon.height = 40;
+    icon.width = iconSize;
+    icon.height = iconSize;
     icon.x = 10;
     icon.y = buttonBg.height / 2 - icon.height / 2;
     button.addChild(icon);
 
-    button.x = (app.screen.width - buttonBg.width) / 2;
+    button.x = x !== null ? x : (app.screen.width - buttonBg.width) / 2;
     button.y = y;
 
     button.interactive = true;
