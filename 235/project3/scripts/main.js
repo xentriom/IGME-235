@@ -85,12 +85,11 @@ class SceneManager {
         }, 20);
         this.addToScene('game', backButton);
 
-        const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
-        const trailGraphics = new PIXI.Graphics();
-        this.app.stage.addChild(trailGraphics);
-
-        // Set initial alpha value for the trail
-        let trailAlpha = 1;
+        let score = 0;
+        const scoreText = new PIXI.Text(`Score: ${score}`, { fontSize: 20, fill: 'white' });
+        scoreText.x = this.app.screen.width - scoreText.width - 20;
+        scoreText.y = 20;
+        this.addToScene('game', scoreText);
 
         const fruitNames = ['Apple', 'Banana', 'Cherry', 'Grape', 'Mango', 'Orange', 'Strawberry', 'Watermelon'];
         const fruitSprites = [];
@@ -110,22 +109,19 @@ class SceneManager {
         const ticker = new PIXI.Ticker();
         ticker.add(() => {
             fruitSprites.forEach((fruitSprite) => {
-                // Update the position of visible fruits
                 if (fruitSprite.visible) {
-                    fruitSprite.y += 5; // Adjust the speed of falling fruits
+                    fruitSprite.y += 2;
 
-                    // Check if the fruit has reached the bottom of the screen
                     if (fruitSprite.y > this.app.screen.height) {
-                        // Reset the position at the top and randomize X
                         fruitSprite.y = -fruitSprite.height;
                         fruitSprite.x = Math.random() * (this.app.screen.width - fruitSprite.width);
                     }
 
-                    // Check for collisions with the mouse position
                     const mousePosition = this.app.renderer.plugins.interaction.mouse.global;
                     if (this.hitTestRectangle(mousePosition, fruitSprite)) {
-                        // Fruit is sliced
                         this.sliceFruit(fruitSprite);
+                        score += 10;
+                        scoreText.text = `Score: ${score}`;
                     }
                 } else {
                     if (Math.random() < 0.02) {
@@ -190,10 +186,7 @@ class SceneManager {
     }
 
     sliceFruit(fruitSprite) {
-        // Add your logic for the slicing effect here
-        // For example, you can make the fruit disappear, play a slicing sound, etc.
         fruitSprite.visible = false;
-        // Add additional slicing effect logic as needed
     }
 }
 
