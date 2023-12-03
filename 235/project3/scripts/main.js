@@ -143,6 +143,9 @@ class SceneManager {
         }, 20);
         this.addToScene('gameOver', backButton);
 
+        // Retry and Main Menu buttons
+        // Display the score
+
         this.switchToScene('gameOver');
     }
 
