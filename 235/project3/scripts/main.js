@@ -166,6 +166,11 @@ class SceneManager {
         }, 20);
         this.addToScene('instruction', backButton);
 
+        const text = new PIXI.Text('How to Play', { fontSize: 50, fill: 'white' });
+        text.x = this.app.screen.width / 2 - text.width / 2;
+        text.y = 200;
+        this.addToScene('instruction', text);
+
         this.switchToScene('instruction');
     }
 
