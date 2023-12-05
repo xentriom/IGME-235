@@ -50,7 +50,7 @@ class SceneManager {
     }
 
     initMainScene() {
-        const title = new PIXI.Text('Fruit Ninja: REmastered', { fontSize: 70, fill: 'white' });
+        const title = new PIXI.Text('Veggie Slicer', { fontSize: 70, fill: 'white' });
         title.x = this.app.screen.width / 2 - title.width / 2;
         title.y = 200;
         this.addToScene('main', title);
