@@ -6,7 +6,7 @@ class MainMenu extends Phaser.Scene {
 
     preload() {
         // const graphics = ['EndlessImage, TimedImage, LifeImage'];
-        const veggieNames = ['Apple', 'Banana', 'Cherry', 'Grape', 'Mango', 'Orange', 'Strawberry', 'Watermelon'];
+        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Squash', 'Tomato'];
         const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause'];
 
         // graphics.forEach((graphic) => {
@@ -14,7 +14,7 @@ class MainMenu extends Phaser.Scene {
         // });
 
         veggieNames.forEach((veggieName) => {
-            this.load.image(veggieName, `./media/fruits/${veggieName}.png`);
+            this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
         });
 
         iconNames.forEach((iconName) => {
@@ -261,7 +261,7 @@ class PracticeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const veggieNames = ['Apple', 'Banana', 'Cherry', 'Grape', 'Mango', 'Orange', 'Strawberry', 'Watermelon'];
+        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Squash', 'Tomato'];
         const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5);
