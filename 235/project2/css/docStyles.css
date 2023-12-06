@@ -171,7 +171,6 @@ Documentation Section
     column-gap: 8%;
     padding: 10%;
     padding-top: 6%;
-    padding-bottom: 0px;
 }
 
 .docuBox h3 {
@@ -208,6 +207,50 @@ Documentation Section
 
 .docuHow {
     grid-area: docuHow;
+}
+
+/* ==========================================
+Thoughts Section
+========================================== */
+.thoughtBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "thoughtInfo thoughtImage";
+    gap: 5%;
+    padding: 10%;
+    padding-top: 5%;
+    padding-bottom: 0px;
+}
+
+.thoughtInfo {
+    grid-area: thoughtInfo;
+}
+
+.thoughtInfo h3 {
+    font-size: 40px;
+    margin-bottom: 2%;
+}
+
+.thoughtInfo p {
+    font-size: 19px;
+    line-height: 1.75;
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.thoughtImage {
+    grid-area: thoughtImage;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10%;
+}
+
+.thoughtImage img {
+    aspect-ratio: 3/4;
+    width: 80%;
+    height: auto;
 }
 
 /* ==========================================

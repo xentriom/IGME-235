@@ -27,6 +27,7 @@
         <a href="#info">About</a>
         <a href="#feature">Features</a>
         <a href="#docu">Documentation</a>
+        <a href="#thought">Thoughts</a>
         <a href="index.html" style="float:right">Visit Pokédex</a>
     </nav>
 
@@ -50,11 +51,13 @@
         <div class="infoBox">
             <section>
                 <h3 class="center">About the Pokédex</h3>
-                <p>The Pokedex has been meticulously developed as a distinguished project for academic purposes. It
-                    seamlessly integrates with the PokiAPI, leveraging its extensive repository of Pokémon data to offer
-                    users a refined and comprehensive experience. The objective is to create a site that provides basic
-                    yet
-                    insightful knowledge at a glance, catering to all Pokemon enthusiasts.</p>
+                <p>The Pokedex has been meticulously developed as a distinguished project for academic purposes created
+                    in
+                    3 weeks. It seamlessly integrates with the PokiAPI, leveraging its extensive repository of Pokémon
+                    data
+                    to offer users a refined and comprehensive experience. The objective is to create a site that
+                    provides
+                    basic yet insightful knowledge at a glance, catering to all Pokemon enthusiasts.</p>
             </section>
         </div>
     </div>
@@ -124,6 +127,31 @@
         </div>
     </div>
 
+    <div id="thought" class="full">
+        <div class="thoughtBox">
+            <section class="thoughtInfo">
+                <h3 class="center">THOUGHTS</h3>
+                <p>My thought process was pretty easy at first, them abition took over and I ended up challenging myself
+                    to various things. Initially I wanted to create the infographic, display screen was never meant to
+                    be.</p>
+                <p>While working on the JavaScript, I realize I would be scrolling a lot due to various features I
+                    wanted to add, so I ended up breaking the files up by functionality. There is a file for each task,
+                    that way debugging is much simplier and I don't have to scroll through hundreds of line to find the
+                    function.</p>
+                <p>That thought of seperating each feature into it's own file ended up following to the css as well.
+                    Most of it is in 1 file but I split them up for various tasks and that made finding and editing the
+                    respective elements easier.</p>
+                <p>On the right, I have images of several iterations of my mockups. As you can see, I frequently took
+                    screenshots of my page and drew over them as I envisioned what I wanted the website to look like.
+                    None of the mockups had any color since I am really bad at picking out color, hence the very bland
+                    and simplistic color choices.</p>
+            </section>
+            <div class="thoughtImage">
+                <img src="media/mockups.png" alt="mockups">
+            </div>
+        </div>
+    </div>
+
     <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
 
     <script>
@@ -146,6 +174,11 @@
         document.querySelector('a[href="#docu"]').addEventListener('click', function (event) {
             event.preventDefault();
             document.getElementById('docu').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#thought"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('thought').scrollIntoView({ behavior: 'smooth' });
         });
 
         let mybutton = document.getElementById("myBtn");
