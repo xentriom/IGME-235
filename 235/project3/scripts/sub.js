@@ -1,4 +1,3 @@
-const lives = 3;
 let score = 0;
 let trailSize = 2;
 
