@@ -349,7 +349,10 @@ class PracticeGame extends Phaser.Scene {
             t: 1,
             onUpdate: (tween) => {
                 const point = this.getPointOnPath(path, tween.getValue());
-                veggie.x = point.x;
+                const minX = 0 + veggie.displayWidth / 2;
+                const maxX = this.sys.game.config.width - veggie.displayWidth / 2;
+
+                veggie.x = Phaser.Math.Clamp(point.x, minX, maxX);
                 veggie.y = point.y;
 
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
@@ -554,7 +557,10 @@ class TimedGame extends Phaser.Scene {
             t: 1,
             onUpdate: (tween) => {
                 const point = this.getPointOnPath(path, tween.getValue());
-                veggie.x = point.x;
+                const minX = 0 + veggie.displayWidth / 2;
+                const maxX = this.sys.game.config.width - veggie.displayWidth / 2;
+
+                veggie.x = Phaser.Math.Clamp(point.x, minX, maxX);
                 veggie.y = point.y;
 
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
@@ -727,7 +733,10 @@ class LifeGame extends Phaser.Scene {
             t: 1,
             onUpdate: (tween) => {
                 const point = this.getPointOnPath(path, tween.getValue());
-                veggie.x = point.x;
+                const minX = 0 + veggie.displayWidth / 2;
+                const maxX = this.sys.game.config.width - veggie.displayWidth / 2;
+
+                veggie.x = Phaser.Math.Clamp(point.x, minX, maxX);
                 veggie.y = point.y;
 
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
