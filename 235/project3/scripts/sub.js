@@ -1,7 +1,5 @@
 let score = 0;
 let trailSize = 2;
-let moneyEarned = 0;
-//let cutCounts = {};
 
 class LoadingScene extends Phaser.Scene {
     constructor() { super({ key: 'LoadingScene' }); }
@@ -101,10 +99,7 @@ class MainMenu extends Phaser.Scene {
             scale: 2.5,
             text: 'Start Game',
             textColor: '#000',
-            onClick: () => {
-                console.log('Swapping to intermission');
-                this.scene.start('Intermission');
-            },
+            onClick: () => this.scene.start('Intermission'),
         });
 
         this.createIconButton({
@@ -172,8 +167,6 @@ class Intermission extends Phaser.Scene {
     constructor() { super({ key: 'Intermission' }); }
 
     create() {
-        console.log('IntermissionScene: creating');
-
         this.add.text(this.sys.game.config.width / 2, 150, 'Select a game mode!', {
             fontSize: '80px',
             fill: '#fff',
@@ -265,8 +258,6 @@ class PracticeGame extends Phaser.Scene {
     }
 
     create() {
-        console.log('PracticeGame: creating');
-
         this.createHomeButton();
         this.scoreField = this.createScoreField();
 
@@ -430,7 +421,6 @@ class TimedGame extends Phaser.Scene {
         this.currentTime = 60000;
         this.timerEvent;
         this.score = 0;
-        this.moneyEarned = 0;
     }
 
     create() {
@@ -539,7 +529,7 @@ class TimedGame extends Phaser.Scene {
         this.timerContainer.getAt(1).setText(`${formattedTime}`);
 
         if (this.currentTime <= 0) {
-            this.scene.start('GameOver', { mode: 'Timed', score: score, moneyEarned: moneyEarned, cutCounts: this.cutCounts });
+            this.scene.start('GameOver', { mode: 'Timed', score: score, cutCounts: this.cutCounts });
             this.timerEvent.destroy();
         }
     }
@@ -585,7 +575,6 @@ class TimedGame extends Phaser.Scene {
                     veggie.destroy();
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
-                    moneyEarned += calculateMoneyForCutFruit(veggie);
                     score += 1;
                     this.scoreField.getAt(1).setText(`Score: ${score}`);
                 }
@@ -663,7 +652,6 @@ class LifeGame extends Phaser.Scene {
         this.trailPoints = [];
         this.lives = 5;
         this.score = 0;
-        this.moneyEarned = 0;
     }
 
     create() {
@@ -787,7 +775,6 @@ class LifeGame extends Phaser.Scene {
                     veggie.destroy();
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
-                    moneyEarned += calculateMoneyForCutFruit(veggie);
                     score += 1;
                     this.scoreField.getAt(1).setText(`Score: ${score}`);
                 }
@@ -802,7 +789,7 @@ class LifeGame extends Phaser.Scene {
                     }
 
                     if (this.hearts.every(heart => heart.isBroken)) {
-                        this.scene.start('GameOver', { mode: 'life', score: score, moneyEarned: moneyEarned, cutCounts: this.cutCounts });
+                        this.scene.start('GameOver', { mode: 'life', score: score, cutCounts: this.cutCounts });
                     }
                 }
             },
@@ -877,13 +864,36 @@ class GameOver extends Phaser.Scene {
     init(data) {
         this.gameMode = data.mode;
         this.score = data.score;
-        this.moneyEarned = data.moneyEarned;
         this.cutCounts = data.cutCounts;
-
-        updateUserBalance(this.moneyEarned);
     }
 
     create() {
+        const veggieValues = {
+            'BellPepper': 1,
+            'Broccoli': 1,
+            'Carrot': 1,
+            'Cauliflower': 1,
+            'Corn': 1,
+            'Eggplant': 1,
+            'GreenCabbage': 1,
+            'Mushroom': 1,
+            'Potato': 1,
+            'Pumpkin': 1,
+            'Radish': 1,
+            'Tomato': 1,
+        };
+
+        let totalCoins = 0;
+
+        for (const veggieType in this.cutCounts) {
+            if (this.cutCounts.hasOwnProperty(veggieType)) {
+                const cutCount = this.cutCounts[veggieType];
+                const veggieValue = veggieValues[veggieType] || 0;
+
+                totalCoins += cutCount * veggieValue;
+            }
+        }
+
         const formattedGameMode = this.gameMode.charAt(0).toUpperCase() + this.gameMode.slice(1);
         console.log(this.cutCounts);
         console.log(this.moneyEarned);
@@ -908,8 +918,6 @@ class GameOver extends Phaser.Scene {
         for (const veggieType in this.cutCounts) {
             if (this.cutCounts.hasOwnProperty(veggieType)) {
                 const cutCount = this.cutCounts[veggieType];
-
-                console.log(`${veggieType}: ${cutCount}`);
 
                 const veggieImage = this.add.image(offsetX, offsetY, veggieType).setScale(2);
                 const cutCountText = this.add.text(offsetX + 30, offsetY, `Sliced: ${cutCount}`, {
@@ -979,8 +987,6 @@ class Shop extends Phaser.Scene {
     constructor() { super({ key: 'Shop' }); }
 
     create() {
-        console.log('Shop: creating');
-
         this.createHomeButton();
 
         this.add.text(this.sys.game.config.width / 2, 150, `You got ${totalCurrency} bucks`, {
@@ -1014,8 +1020,6 @@ class Settings extends Phaser.Scene {
     constructor() { super({ key: 'Settings' }); }
 
     create() {
-        console.log('Settings: creating');
-
         this.createHomeButton();
     }
 
@@ -1076,34 +1080,7 @@ async function playBackgroundMusic() {
             volume: 0.5,
         });
         await backgroundMusic.play();
-        console.log('Background music playing');
     } catch (error) {
         console.error('Error playing background music:', error.message);
     }
-}
-
-let totalCurrency = 0;
-
-const veggieValues = {
-    'BellPepper': 2,
-    'Broccoli': 3,
-    'Carrot': 1,
-    'Cauliflower': 2,
-    'Corn': 1,
-    'Eggplant': 2,
-    'GreenCabbage': 1,
-    'Mushroom': 1,
-    'Potato': 1,
-    'Pumpkin': 3,
-    'Radish': 5,
-    'Tomato': 1,
-};
-
-function calculateMoneyForCutFruit(veggieType) {
-    const veggieValue = veggieValues[veggieType];
-    return veggieValue !== undefined ? veggieValue : 0;
-}
-
-function updateUserBalance(amount) {
-    totalCurrency += amount;
 }
