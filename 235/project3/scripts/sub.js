@@ -6,7 +6,7 @@ class LoadingScene extends Phaser.Scene {
 
     preload() {
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart'];
+        const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor'];
         dataManager.loadFromLocalStorage();
 
         veggieNames.forEach((veggieName) => {
@@ -354,12 +354,16 @@ class PracticeGame extends Phaser.Scene {
 
         const fieldBackground = this.add.graphics()
             .fillStyle(0xffffff)
-            .fillRoundedRect(-220, 0, 200, 50, 10);
+            .fillRoundedRect(-220, 0, 215, 50, 10);
 
-        const scoreText = this.add.text(-50, 25, `Score: ${dataManager.score}`, {
-            fontSize: '24px',
+        const scoreIcon = this.add.image(this.sys.game.config.width - 210, 43, 'Backpack')
+            .setOrigin(0.5)
+            .setScale(2);
+
+        const scoreText = this.add.text(-165, 25, `Sliced: ${dataManager.score}`, {
+            fontSize: '22px',
             fill: '#000',
-        }).setOrigin(1, 0.5);
+        }).setOrigin(0, 0.5);
 
         scoreField.add([fieldBackground, scoreText]);
 
@@ -404,7 +408,7 @@ class PracticeGame extends Phaser.Scene {
                     veggie.hasContributedToScore = true;
                     veggie.destroy();
                     dataManager.score += 1;
-                    this.scoreField.getAt(1).setText(`Score: ${dataManager.score}`);
+                    this.scoreField.getAt(1).setText(`Sliced: ${dataManager.score}`);
                 }
             },
             duration: path.duration,
@@ -551,16 +555,21 @@ class TimedGame extends Phaser.Scene {
     }
 
     createScoreField() {
+        dataManager.score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
             .fillStyle(0xffffff)
-            .fillRoundedRect(-220, 0, 200, 50, 10);
+            .fillRoundedRect(-220, 0, 215, 50, 10);
 
-        const scoreText = this.add.text(-50, 25, `Score: ${dataManager.score}`, {
-            fontSize: '24px',
+        const scoreIcon = this.add.image(this.sys.game.config.width - 210, 43, 'Backpack')
+            .setOrigin(0.5)
+            .setScale(2);
+
+        const scoreText = this.add.text(-165, 25, `Sliced: ${dataManager.score}`, {
+            fontSize: '22px',
             fill: '#000',
-        }).setOrigin(1, 0.5);
+        }).setOrigin(0, 0.5);
 
         scoreField.add([fieldBackground, scoreText]);
 
@@ -572,9 +581,13 @@ class TimedGame extends Phaser.Scene {
 
         const timerBackground = this.add.graphics()
             .fillStyle(0xffffff)
-            .fillRoundedRect(-100, 0, 200, 50, 10);
+            .fillRoundedRect(-75, 0, 150, 50, 10);
 
-        const timerText = this.add.text(0, 25, 'Time: 1:00', {
+        const timerIcon = this.add.image(this.sys.game.config.width / 2 - 45, 43, 'CookingPot')
+            .setOrigin(0.5)
+            .setScale(3);
+
+        const timerText = this.add.text(20, 25, '1:00', {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5, 0.5);
@@ -640,7 +653,7 @@ class TimedGame extends Phaser.Scene {
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
                     dataManager.score += 1;
-                    this.scoreField.getAt(1).setText(`Score: ${dataManager.score}`);
+                    this.scoreField.getAt(1).setText(`Sliced: ${dataManager.score}`);
                 }
             },
             duration: path.duration,
@@ -780,16 +793,21 @@ class LifeGame extends Phaser.Scene {
     }
 
     createScoreField() {
+        dataManager.score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
             .fillStyle(0xffffff)
-            .fillRoundedRect(-220, 0, 200, 50, 10);
+            .fillRoundedRect(-220, 0, 215, 50, 10);
 
-        const scoreText = this.add.text(-50, 25, `Score: ${dataManager.score}`, {
-            fontSize: '24px',
+        const scoreIcon = this.add.image(this.sys.game.config.width - 210, 43, 'Backpack')
+            .setOrigin(0.5)
+            .setScale(2);
+
+        const scoreText = this.add.text(-165, 25, `Sliced: ${dataManager.score}`, {
+            fontSize: '22px',
             fill: '#000',
-        }).setOrigin(1, 0.5);
+        }).setOrigin(0, 0.5);
 
         scoreField.add([fieldBackground, scoreText]);
 
@@ -837,7 +855,7 @@ class LifeGame extends Phaser.Scene {
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
                     dataManager.score += 1;
-                    this.scoreField.getAt(1).setText(`Score: ${dataManager.score}`);
+                    this.scoreField.getAt(1).setText(`Sliced: ${dataManager.score}`);
                 }
 
                 if (!veggie.hasContributedToScore && veggie.y >= this.sys.game.config.height) {
@@ -979,18 +997,21 @@ class GameOver extends Phaser.Scene {
         this.createReturnButton({
             x: this.sys.game.config.width / 2 - 400,
             text: 'Retry',
+            icon: 'Restart',
             onClick: () => { this.scene.start(`${formattedGameMode}Game`); }
         });
 
         this.createReturnButton({
             x: this.sys.game.config.width / 2,
             text: 'Intermission',
+            icon: 'Monitor',
             onClick: () => { this.scene.start('Intermission'); }
         });
 
         this.createReturnButton({
             x: this.sys.game.config.width / 2 + 400,
             text: 'Main Menu',
+            icon: 'Home',
             onClick: () => { this.scene.start('MainMenu'); }
         });
 
@@ -1001,7 +1022,7 @@ class GameOver extends Phaser.Scene {
         }
     }
 
-    createReturnButton({ x, text, onClick }) {
+    createReturnButton({ x, text, icon,onClick }) {
         const width = 300;
         const height = 60;
 
@@ -1022,10 +1043,14 @@ class GameOver extends Phaser.Scene {
             .on('pointerdown', onClick);
         buttonBackground.input.cursor = 'pointer';
 
-        const buttonText = this.add.text(x, this.sys.game.config.height - 200, text, {
-            fontSize: '30px',
+        const buttonText = this.add.text(x + 10, this.sys.game.config.height - 200, text, {
+            fontSize: '26px',
             fill: "#000",
         }).setOrigin(0.5);
+
+        const buttonIcon = this.add.image(x - buttonText.width / 2 - 20, this.sys.game.config.height - 200, icon)
+            .setOrigin(0.5)
+            .setScale(2);
     }
 }
 
