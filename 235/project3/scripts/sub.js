@@ -1,11 +1,13 @@
 let score = 0;
 let trailSize = 2;
+let moneyEarned = 0;
+//let cutCounts = {};
 
 class LoadingScene extends Phaser.Scene {
     constructor() { super({ key: 'LoadingScene' }); }
 
     preload() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Squash', 'Tomato'];
+        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
         const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart'];
 
         veggieNames.forEach((veggieName) => {
@@ -321,7 +323,7 @@ class PracticeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Squash', 'Tomato'];
+        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
         const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
@@ -428,10 +430,24 @@ class TimedGame extends Phaser.Scene {
         this.currentTime = 60000;
         this.timerEvent;
         this.score = 0;
+        this.moneyEarned = 0;
     }
 
     create() {
-        console.log('TimedGame: creating');
+        this.cutCounts = {
+            BellPepper: 0,
+            Broccoli: 0,
+            Carrot: 0,
+            Cauliflower: 0,
+            Corn: 0,
+            Eggplant: 0,
+            GreenCabbage: 0,
+            Mushroom: 0,
+            Potato: 0,
+            Pumpkin: 0,
+            Radish: 0,
+            Tomato: 0
+        };
 
         this.createHomeButton();
         this.scoreField = this.createScoreField();
@@ -523,17 +539,18 @@ class TimedGame extends Phaser.Scene {
         this.timerContainer.getAt(1).setText(`${formattedTime}`);
 
         if (this.currentTime <= 0) {
-            this.scene.start('GameOver', { mode: 'Timed', score: score });
+            this.scene.start('GameOver', { mode: 'Timed', score: score, moneyEarned: moneyEarned, cutCounts: this.cutCounts });
             this.timerEvent.destroy();
         }
     }
 
     spawnVeggie() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Squash', 'Tomato'];
+        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
         const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
+        veggie.veggieType = randomVeggieName;
 
         veggie.hasContributedToScore = false;
 
@@ -566,6 +583,9 @@ class TimedGame extends Phaser.Scene {
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
                     veggie.hasContributedToScore = true;
                     veggie.destroy();
+                    const veggieType = this.getVeggieType(veggie);
+                    this.updateCutCount(veggieType);
+                    moneyEarned += calculateMoneyForCutFruit(veggie);
                     score += 1;
                     this.scoreField.getAt(1).setText(`Score: ${score}`);
                 }
@@ -625,6 +645,14 @@ class TimedGame extends Phaser.Scene {
 
         return point;
     }
+
+    updateCutCount(veggie) {
+        this.cutCounts[veggie] = (this.cutCounts[veggie] || 0) + 1;
+    }
+
+    getVeggieType(veggie) {
+        return veggie.veggieType || 'Unknown';
+    }
 }
 
 class LifeGame extends Phaser.Scene {
@@ -635,10 +663,24 @@ class LifeGame extends Phaser.Scene {
         this.trailPoints = [];
         this.lives = 5;
         this.score = 0;
+        this.moneyEarned = 0;
     }
 
     create() {
-        console.log('LifeGame: creating');
+        this.cutCounts = {
+            BellPepper: 0,
+            Broccoli: 0,
+            Carrot: 0,
+            Cauliflower: 0,
+            Corn: 0,
+            Eggplant: 0,
+            GreenCabbage: 0,
+            Mushroom: 0,
+            Potato: 0,
+            Pumpkin: 0,
+            Radish: 0,
+            Tomato: 0
+        };
 
         this.createHomeButton();
         this.scoreField = this.createScoreField();
@@ -705,11 +747,12 @@ class LifeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Squash', 'Tomato'];
+        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
         const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
+        veggie.veggieType = randomVeggieName;
 
         veggie.hasContributedToScore = false;
 
@@ -742,6 +785,9 @@ class LifeGame extends Phaser.Scene {
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
                     veggie.hasContributedToScore = true;
                     veggie.destroy();
+                    const veggieType = this.getVeggieType(veggie);
+                    this.updateCutCount(veggieType);
+                    moneyEarned += calculateMoneyForCutFruit(veggie);
                     score += 1;
                     this.scoreField.getAt(1).setText(`Score: ${score}`);
                 }
@@ -756,7 +802,7 @@ class LifeGame extends Phaser.Scene {
                     }
 
                     if (this.hearts.every(heart => heart.isBroken)) {
-                        this.scene.start('GameOver', { mode: 'life', score: score });
+                        this.scene.start('GameOver', { mode: 'life', score: score, moneyEarned: moneyEarned, cutCounts: this.cutCounts });
                     }
                 }
             },
@@ -815,6 +861,14 @@ class LifeGame extends Phaser.Scene {
 
         return point;
     }
+
+    updateCutCount(veggie) {
+        this.cutCounts[veggie] = (this.cutCounts[veggie] || 0) + 1;
+    }
+
+    getVeggieType(veggie) {
+        return veggie.veggieType || 'Unknown';
+    }
 }
 
 class GameOver extends Phaser.Scene {
@@ -823,33 +877,69 @@ class GameOver extends Phaser.Scene {
     init(data) {
         this.gameMode = data.mode;
         this.score = data.score;
+        this.moneyEarned = data.moneyEarned;
+        this.cutCounts = data.cutCounts;
+
+        updateUserBalance(this.moneyEarned);
     }
 
     create() {
-        console.log('GameOver: creating');
-
         const formattedGameMode = this.gameMode.charAt(0).toUpperCase() + this.gameMode.slice(1);
+        console.log(this.cutCounts);
+        console.log(this.moneyEarned);
 
-        this.add.text(this.sys.game.config.width / 2, 100, formattedGameMode, {
+        this.add.text(this.sys.game.config.width / 2, 150, `Game Over!`, {
             fontSize: '120px',
             fill: '#fff',
         }).setOrigin(0.5);
 
-        this.add.text(this.sys.game.config.width / 2, 200, score, {
-            fontSize: '120px',
+        this.add.text(this.sys.game.config.width / 2, 250, `You scored ${score} points in ${formattedGameMode} mode`, {
+            fontSize: '60px',
             fill: '#fff',
         }).setOrigin(0.5);
+
+        const middleX = this.sys.game.config.width / 2 - 420;
+        const middleY = this.sys.game.config.height / 2 + 60;
+
+        let offsetX = middleX - 150;
+        let offsetY = middleY - 100;
+        let countPerRow = 0;
+
+        for (const veggieType in this.cutCounts) {
+            if (this.cutCounts.hasOwnProperty(veggieType)) {
+                const cutCount = this.cutCounts[veggieType];
+
+                console.log(`${veggieType}: ${cutCount}`);
+
+                const veggieImage = this.add.image(offsetX, offsetY, veggieType).setScale(2);
+                const cutCountText = this.add.text(offsetX + 30, offsetY, `Sliced: ${cutCount}`, {
+                    fontSize: '20px',
+                    fill: '#fff',
+                });
+
+                offsetX += 200;
+                countPerRow += 1;
+
+                if (countPerRow >= 6) {
+                    offsetX = middleX - 150;
+                    offsetY += 100;
+                    countPerRow = 0;
+                }
+            }
+        }
 
         this.createReturnButton({
             x: this.sys.game.config.width / 2 - 400,
             text: 'Retry',
             onClick: () => { this.scene.start(`${formattedGameMode}Game`); }
         });
+
         this.createReturnButton({
             x: this.sys.game.config.width / 2,
             text: 'Intermission',
             onClick: () => { this.scene.start('Intermission'); }
         });
+
         this.createReturnButton({
             x: this.sys.game.config.width / 2 + 400,
             text: 'Main Menu',
@@ -892,6 +982,11 @@ class Shop extends Phaser.Scene {
         console.log('Shop: creating');
 
         this.createHomeButton();
+
+        this.add.text(this.sys.game.config.width / 2, 150, `You got ${totalCurrency} bucks`, {
+            fontSize: '120px',
+            fill: '#fff',
+        }).setOrigin(0.5);
     }
 
     createHomeButton() {
@@ -985,4 +1080,30 @@ async function playBackgroundMusic() {
     } catch (error) {
         console.error('Error playing background music:', error.message);
     }
+}
+
+let totalCurrency = 0;
+
+const veggieValues = {
+    'BellPepper': 2,
+    'Broccoli': 3,
+    'Carrot': 1,
+    'Cauliflower': 2,
+    'Corn': 1,
+    'Eggplant': 2,
+    'GreenCabbage': 1,
+    'Mushroom': 1,
+    'Potato': 1,
+    'Pumpkin': 3,
+    'Radish': 5,
+    'Tomato': 1,
+};
+
+function calculateMoneyForCutFruit(veggieType) {
+    const veggieValue = veggieValues[veggieType];
+    return veggieValue !== undefined ? veggieValue : 0;
+}
+
+function updateUserBalance(amount) {
+    totalCurrency += amount;
 }
