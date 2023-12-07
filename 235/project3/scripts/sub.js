@@ -163,8 +163,6 @@ class MainMenu extends Phaser.Scene {
         buttonBackground.setDepth(1);
         icon.setDepth(2);
         buttonText.setDepth(3);
-
-        console.log(`Creating ${text} button completed`);
     }
 }
 
@@ -627,7 +625,7 @@ class LifeGame extends Phaser.Scene {
         this.veggieGroup;
         this.trailGraphics;
         this.trailPoints = [];
-        this.lives = 3;
+        this.lives = 5;
         this.score = 0;
     }
 
@@ -651,8 +649,11 @@ class LifeGame extends Phaser.Scene {
         this.input.on('pointermove', this.handleMouseMove, this);
 
         this.hearts = [];
+        const totalWidth = this.lives * 40 * 2;
+        const startX = (this.sys.game.config.width - totalWidth) / 2;
+
         for (let i = 0; i < this.lives; i++) {
-            const heart = this.add.image(20 + i * 40, 20, 'Heart').setOrigin(0, 0).setScale(2);
+            const heart = this.add.image(startX + i * 40 * 2, 20, 'Heart').setOrigin(0, 0).setScale(2);
             this.hearts.push(heart);
         }
     }
@@ -817,7 +818,7 @@ class GameOver extends Phaser.Scene {
 
         const formattedGameMode = this.gameMode.charAt(0).toUpperCase() + this.gameMode.slice(1);
 
-        this.add.text(this.sys.game.config.width / 2, 200, formattedGameMode, {
+        this.add.text(this.sys.game.config.width / 2, 100, formattedGameMode, {
             fontSize: '120px',
             fill: '#fff',
         }).setOrigin(0.5);
@@ -825,6 +826,49 @@ class GameOver extends Phaser.Scene {
         this.add.text(this.sys.game.config.width / 2, 200, score, {
             fontSize: '120px',
             fill: '#fff',
+        }).setOrigin(0.5);
+
+        this.createReturnButton({
+            x: this.sys.game.config.width / 2 - 400,
+            text: 'Retry',
+            onClick: () => { this.scene.start(`${formattedGameMode}Game`); }
+        });
+        this.createReturnButton({
+            x: this.sys.game.config.width / 2,
+            text: 'Intermission',
+            onClick: () => { this.scene.start('Intermission'); }
+        });
+        this.createReturnButton({
+            x: this.sys.game.config.width / 2 + 400,
+            text: 'Main Menu',
+            onClick: () => { this.scene.start('MainMenu'); }
+        });
+    }
+
+    createReturnButton({ x, text, onClick }) {
+        const width = 300;
+        const height = 60;
+
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x - width / 2, this.sys.game.config.height - 200 - height / 2, width, height, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(x - width / 2, this.sys.game.config.height - 200 - height / 2, width, height),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(x - width / 2, this.sys.game.config.height - 200 - height / 2, width, height, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(x - width / 2, this.sys.game.config.height - 200 - height / 2, width, height, 10);
+            })
+            .on('pointerdown', onClick);
+        buttonBackground.input.cursor = 'pointer';
+
+        const buttonText = this.add.text(x, this.sys.game.config.height - 200, text, {
+            fontSize: '30px',
+            fill: "#000",
         }).setOrigin(0.5);
     }
 }
@@ -834,6 +878,28 @@ class Shop extends Phaser.Scene {
 
     create() {
         console.log('Shop: creating');
+
+        this.createHomeButton();
+    }
+
+    createHomeButton() {
+        const homeButton = this.add.container(20, 20);
+        const iconKey = 'Home';
+
+        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
+            .setOrigin(0)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => {
+                this.scene.start('MainMenu');
+            });
+
+        const homeIcon = this.add.image(35, 35, iconKey)
+            .setOrigin(0.5)
+            .setScale(2);
+
+        homeButton.add([buttonBackground, homeIcon]);
+
+        return homeButton;
     }
 }
 
@@ -842,6 +908,28 @@ class Settings extends Phaser.Scene {
 
     create() {
         console.log('Settings: creating');
+
+        this.createHomeButton();
+    }
+
+    createHomeButton() {
+        const homeButton = this.add.container(20, 20);
+        const iconKey = 'Home';
+
+        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
+            .setOrigin(0)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => {
+                this.scene.start('MainMenu');
+            });
+
+        const homeIcon = this.add.image(35, 35, iconKey)
+            .setOrigin(0.5)
+            .setScale(2);
+
+        homeButton.add([buttonBackground, homeIcon]);
+
+        return homeButton;
     }
 }
 
