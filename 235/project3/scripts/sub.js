@@ -1116,9 +1116,7 @@ const dataManager = {
         this.trailSize = storedData.trailSize || this.trailSize;
         this.trailLength = storedData.trailLength || this.trailLength;
         this.totalCoins = storedData.totalCoins || this.totalCoins;
-        this.veggieNames = storedData.veggieNames || this.veggieNames;
         this.cutCount = storedData.cutCount || this.cutCount;
-        this.veggieValues = storedData.veggieValues || this.veggieValues;
     },
 
     saveToLocalStorage() {
@@ -1129,9 +1127,7 @@ const dataManager = {
             trailSize: this.trailSize,
             trailLength: this.trailLength,
             totalCoins: this.totalCoins,
-            veggieNames: this.veggieNames,
             cutCount: this.cutCount,
-            veggieValues: this.veggieValues,
         };
         localStorage.setItem('gameData', JSON.stringify(storedData));
     },
@@ -1143,20 +1139,6 @@ const dataManager = {
         this.trailSize = 2;
         this.trailLength = 5;
         this.totalCoins = 0;
-        this.veggieNames = [
-            'BellPepper',
-            'Broccoli',
-            'Carrot',
-            'Cauliflower',
-            'Corn',
-            'Eggplant',
-            'GreenCabbage',
-            'Mushroom',
-            'Potato',
-            'Pumpkin',
-            'Radish',
-            'Tomato'
-        ],
         this.cutCount = {
             'BellPepper': 0,
             'Broccoli': 0,
@@ -1170,20 +1152,6 @@ const dataManager = {
             'Pumpkin': 0,
             'Radish': 0,
             'Tomato': 0,
-        },
-        this.veggieValues = {
-            'BellPepper': 1,
-            'Broccoli': 1,
-            'Carrot': 1,
-            'Cauliflower': 1,
-            'Corn': 1,
-            'Eggplant': 1,
-            'GreenCabbage': 1,
-            'Mushroom': 1,
-            'Potato': 1,
-            'Pumpkin': 1,
-            'Radish': 1,
-            'Tomato': 1,
         };
     this.saveToLocalStorage();
     },
