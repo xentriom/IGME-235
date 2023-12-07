@@ -7,6 +7,7 @@ class LoadingScene extends Phaser.Scene {
     preload() {
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
         const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart'];
+        dataManager.loadFromLocalStorage();
 
         veggieNames.forEach((veggieName) => {
             this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
@@ -296,14 +297,14 @@ class PracticeGame extends Phaser.Scene {
     }
 
     createScoreField() {
-        score = 0;
+        dataManager.score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
             .fillStyle(0xffffff)
             .fillRoundedRect(-220, 0, 200, 50, 10);
 
-        const scoreText = this.add.text(-50, 25, `Score: ${score}`, {
+        const scoreText = this.add.text(-50, 25, `Score: ${dataManager.score}`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(1, 0.5);
@@ -314,8 +315,7 @@ class PracticeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
+        const randomVeggieName = Phaser.Math.RND.pick(dataManager.veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
@@ -351,8 +351,8 @@ class PracticeGame extends Phaser.Scene {
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
                     veggie.hasContributedToScore = true;
                     veggie.destroy();
-                    score += 1;
-                    this.scoreField.getAt(1).setText(`Score: ${score}`);
+                    dataManager.score += 1;
+                    this.scoreField.getAt(1).setText(`Score: ${dataManager.score}`);
                 }
             },
             duration: path.duration,
@@ -364,12 +364,12 @@ class PracticeGame extends Phaser.Scene {
     handleMouseMove(pointer) {
         this.trailPoints.push({ x: pointer.x, y: pointer.y });
 
-        while (this.trailPoints.length > 5) {
+        while (this.trailPoints.length > dataManager.trailLength) {
             this.trailPoints.shift();
         }
 
         this.trailGraphics.clear();
-        this.trailGraphics.lineStyle(trailSize, 0x00ff00, 1);
+        this.trailGraphics.lineStyle(dataManager.trailSize, 0x00ff00, 1);
         this.trailGraphics.beginPath();
         this.trailGraphics.moveTo(this.trailPoints[0].x, this.trailPoints[0].y);
 
@@ -420,7 +420,6 @@ class TimedGame extends Phaser.Scene {
         this.trailPoints = [];
         this.currentTime = 60000;
         this.timerEvent;
-        this.score = 0;
     }
 
     create() {
@@ -485,14 +484,13 @@ class TimedGame extends Phaser.Scene {
     }
 
     createScoreField() {
-        score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
             .fillStyle(0xffffff)
             .fillRoundedRect(-220, 0, 200, 50, 10);
 
-        const scoreText = this.add.text(-50, 25, `Score: ${score}`, {
+        const scoreText = this.add.text(-50, 25, `Score: ${dataManager.score}`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(1, 0.5);
@@ -520,23 +518,22 @@ class TimedGame extends Phaser.Scene {
     }
 
     updateTimer() {
-        this.currentTime -= 1000;
+        dataManager.alottedTime -= 1000;
 
-        const minutes = Math.floor(this.currentTime / 60000);
-        const seconds = Math.floor((this.currentTime % 60000) / 1000);
+        const minutes = Math.floor(dataManager.alottedTime / 60000);
+        const seconds = Math.floor((dataManager.alottedTime % 60000) / 1000);
         const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
 
         this.timerContainer.getAt(1).setText(`${formattedTime}`);
 
-        if (this.currentTime <= 0) {
-            this.scene.start('GameOver', { mode: 'Timed', score: score, cutCounts: this.cutCounts });
+        if (dataManager.alottedTime <= 0) {
+            this.scene.start('GameOver', { mode: 'Timed' });
             this.timerEvent.destroy();
         }
     }
 
     spawnVeggie() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
+        const randomVeggieName = Phaser.Math.RND.pick(dataManager.veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
@@ -575,8 +572,8 @@ class TimedGame extends Phaser.Scene {
                     veggie.destroy();
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
-                    score += 1;
-                    this.scoreField.getAt(1).setText(`Score: ${score}`);
+                    dataManager.score += 1;
+                    this.scoreField.getAt(1).setText(`Score: ${dataManager.score}`);
                 }
             },
             duration: path.duration,
@@ -588,12 +585,12 @@ class TimedGame extends Phaser.Scene {
     handleMouseMove(pointer) {
         this.trailPoints.push({ x: pointer.x, y: pointer.y });
 
-        while (this.trailPoints.length > 5) {
+        while (this.trailPoints.length > dataManager.trailLength) {
             this.trailPoints.shift();
         }
 
         this.trailGraphics.clear();
-        this.trailGraphics.lineStyle(trailSize, 0x00ff00, 1);
+        this.trailGraphics.lineStyle(dataManager.trailSize, 0x00ff00, 1);
         this.trailGraphics.beginPath();
         this.trailGraphics.moveTo(this.trailPoints[0].x, this.trailPoints[0].y);
 
@@ -636,7 +633,7 @@ class TimedGame extends Phaser.Scene {
     }
 
     updateCutCount(veggie) {
-        this.cutCounts[veggie] = (this.cutCounts[veggie] || 0) + 1;
+        dataManager.cutCount[veggie] = (dataManager.cutCount[veggie] || 0) + 1;
     }
 
     getVeggieType(veggie) {
@@ -651,25 +648,9 @@ class LifeGame extends Phaser.Scene {
         this.trailGraphics;
         this.trailPoints = [];
         this.lives = 5;
-        this.score = 0;
     }
 
     create() {
-        this.cutCounts = {
-            BellPepper: 0,
-            Broccoli: 0,
-            Carrot: 0,
-            Cauliflower: 0,
-            Corn: 0,
-            Eggplant: 0,
-            GreenCabbage: 0,
-            Mushroom: 0,
-            Potato: 0,
-            Pumpkin: 0,
-            Radish: 0,
-            Tomato: 0
-        };
-
         this.createHomeButton();
         this.scoreField = this.createScoreField();
 
@@ -687,10 +668,10 @@ class LifeGame extends Phaser.Scene {
         this.input.on('pointermove', this.handleMouseMove, this);
 
         this.hearts = [];
-        const totalWidth = this.lives * 40 * 2;
+        const totalWidth = dataManager.numberOfHearts * 40 * 2;
         const startX = (this.sys.game.config.width - totalWidth) / 2;
 
-        for (let i = 0; i < this.lives; i++) {
+        for (let i = 0; i < dataManager.numberOfHearts; i++) {
             const heart = this.add.image(startX + i * 40 * 2, 20, 'Heart').setOrigin(0, 0).setScale(2);
             this.hearts.push(heart);
         }
@@ -717,14 +698,13 @@ class LifeGame extends Phaser.Scene {
     }
 
     createScoreField() {
-        score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
             .fillStyle(0xffffff)
             .fillRoundedRect(-220, 0, 200, 50, 10);
 
-        const scoreText = this.add.text(-50, 25, `Score: ${score}`, {
+        const scoreText = this.add.text(-50, 25, `Score: ${dataManager.score}`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(1, 0.5);
@@ -735,8 +715,7 @@ class LifeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const randomVeggieName = Phaser.Math.RND.pick(veggieNames);
+        const randomVeggieName = Phaser.Math.RND.pick(dataManager.veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
@@ -775,8 +754,8 @@ class LifeGame extends Phaser.Scene {
                     veggie.destroy();
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
-                    score += 1;
-                    this.scoreField.getAt(1).setText(`Score: ${score}`);
+                    dataManager.score += 1;
+                    this.scoreField.getAt(1).setText(`Score: ${dataManager.score}`);
                 }
 
                 if (!veggie.hasContributedToScore && veggie.y >= this.sys.game.config.height) {
@@ -789,7 +768,7 @@ class LifeGame extends Phaser.Scene {
                     }
 
                     if (this.hearts.every(heart => heart.isBroken)) {
-                        this.scene.start('GameOver', { mode: 'life', score: score, cutCounts: this.cutCounts });
+                        this.scene.start('GameOver', { mode: 'life' });
                     }
                 }
             },
@@ -802,12 +781,12 @@ class LifeGame extends Phaser.Scene {
     handleMouseMove(pointer) {
         this.trailPoints.push({ x: pointer.x, y: pointer.y });
 
-        while (this.trailPoints.length > 5) {
+        while (this.trailPoints.length > dataManager.trailLength) {
             this.trailPoints.shift();
         }
 
         this.trailGraphics.clear();
-        this.trailGraphics.lineStyle(trailSize, 0x00ff00, 1);
+        this.trailGraphics.lineStyle(dataManager.trailSize, 0x00ff00, 1);
         this.trailGraphics.beginPath();
         this.trailGraphics.moveTo(this.trailPoints[0].x, this.trailPoints[0].y);
 
@@ -850,7 +829,7 @@ class LifeGame extends Phaser.Scene {
     }
 
     updateCutCount(veggie) {
-        this.cutCounts[veggie] = (this.cutCounts[veggie] || 0) + 1;
+        dataManager.cutCount[veggie] = (dataManager.cutCount[veggie] || 0) + 1;
     }
 
     getVeggieType(veggie) {
@@ -863,47 +842,26 @@ class GameOver extends Phaser.Scene {
 
     init(data) {
         this.gameMode = data.mode;
-        this.score = data.score;
-        this.cutCounts = data.cutCounts;
     }
 
     create() {
-        const veggieValues = {
-            'BellPepper': 1,
-            'Broccoli': 1,
-            'Carrot': 1,
-            'Cauliflower': 1,
-            'Corn': 1,
-            'Eggplant': 1,
-            'GreenCabbage': 1,
-            'Mushroom': 1,
-            'Potato': 1,
-            'Pumpkin': 1,
-            'Radish': 1,
-            'Tomato': 1,
-        };
+        for (const veggieType in dataManager.cutCount) {
+            if (dataManager.cutCount.hasOwnProperty(veggieType)) {
+                const cutCount = dataManager.cutCount[veggieType];
+                const veggieValue = dataManager.veggieValues[veggieType] || 0;
 
-        let totalCoins = 0;
-
-        for (const veggieType in this.cutCounts) {
-            if (this.cutCounts.hasOwnProperty(veggieType)) {
-                const cutCount = this.cutCounts[veggieType];
-                const veggieValue = veggieValues[veggieType] || 0;
-
-                totalCoins += cutCount * veggieValue;
+                dataManager.totalCoins += cutCount * veggieValue;
             }
         }
 
         const formattedGameMode = this.gameMode.charAt(0).toUpperCase() + this.gameMode.slice(1);
-        console.log(this.cutCounts);
-        console.log(this.moneyEarned);
 
         this.add.text(this.sys.game.config.width / 2, 150, `Game Over!`, {
             fontSize: '120px',
             fill: '#fff',
         }).setOrigin(0.5);
 
-        this.add.text(this.sys.game.config.width / 2, 250, `You scored ${score} points in ${formattedGameMode} mode`, {
+        this.add.text(this.sys.game.config.width / 2, 250, `You scored ${dataManager.score} points in ${formattedGameMode} mode`, {
             fontSize: '60px',
             fill: '#fff',
         }).setOrigin(0.5);
@@ -915,9 +873,9 @@ class GameOver extends Phaser.Scene {
         let offsetY = middleY - 100;
         let countPerRow = 0;
 
-        for (const veggieType in this.cutCounts) {
-            if (this.cutCounts.hasOwnProperty(veggieType)) {
-                const cutCount = this.cutCounts[veggieType];
+        for (const veggieType in dataManager.cutCount) {
+            if (dataManager.cutCount.hasOwnProperty(veggieType)) {
+                const cutCount = dataManager.cutCount[veggieType];
 
                 const veggieImage = this.add.image(offsetX, offsetY, veggieType).setScale(2);
                 const cutCountText = this.add.text(offsetX + 30, offsetY, `Sliced: ${cutCount}`, {
@@ -953,6 +911,12 @@ class GameOver extends Phaser.Scene {
             text: 'Main Menu',
             onClick: () => { this.scene.start('MainMenu'); }
         });
+
+        resetRoundData();
+        
+        if (dataManager.isSavingData) {
+            dataManager.saveData();
+        }
     }
 
     createReturnButton({ x, text, onClick }) {
@@ -989,10 +953,14 @@ class Shop extends Phaser.Scene {
     create() {
         this.createHomeButton();
 
-        this.add.text(this.sys.game.config.width / 2, 150, `You got ${totalCurrency} bucks`, {
+        this.add.text(this.sys.game.config.width / 2, 150, `You got ${dataManager.totalCoins} bucks`, {
             fontSize: '120px',
             fill: '#fff',
         }).setOrigin(0.5);
+
+        if (dataManager.isSavingData) {
+            dataManager.saveData();
+        }
     }
 
     createHomeButton() {
@@ -1021,6 +989,10 @@ class Settings extends Phaser.Scene {
 
     create() {
         this.createHomeButton();
+
+        if (dataManager.isSavingData) {
+            dataManager.saveData();
+        }
     }
 
     createHomeButton() {
@@ -1083,4 +1055,159 @@ async function playBackgroundMusic() {
     } catch (error) {
         console.error('Error playing background music:', error.message);
     }
+}
+
+const dataManager = {
+    isSavingData: false,
+    alottedTime: 60000,
+    numberOfHearts: 5,
+    score: 0,
+    trailSize: 2,
+    trailLength: 5,
+    totalCoins: 0,
+    veggieNames: [
+        'BellPepper',
+        'Broccoli',
+        'Carrot',
+        'Cauliflower',
+        'Corn',
+        'Eggplant',
+        'GreenCabbage',
+        'Mushroom',
+        'Potato',
+        'Pumpkin',
+        'Radish',
+        'Tomato'
+    ],
+    cutCount: {
+        'BellPepper': 0,
+        'Broccoli': 0,
+        'Carrot': 0,
+        'Cauliflower': 0,
+        'Corn': 0,
+        'Eggplant': 0,
+        'GreenCabbage': 0,
+        'Mushroom': 0,
+        'Potato': 0,
+        'Pumpkin': 0,
+        'Radish': 0,
+        'Tomato': 0,
+    },
+    veggieValues: {
+        'BellPepper': 1,
+        'Broccoli': 1,
+        'Carrot': 1,
+        'Cauliflower': 1,
+        'Corn': 1,
+        'Eggplant': 1,
+        'GreenCabbage': 1,
+        'Mushroom': 1,
+        'Potato': 1,
+        'Pumpkin': 1,
+        'Radish': 1,
+        'Tomato': 1,
+    },
+
+    loadFromLocalStorage() {
+        const storedData = JSON.parse(localStorage.getItem('gameData')) || {};
+        this.alottedTime = storedData.alottedTime || this.alottedTime;
+        this.numberOfHearts = storedData.numberOfHearts || this.numberOfHearts;
+        this.score = storedData.score || this.score;
+        this.trailSize = storedData.trailSize || this.trailSize;
+        this.trailLength = storedData.trailLength || this.trailLength;
+        this.totalCoins = storedData.totalCoins || this.totalCoins;
+        this.veggieNames = storedData.veggieNames || this.veggieNames;
+        this.cutCount = storedData.cutCount || this.cutCount;
+        this.veggieValues = storedData.veggieValues || this.veggieValues;
+    },
+
+    saveToLocalStorage() {
+        const storedData = {
+            alottedTime: this.alottedTime,
+            numberOfHearts: this.numberOfHearts,
+            score: this.score,
+            trailSize: this.trailSize,
+            trailLength: this.trailLength,
+            totalCoins: this.totalCoins,
+            veggieNames: this.veggieNames,
+            cutCount: this.cutCount,
+            veggieValues: this.veggieValues,
+        };
+        localStorage.setItem('gameData', JSON.stringify(storedData));
+    },
+
+    resetData() {
+        this.alottedTime = 60000;
+        this.numberOfHearts = 5;
+        this.score = 0;
+        this.trailSize = 2;
+        this.trailLength = 5;
+        this.totalCoins = 0;
+        this.veggieNames = [
+            'BellPepper',
+            'Broccoli',
+            'Carrot',
+            'Cauliflower',
+            'Corn',
+            'Eggplant',
+            'GreenCabbage',
+            'Mushroom',
+            'Potato',
+            'Pumpkin',
+            'Radish',
+            'Tomato'
+        ],
+        this.cutCount = {
+            'BellPepper': 0,
+            'Broccoli': 0,
+            'Carrot': 0,
+            'Cauliflower': 0,
+            'Corn': 0,
+            'Eggplant': 0,
+            'GreenCabbage': 0,
+            'Mushroom': 0,
+            'Potato': 0,
+            'Pumpkin': 0,
+            'Radish': 0,
+            'Tomato': 0,
+        },
+        this.veggieValues = {
+            'BellPepper': 1,
+            'Broccoli': 1,
+            'Carrot': 1,
+            'Cauliflower': 1,
+            'Corn': 1,
+            'Eggplant': 1,
+            'GreenCabbage': 1,
+            'Mushroom': 1,
+            'Potato': 1,
+            'Pumpkin': 1,
+            'Radish': 1,
+            'Tomato': 1,
+        };
+    this.saveToLocalStorage();
+    },
+};
+
+function resetRoundData() {
+    dataManager.alottedTime = 60000;
+    dataManager.score = 0;
+    dataManager.cutCount = {
+        'BellPepper': 0,
+        'Broccoli': 0,
+        'Carrot': 0,
+        'Cauliflower': 0,
+        'Corn': 0,
+        'Eggplant': 0,
+        'GreenCabbage': 0,
+        'Mushroom': 0,
+        'Potato': 0,
+        'Pumpkin': 0,
+        'Radish': 0,
+        'Tomato': 0,
+    };
+}
+
+function saveData() {
+    dataManager.saveToLocalStorage();
 }
