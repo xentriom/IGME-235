@@ -168,6 +168,8 @@ class Intermission extends Phaser.Scene {
     constructor() { super({ key: 'Intermission' }); }
 
     create() {
+        this.createHomeButton();
+
         this.add.text(this.sys.game.config.width / 2, 150, 'Select a game mode!', {
             fontSize: '80px',
             fill: '#fff',
@@ -176,6 +178,41 @@ class Intermission extends Phaser.Scene {
         this.createGameModes(0, 'practice');
         this.createGameModes(1, 'timed');
         this.createGameModes(2, 'life');
+    }
+
+    createHomeButton() {
+        const homeButton = this.add.container(20, 20);
+
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerdown', () => {
+                this.scene.start('MainMenu');
+            });
+
+        const homeIcon = this.add.image(30, 25, 'Home')
+            .setOrigin(0.5)
+            .setScale(2);
+
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
+
+        return homeButton;
     }
 
     createGameModes(index, sceneKey) {
@@ -278,20 +315,35 @@ class PracticeGame extends Phaser.Scene {
 
     createHomeButton() {
         const homeButton = this.add.container(20, 20);
-        const iconKey = 'Home';
 
-        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
-            .setOrigin(0)
-            .setInteractive({ useHandCursor: true })
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
 
-        const homeIcon = this.add.image(35, 35, iconKey)
+        const homeIcon = this.add.image(30, 25, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        homeButton.add([buttonBackground, homeIcon]);
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -465,20 +517,35 @@ class TimedGame extends Phaser.Scene {
 
     createHomeButton() {
         const homeButton = this.add.container(20, 20);
-        const iconKey = 'Home';
 
-        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
-            .setOrigin(0)
-            .setInteractive({ useHandCursor: true })
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
 
-        const homeIcon = this.add.image(35, 35, iconKey)
+        const homeIcon = this.add.image(30, 25, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        homeButton.add([buttonBackground, homeIcon]);
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -679,20 +746,35 @@ class LifeGame extends Phaser.Scene {
 
     createHomeButton() {
         const homeButton = this.add.container(20, 20);
-        const iconKey = 'Home';
 
-        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
-            .setOrigin(0)
-            .setInteractive({ useHandCursor: true })
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
 
-        const homeIcon = this.add.image(35, 35, iconKey)
+        const homeIcon = this.add.image(30, 25, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        homeButton.add([buttonBackground, homeIcon]);
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -913,7 +995,7 @@ class GameOver extends Phaser.Scene {
         });
 
         resetRoundData();
-        
+
         if (dataManager.isSavingData) {
             dataManager.saveData();
         }
@@ -965,20 +1047,35 @@ class Shop extends Phaser.Scene {
 
     createHomeButton() {
         const homeButton = this.add.container(20, 20);
-        const iconKey = 'Home';
 
-        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
-            .setOrigin(0)
-            .setInteractive({ useHandCursor: true })
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
 
-        const homeIcon = this.add.image(35, 35, iconKey)
+        const homeIcon = this.add.image(30, 25, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        homeButton.add([buttonBackground, homeIcon]);
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -997,20 +1094,35 @@ class Settings extends Phaser.Scene {
 
     createHomeButton() {
         const homeButton = this.add.container(20, 20);
-        const iconKey = 'Home';
 
-        const buttonBackground = this.add.rectangle(10, 10, 50, 50, 0xffffff)
-            .setOrigin(0)
-            .setInteractive({ useHandCursor: true })
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
 
-        const homeIcon = this.add.image(35, 35, iconKey)
+        const homeIcon = this.add.image(30, 25, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        homeButton.add([buttonBackground, homeIcon]);
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -1153,7 +1265,7 @@ const dataManager = {
             'Radish': 0,
             'Tomato': 0,
         };
-    this.saveToLocalStorage();
+        this.saveToLocalStorage();
     },
 };
 
