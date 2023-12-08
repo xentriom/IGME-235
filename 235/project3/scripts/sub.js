@@ -5,8 +5,9 @@ class LoadingScene extends Phaser.Scene {
     constructor() { super({ key: 'LoadingScene' }); }
 
     preload() {
+        loadData();
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
+        const iconNames = ['FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
 
         veggieNames.forEach((veggieName) => {
             this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
@@ -1217,20 +1218,63 @@ class Settings extends Phaser.Scene {
     }
 
     createSave() {
-        const saveButtonBackground = this.add.graphics()
-            .fillStyle(0xfff)
-            .fillRoundedRect(100, 400, 200, 50, 10);
+        this.add.image(100, 420, 'FloppyDisk').setOrigin(0.5).setScale(2);
 
-        const saveButton = this.add.text(200, 425, 'Save', { fontSize: '30px', fill: '#fff' })
-            .setOrigin(0.5)
-            .setInteractive({ useHandCursor: true })
+        const autoSaveText = this.add.text(140, 400, 'Auto Save', {
+            fontSize: '40px',
+            fill: '#000',
+        });
+
+        let x = 390;
+        let y = 400;
+        let radius = 10;
+        let width = 140;
+        let height = 40;
+
+        const enableFillColor = adjustableData.isAutoSaving ? 0x00ff00 : 0xffffff;
+        const enableMessage = adjustableData.isAutoSaving ? 'ENABLED' : 'ENABLE';
+        const enableText = this.add.text(x + 20, y + 20, enableMessage, { fontSize: '24px', fill: '#000' }).setOrigin(0, 0.5);
+        const enableButton = this.add.graphics()
+            .fillStyle(enableFillColor)
+            .fillRoundedRect(x, y, width, height, radius)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(x, y, width, height),
+                Phaser.Geom.Rectangle.Contains)
             .on('pointerdown', () => {
-                dataManager.isSavingData = true;
-                this.scene.start('MainMenu');
+                if (!adjustableData.isAutoSaving) {
+                    adjustableData.isAutoSaving = !adjustableData.isAutoSaving;
+                    saveData();
+                    this.autoSaveInterval = setInterval(() => {
+                        saveData();
+                    }, 15000);
+                }
+                this.scene.restart();
             });
+        enableButton.input.cursor = 'pointer';
 
-        saveButtonBackground.setDepth(1);
-        saveButton.setDepth(2);
+        const disableFillColor = adjustableData.isAutoSaving ? 0xffffff : 0xff0000;
+        const disableMessage = adjustableData.isAutoSaving ? 'DISABLE' : 'DISABLED';
+        const disableText = this.add.text(x + 160 + 15, y + 20, disableMessage, { fontSize: '24px', fill: '#000' }).setOrigin(0, 0.5);
+        const disableButton = this.add.graphics()
+            .fillStyle(disableFillColor)
+            .fillRoundedRect(x + 160, y, width, height, radius)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(x + 160, y, width, height),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerdown', () => {
+                if (adjustableData.isAutoSaving) {
+                    adjustableData.isAutoSaving = !adjustableData.isAutoSaving;
+                    clearInterval(this.autoSaveInterval);
+                    saveData();
+                }
+                this.scene.restart();
+            });
+        disableButton.input.cursor = 'pointer';
+
+        enableButton.setDepth(1);
+        disableButton.setDepth(1);
+        enableText.setDepth(2);
+        disableText.setDepth(2);
     }
 }
 
@@ -1260,7 +1304,7 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-const adjustableData = {
+let adjustableData = {
     isAutoSaving: false,
     isMusicPlaying: true,
     volume: 0.1,
@@ -1340,141 +1384,28 @@ function resetRoundData() {
 }
 
 function saveData() {
-
+    localStorage.setItem('adjustableData', JSON.stringify(adjustableData));
 }
 
 function loadData() {
-
+    const savedData = localStorage.getItem('adjustableData');
+    if (savedData) {
+        adjustableData = JSON.parse(savedData);
+    }
 }
 
 function resetGameData() {
+    adjustableData = {
+        isAutoSaving: false,
+        isMusicPlaying: true,
+        volume: 0.1,
+        trailSize: 2,
+        trailLength: 5,
+        totalCoins: 0,
+    };
 
+    saveData();
 }
-
-// const dataManager = {
-//     isSavingData: false,
-//     alottedTime: 60000,
-//     numberOfHearts: 5,
-//     score: 0,
-//     trailSize: 2,
-//     trailLength: 5,
-//     totalCoins: 0,
-//     veggieNames: [
-//         'BellPepper',
-//         'Broccoli',
-//         'Carrot',
-//         'Cauliflower',
-//         'Corn',
-//         'Eggplant',
-//         'GreenCabbage',
-//         'Mushroom',
-//         'Potato',
-//         'Pumpkin',
-//         'Radish',
-//         'Tomato'
-//     ],
-//     cutCount: {
-//         'BellPepper': 0,
-//         'Broccoli': 0,
-//         'Carrot': 0,
-//         'Cauliflower': 0,
-//         'Corn': 0,
-//         'Eggplant': 0,
-//         'GreenCabbage': 0,
-//         'Mushroom': 0,
-//         'Potato': 0,
-//         'Pumpkin': 0,
-//         'Radish': 0,
-//         'Tomato': 0,
-//     },
-//     veggieValues: {
-//         'BellPepper': 1,
-//         'Broccoli': 1,
-//         'Carrot': 1,
-//         'Cauliflower': 1,
-//         'Corn': 1,
-//         'Eggplant': 1,
-//         'GreenCabbage': 1,
-//         'Mushroom': 1,
-//         'Potato': 1,
-//         'Pumpkin': 1,
-//         'Radish': 1,
-//         'Tomato': 1,
-//     },
-
-//     loadFromLocalStorage() {
-//         const storedData = JSON.parse(localStorage.getItem('gameData')) || {};
-//         this.alottedTime = storedData.alottedTime || this.alottedTime;
-//         this.numberOfHearts = storedData.numberOfHearts || this.numberOfHearts;
-//         this.score = storedData.score || this.score;
-//         this.trailSize = storedData.trailSize || this.trailSize;
-//         this.trailLength = storedData.trailLength || this.trailLength;
-//         this.totalCoins = storedData.totalCoins || this.totalCoins;
-//         this.cutCount = storedData.cutCount || this.cutCount;
-//     },
-
-//     saveToLocalStorage() {
-//         const storedData = {
-//             alottedTime: this.alottedTime,
-//             numberOfHearts: this.numberOfHearts,
-//             score: this.score,
-//             trailSize: this.trailSize,
-//             trailLength: this.trailLength,
-//             totalCoins: this.totalCoins,
-//             cutCount: this.cutCount,
-//         };
-//         localStorage.setItem('gameData', JSON.stringify(storedData));
-//     },
-
-//     resetData() {
-//         this.alottedTime = 60000;
-//         this.numberOfHearts = 5;
-//         this.score = 0;
-//         this.trailSize = 2;
-//         this.trailLength = 5;
-//         this.totalCoins = 0;
-//         this.cutCount = {
-//             'BellPepper': 0,
-//             'Broccoli': 0,
-//             'Carrot': 0,
-//             'Cauliflower': 0,
-//             'Corn': 0,
-//             'Eggplant': 0,
-//             'GreenCabbage': 0,
-//             'Mushroom': 0,
-//             'Potato': 0,
-//             'Pumpkin': 0,
-//             'Radish': 0,
-//             'Tomato': 0,
-//         };
-//         this.saveToLocalStorage();
-//     },
-// };
-
-// function resetRoundData() {
-//     dataManager.alottedTime = 60000;
-//     dataManager.score = 0;
-//     dataManager.cutCount = {
-//         'BellPepper': 0,
-//         'Broccoli': 0,
-//         'Carrot': 0,
-//         'Cauliflower': 0,
-//         'Corn': 0,
-//         'Eggplant': 0,
-//         'GreenCabbage': 0,
-//         'Mushroom': 0,
-//         'Potato': 0,
-//         'Pumpkin': 0,
-//         'Radish': 0,
-//         'Tomato': 0,
-//     };
-// }
-
-// function saveData() {
-//     dataManager.saveToLocalStorage();
-// }
-
-// playBackgroundMusic();
 
 async function playBackgroundMusic() {
     try {
