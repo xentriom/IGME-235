@@ -7,7 +7,7 @@ class LoadingScene extends Phaser.Scene {
     preload() {
         loadData();
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const iconNames = ['FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
+        const iconNames = ['Power', 'FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
 
         veggieNames.forEach((veggieName) => {
             this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
@@ -1117,6 +1117,7 @@ class Settings extends Phaser.Scene {
         this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
         this.createVolume();
         this.createSave();
+        this.createReset();
     }
 
     createHomeButton() {
@@ -1275,6 +1276,27 @@ class Settings extends Phaser.Scene {
         disableButton.setDepth(1);
         enableText.setDepth(2);
         disableText.setDepth(2);
+    }
+
+    createReset() {
+        this.add.image(100, 570, 'Power').setOrigin(0.5).setScale(2);
+        this.add.text(140, 550, 'Reset Game', { fontSize: '40px', fill: '#000' });
+
+        const resetText = this.add.text(430 + 50, 550 + 20, 'RESET', { fontSize: '24px', fill: '#000' }).setOrigin(0.5);
+        const resetButton = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(430, 550, 100, 40, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(390, 550, 460, 40),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerdown', () => {
+                resetGameData();
+                this.scene.start('LoadingScene');
+            });
+        resetButton.input.cursor = 'pointer';
+
+        resetButton.setDepth(1);
+        resetText.setDepth(2);
     }
 }
 
