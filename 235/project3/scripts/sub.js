@@ -6,8 +6,7 @@ class LoadingScene extends Phaser.Scene {
 
     preload() {
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor'];
-        dataManager.loadFromLocalStorage();
+        const iconNames = ['Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
 
         veggieNames.forEach((veggieName) => {
             this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
@@ -78,6 +77,7 @@ class LoadingScene extends Phaser.Scene {
     }
 
     create() {
+        playBackgroundMusic();
         this.scene.start('MainMenu');
     }
 }
@@ -349,7 +349,7 @@ class PracticeGame extends Phaser.Scene {
     }
 
     createScoreField() {
-        dataManager.score = 0;
+        roundData.score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
@@ -360,7 +360,7 @@ class PracticeGame extends Phaser.Scene {
             .setOrigin(0.5)
             .setScale(2);
 
-        const scoreText = this.add.text(-165, 25, `Sliced: ${dataManager.score}`, {
+        const scoreText = this.add.text(-165, 25, `Sliced: ${roundData.score}`, {
             fontSize: '22px',
             fill: '#000',
         }).setOrigin(0, 0.5);
@@ -371,7 +371,7 @@ class PracticeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const randomVeggieName = Phaser.Math.RND.pick(dataManager.veggieNames);
+        const randomVeggieName = Phaser.Math.RND.pick(gameData.veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
@@ -407,8 +407,8 @@ class PracticeGame extends Phaser.Scene {
                 if (!veggie.hasContributedToScore && this.checkCollision(veggie)) {
                     veggie.hasContributedToScore = true;
                     veggie.destroy();
-                    dataManager.score += 1;
-                    this.scoreField.getAt(1).setText(`Sliced: ${dataManager.score}`);
+                    roundData.score += 1;
+                    this.scoreField.getAt(1).setText(`Sliced: ${roundData.score}`);
                 }
             },
             duration: path.duration,
@@ -420,12 +420,12 @@ class PracticeGame extends Phaser.Scene {
     handleMouseMove(pointer) {
         this.trailPoints.push({ x: pointer.x, y: pointer.y });
 
-        while (this.trailPoints.length > dataManager.trailLength) {
+        while (this.trailPoints.length > adjustableData.trailLength) {
             this.trailPoints.shift();
         }
 
         this.trailGraphics.clear();
-        this.trailGraphics.lineStyle(dataManager.trailSize, 0x00ff00, 1);
+        this.trailGraphics.lineStyle(adjustableData.trailSize, 0x00ff00, 1);
         this.trailGraphics.beginPath();
         this.trailGraphics.moveTo(this.trailPoints[0].x, this.trailPoints[0].y);
 
@@ -555,7 +555,7 @@ class TimedGame extends Phaser.Scene {
     }
 
     createScoreField() {
-        dataManager.score = 0;
+        roundData.score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
@@ -566,7 +566,7 @@ class TimedGame extends Phaser.Scene {
             .setOrigin(0.5)
             .setScale(2);
 
-        const scoreText = this.add.text(-165, 25, `Sliced: ${dataManager.score}`, {
+        const scoreText = this.add.text(-165, 25, `Sliced: ${roundData.score}`, {
             fontSize: '22px',
             fill: '#000',
         }).setOrigin(0, 0.5);
@@ -598,22 +598,22 @@ class TimedGame extends Phaser.Scene {
     }
 
     updateTimer() {
-        dataManager.alottedTime -= 1000;
+        gameData.alottedTime -= 1000;
 
-        const minutes = Math.floor(dataManager.alottedTime / 60000);
-        const seconds = Math.floor((dataManager.alottedTime % 60000) / 1000);
+        const minutes = Math.floor(gameData.alottedTime / 60000);
+        const seconds = Math.floor((gameData.alottedTime % 60000) / 1000);
         const formattedTime = `${minutes}:${String(seconds).padStart(2, '0')}`;
 
         this.timerContainer.getAt(1).setText(`${formattedTime}`);
 
-        if (dataManager.alottedTime <= 0) {
+        if (gameData.alottedTime <= 0) {
             this.scene.start('GameOver', { mode: 'Timed' });
             this.timerEvent.destroy();
         }
     }
 
     spawnVeggie() {
-        const randomVeggieName = Phaser.Math.RND.pick(dataManager.veggieNames);
+        const randomVeggieName = Phaser.Math.RND.pick(gameData.veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
@@ -652,8 +652,8 @@ class TimedGame extends Phaser.Scene {
                     veggie.destroy();
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
-                    dataManager.score += 1;
-                    this.scoreField.getAt(1).setText(`Sliced: ${dataManager.score}`);
+                    roundData.score += 1;
+                    this.scoreField.getAt(1).setText(`Sliced: ${roundData.score}`);
                 }
             },
             duration: path.duration,
@@ -665,12 +665,12 @@ class TimedGame extends Phaser.Scene {
     handleMouseMove(pointer) {
         this.trailPoints.push({ x: pointer.x, y: pointer.y });
 
-        while (this.trailPoints.length > dataManager.trailLength) {
+        while (this.trailPoints.length > adjustableData.trailLength) {
             this.trailPoints.shift();
         }
 
         this.trailGraphics.clear();
-        this.trailGraphics.lineStyle(dataManager.trailSize, 0x00ff00, 1);
+        this.trailGraphics.lineStyle(adjustableData.trailSize, 0x00ff00, 1);
         this.trailGraphics.beginPath();
         this.trailGraphics.moveTo(this.trailPoints[0].x, this.trailPoints[0].y);
 
@@ -713,7 +713,7 @@ class TimedGame extends Phaser.Scene {
     }
 
     updateCutCount(veggie) {
-        dataManager.cutCount[veggie] = (dataManager.cutCount[veggie] || 0) + 1;
+        roundData.cutCount[veggie] = (roundData.cutCount[veggie] || 0) + 1;
     }
 
     getVeggieType(veggie) {
@@ -748,10 +748,10 @@ class LifeGame extends Phaser.Scene {
         this.input.on('pointermove', this.handleMouseMove, this);
 
         this.hearts = [];
-        const totalWidth = dataManager.numberOfHearts * 40 * 2;
+        const totalWidth = gameData.numberOfHearts * 40 * 2;
         const startX = (this.sys.game.config.width - totalWidth) / 2;
 
-        for (let i = 0; i < dataManager.numberOfHearts; i++) {
+        for (let i = 0; i < gameData.numberOfHearts; i++) {
             const heart = this.add.image(startX + i * 40 * 2, 20, 'Heart').setOrigin(0, 0).setScale(2);
             this.hearts.push(heart);
         }
@@ -793,7 +793,7 @@ class LifeGame extends Phaser.Scene {
     }
 
     createScoreField() {
-        dataManager.score = 0;
+        roundData.score = 0;
         const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
 
         const fieldBackground = this.add.graphics()
@@ -804,7 +804,7 @@ class LifeGame extends Phaser.Scene {
             .setOrigin(0.5)
             .setScale(2);
 
-        const scoreText = this.add.text(-165, 25, `Sliced: ${dataManager.score}`, {
+        const scoreText = this.add.text(-165, 25, `Sliced: ${roundData.score}`, {
             fontSize: '22px',
             fill: '#000',
         }).setOrigin(0, 0.5);
@@ -815,7 +815,7 @@ class LifeGame extends Phaser.Scene {
     }
 
     spawnVeggie() {
-        const randomVeggieName = Phaser.Math.RND.pick(dataManager.veggieNames);
+        const randomVeggieName = Phaser.Math.RND.pick(gameData.veggieNames);
         const veggie = this.add.image(Phaser.Math.Between(50, this.sys.game.config.width - 50), -100, randomVeggieName)
             .setOrigin(0.5, 0.5)
             .setScale(2);
@@ -854,8 +854,8 @@ class LifeGame extends Phaser.Scene {
                     veggie.destroy();
                     const veggieType = this.getVeggieType(veggie);
                     this.updateCutCount(veggieType);
-                    dataManager.score += 1;
-                    this.scoreField.getAt(1).setText(`Sliced: ${dataManager.score}`);
+                    roundData.score += 1;
+                    this.scoreField.getAt(1).setText(`Sliced: ${roundData.score}`);
                 }
 
                 if (!veggie.hasContributedToScore && veggie.y >= this.sys.game.config.height) {
@@ -881,12 +881,12 @@ class LifeGame extends Phaser.Scene {
     handleMouseMove(pointer) {
         this.trailPoints.push({ x: pointer.x, y: pointer.y });
 
-        while (this.trailPoints.length > dataManager.trailLength) {
+        while (this.trailPoints.length > adjustableData.trailLength) {
             this.trailPoints.shift();
         }
 
         this.trailGraphics.clear();
-        this.trailGraphics.lineStyle(dataManager.trailSize, 0x00ff00, 1);
+        this.trailGraphics.lineStyle(adjustableData.trailSize, 0x00ff00, 1);
         this.trailGraphics.beginPath();
         this.trailGraphics.moveTo(this.trailPoints[0].x, this.trailPoints[0].y);
 
@@ -929,7 +929,7 @@ class LifeGame extends Phaser.Scene {
     }
 
     updateCutCount(veggie) {
-        dataManager.cutCount[veggie] = (dataManager.cutCount[veggie] || 0) + 1;
+        roundData.cutCount[veggie] = (roundData.cutCount[veggie] || 0) + 1;
     }
 
     getVeggieType(veggie) {
@@ -945,12 +945,12 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
-        for (const veggieType in dataManager.cutCount) {
-            if (dataManager.cutCount.hasOwnProperty(veggieType)) {
-                const cutCount = dataManager.cutCount[veggieType];
-                const veggieValue = dataManager.veggieValues[veggieType] || 0;
+        for (const veggieType in roundData.cutCount) {
+            if (roundData.cutCount.hasOwnProperty(veggieType)) {
+                const cutCount = roundData.cutCount[veggieType];
+                const veggieValue = gameData.veggieValues[veggieType] || 0;
 
-                dataManager.totalCoins += cutCount * veggieValue;
+                adjustableData.totalCoins += cutCount * veggieValue;
             }
         }
 
@@ -961,7 +961,7 @@ class GameOver extends Phaser.Scene {
             fill: '#fff',
         }).setOrigin(0.5);
 
-        this.add.text(this.sys.game.config.width / 2, 250, `You scored ${dataManager.score} points in ${formattedGameMode} mode`, {
+        this.add.text(this.sys.game.config.width / 2, 250, `You scored ${roundData.score} points in ${formattedGameMode} mode`, {
             fontSize: '60px',
             fill: '#fff',
         }).setOrigin(0.5);
@@ -973,9 +973,9 @@ class GameOver extends Phaser.Scene {
         let offsetY = middleY - 100;
         let countPerRow = 0;
 
-        for (const veggieType in dataManager.cutCount) {
-            if (dataManager.cutCount.hasOwnProperty(veggieType)) {
-                const cutCount = dataManager.cutCount[veggieType];
+        for (const veggieType in roundData.cutCount) {
+            if (roundData.cutCount.hasOwnProperty(veggieType)) {
+                const cutCount = roundData.cutCount[veggieType];
 
                 const veggieImage = this.add.image(offsetX, offsetY, veggieType).setScale(2);
                 const cutCountText = this.add.text(offsetX + 30, offsetY, `Sliced: ${cutCount}`, {
@@ -1017,12 +1017,12 @@ class GameOver extends Phaser.Scene {
 
         resetRoundData();
 
-        if (dataManager.isSavingData) {
-            dataManager.saveData();
-        }
+        // if (dataManager.isSavingData) {
+        //     dataManager.saveData();
+        // }
     }
 
-    createReturnButton({ x, text, icon,onClick }) {
+    createReturnButton({ x, text, icon, onClick }) {
         const width = 300;
         const height = 60;
 
@@ -1060,14 +1060,14 @@ class Shop extends Phaser.Scene {
     create() {
         this.createHomeButton();
 
-        this.add.text(this.sys.game.config.width / 2, 150, `You got ${dataManager.totalCoins} bucks`, {
+        this.add.text(this.sys.game.config.width / 2, 150, `You got ${adjustableData.totalCoins} bucks`, {
             fontSize: '120px',
             fill: '#fff',
         }).setOrigin(0.5);
 
-        if (dataManager.isSavingData) {
-            dataManager.saveData();
-        }
+        // if (dataManager.isSavingData) {
+        //     dataManager.saveData();
+        // }
     }
 
     createHomeButton() {
@@ -1111,10 +1111,11 @@ class Settings extends Phaser.Scene {
 
     create() {
         this.createHomeButton();
+        this.createBackground();
 
-        if (dataManager.isSavingData) {
-            dataManager.saveData();
-        }
+        this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
+        this.createVolume();
+        this.createSave();
     }
 
     createHomeButton() {
@@ -1151,6 +1152,86 @@ class Settings extends Phaser.Scene {
 
         return homeButton;
     }
+
+    createBackground() {
+        const background = this.add.graphics()
+            .fillStyle(0xd3d3d3)
+            .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
+
+        return background;
+    }
+
+    createVolume() {
+        const numSquares = 10;
+        const squareSize = 32;
+
+        if (adjustableData.volume === 0) {
+            this.add.image(100, 270, 'SpeakerMute').setOrigin(0.5).setScale(2);
+        }
+        else {
+            this.add.image(100, 270, 'SpeakerOn').setOrigin(0.5).setScale(2);
+        }
+
+        const volumeText = this.add.text(140, 250, `Volume`, { fontSize: '40px', fill: '#000' });
+
+        const decreaseButtonBackground = this.add.graphics()
+            .fillStyle(0xfff)
+            .fillRoundedRect(340, 255, 30, 30, 10);
+
+        const decreaseButton = this.add.text(355, 268, '-', { fontSize: '30px', fill: '#fff' })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => this.adjustVolume(Math.round((adjustableData.volume - 0.1) * 10) / 10));
+
+        const increaseButtonBackground = this.add.graphics()
+            .fillStyle(0xfff)
+            .fillRoundedRect(710, 255, 30, 30, 10);
+
+        const increaseButton = this.add.text(725, 270, '+', { fontSize: '30px', fill: '#fff' })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => this.adjustVolume(Math.round((adjustableData.volume + 0.1) * 10) / 10));
+
+        for (let i = 0; i < numSquares; i++) {
+            const x = 380 + i * (squareSize);
+            const isFilled = i < Math.ceil(adjustableData.volume * numSquares);
+
+            const square = this.add.graphics()
+                .fillStyle(isFilled ? 0x00ff00 : 0x000000)
+                .fillRect(x, 253, squareSize, squareSize);
+        }
+
+        decreaseButtonBackground.setDepth(1);
+        increaseButtonBackground.setDepth(1);
+        decreaseButton.setDepth(2);
+        increaseButton.setDepth(2);
+    }
+
+    adjustVolume(volume) {
+        adjustableData.volume = Phaser.Math.Clamp(volume, 0, 1.0);
+        this.scene.restart();
+
+        if (backgroundMusic) {
+            backgroundMusic.volume(adjustableData.volume);
+        }
+    }
+
+    createSave() {
+        const saveButtonBackground = this.add.graphics()
+            .fillStyle(0xfff)
+            .fillRoundedRect(100, 400, 200, 50, 10);
+
+        const saveButton = this.add.text(200, 425, 'Save', { fontSize: '30px', fill: '#fff' })
+            .setOrigin(0.5)
+            .setInteractive({ useHandCursor: true })
+            .on('pointerdown', () => {
+                dataManager.isSavingData = true;
+                this.scene.start('MainMenu');
+            });
+
+        saveButtonBackground.setDepth(1);
+        saveButton.setDepth(2);
+    }
 }
 
 const config = {
@@ -1179,29 +1260,18 @@ const config = {
 
 const game = new Phaser.Game(config);
 
-playBackgroundMusic();
-
-async function playBackgroundMusic() {
-    try {
-        const backgroundMusic = new Howl({
-            src: ['./media/audio/main_bgm.mp3'],
-            loop: true,
-            volume: 0.5,
-        });
-        await backgroundMusic.play();
-    } catch (error) {
-        console.error('Error playing background music:', error.message);
-    }
-}
-
-const dataManager = {
-    isSavingData: false,
-    alottedTime: 60000,
-    numberOfHearts: 5,
-    score: 0,
+const adjustableData = {
+    isAutoSaving: false,
+    isMusicPlaying: true,
+    volume: 0.1,
     trailSize: 2,
     trailLength: 5,
     totalCoins: 0,
+}
+
+const gameData = {
+    alottedTime: 60000,
+    numberOfHearts: 5,
     veggieNames: [
         'BellPepper',
         'Broccoli',
@@ -1216,20 +1286,6 @@ const dataManager = {
         'Radish',
         'Tomato'
     ],
-    cutCount: {
-        'BellPepper': 0,
-        'Broccoli': 0,
-        'Carrot': 0,
-        'Cauliflower': 0,
-        'Corn': 0,
-        'Eggplant': 0,
-        'GreenCabbage': 0,
-        'Mushroom': 0,
-        'Potato': 0,
-        'Pumpkin': 0,
-        'Radish': 0,
-        'Tomato': 0,
-    },
     veggieValues: {
         'BellPepper': 1,
         'Broccoli': 1,
@@ -1244,60 +1300,30 @@ const dataManager = {
         'Radish': 1,
         'Tomato': 1,
     },
+}
 
-    loadFromLocalStorage() {
-        const storedData = JSON.parse(localStorage.getItem('gameData')) || {};
-        this.alottedTime = storedData.alottedTime || this.alottedTime;
-        this.numberOfHearts = storedData.numberOfHearts || this.numberOfHearts;
-        this.score = storedData.score || this.score;
-        this.trailSize = storedData.trailSize || this.trailSize;
-        this.trailLength = storedData.trailLength || this.trailLength;
-        this.totalCoins = storedData.totalCoins || this.totalCoins;
-        this.cutCount = storedData.cutCount || this.cutCount;
+const roundData = {
+    score: 0,
+    cutCount: {
+        'BellPepper': 0,
+        'Broccoli': 0,
+        'Carrot': 0,
+        'Cauliflower': 0,
+        'Corn': 0,
+        'Eggplant': 0,
+        'GreenCabbage': 0,
+        'Mushroom': 0,
+        'Potato': 0,
+        'Pumpkin': 0,
+        'Radish': 0,
+        'Tomato': 0,
     },
-
-    saveToLocalStorage() {
-        const storedData = {
-            alottedTime: this.alottedTime,
-            numberOfHearts: this.numberOfHearts,
-            score: this.score,
-            trailSize: this.trailSize,
-            trailLength: this.trailLength,
-            totalCoins: this.totalCoins,
-            cutCount: this.cutCount,
-        };
-        localStorage.setItem('gameData', JSON.stringify(storedData));
-    },
-
-    resetData() {
-        this.alottedTime = 60000;
-        this.numberOfHearts = 5;
-        this.score = 0;
-        this.trailSize = 2;
-        this.trailLength = 5;
-        this.totalCoins = 0;
-        this.cutCount = {
-            'BellPepper': 0,
-            'Broccoli': 0,
-            'Carrot': 0,
-            'Cauliflower': 0,
-            'Corn': 0,
-            'Eggplant': 0,
-            'GreenCabbage': 0,
-            'Mushroom': 0,
-            'Potato': 0,
-            'Pumpkin': 0,
-            'Radish': 0,
-            'Tomato': 0,
-        };
-        this.saveToLocalStorage();
-    },
-};
+}
 
 function resetRoundData() {
-    dataManager.alottedTime = 60000;
-    dataManager.score = 0;
-    dataManager.cutCount = {
+    gameData.alottedTime = 60000;
+    roundData.score = 0;
+    roundData.cutCount = {
         'BellPepper': 0,
         'Broccoli': 0,
         'Carrot': 0,
@@ -1314,5 +1340,157 @@ function resetRoundData() {
 }
 
 function saveData() {
-    dataManager.saveToLocalStorage();
+
+}
+
+function loadData() {
+
+}
+
+function resetGameData() {
+
+}
+
+// const dataManager = {
+//     isSavingData: false,
+//     alottedTime: 60000,
+//     numberOfHearts: 5,
+//     score: 0,
+//     trailSize: 2,
+//     trailLength: 5,
+//     totalCoins: 0,
+//     veggieNames: [
+//         'BellPepper',
+//         'Broccoli',
+//         'Carrot',
+//         'Cauliflower',
+//         'Corn',
+//         'Eggplant',
+//         'GreenCabbage',
+//         'Mushroom',
+//         'Potato',
+//         'Pumpkin',
+//         'Radish',
+//         'Tomato'
+//     ],
+//     cutCount: {
+//         'BellPepper': 0,
+//         'Broccoli': 0,
+//         'Carrot': 0,
+//         'Cauliflower': 0,
+//         'Corn': 0,
+//         'Eggplant': 0,
+//         'GreenCabbage': 0,
+//         'Mushroom': 0,
+//         'Potato': 0,
+//         'Pumpkin': 0,
+//         'Radish': 0,
+//         'Tomato': 0,
+//     },
+//     veggieValues: {
+//         'BellPepper': 1,
+//         'Broccoli': 1,
+//         'Carrot': 1,
+//         'Cauliflower': 1,
+//         'Corn': 1,
+//         'Eggplant': 1,
+//         'GreenCabbage': 1,
+//         'Mushroom': 1,
+//         'Potato': 1,
+//         'Pumpkin': 1,
+//         'Radish': 1,
+//         'Tomato': 1,
+//     },
+
+//     loadFromLocalStorage() {
+//         const storedData = JSON.parse(localStorage.getItem('gameData')) || {};
+//         this.alottedTime = storedData.alottedTime || this.alottedTime;
+//         this.numberOfHearts = storedData.numberOfHearts || this.numberOfHearts;
+//         this.score = storedData.score || this.score;
+//         this.trailSize = storedData.trailSize || this.trailSize;
+//         this.trailLength = storedData.trailLength || this.trailLength;
+//         this.totalCoins = storedData.totalCoins || this.totalCoins;
+//         this.cutCount = storedData.cutCount || this.cutCount;
+//     },
+
+//     saveToLocalStorage() {
+//         const storedData = {
+//             alottedTime: this.alottedTime,
+//             numberOfHearts: this.numberOfHearts,
+//             score: this.score,
+//             trailSize: this.trailSize,
+//             trailLength: this.trailLength,
+//             totalCoins: this.totalCoins,
+//             cutCount: this.cutCount,
+//         };
+//         localStorage.setItem('gameData', JSON.stringify(storedData));
+//     },
+
+//     resetData() {
+//         this.alottedTime = 60000;
+//         this.numberOfHearts = 5;
+//         this.score = 0;
+//         this.trailSize = 2;
+//         this.trailLength = 5;
+//         this.totalCoins = 0;
+//         this.cutCount = {
+//             'BellPepper': 0,
+//             'Broccoli': 0,
+//             'Carrot': 0,
+//             'Cauliflower': 0,
+//             'Corn': 0,
+//             'Eggplant': 0,
+//             'GreenCabbage': 0,
+//             'Mushroom': 0,
+//             'Potato': 0,
+//             'Pumpkin': 0,
+//             'Radish': 0,
+//             'Tomato': 0,
+//         };
+//         this.saveToLocalStorage();
+//     },
+// };
+
+// function resetRoundData() {
+//     dataManager.alottedTime = 60000;
+//     dataManager.score = 0;
+//     dataManager.cutCount = {
+//         'BellPepper': 0,
+//         'Broccoli': 0,
+//         'Carrot': 0,
+//         'Cauliflower': 0,
+//         'Corn': 0,
+//         'Eggplant': 0,
+//         'GreenCabbage': 0,
+//         'Mushroom': 0,
+//         'Potato': 0,
+//         'Pumpkin': 0,
+//         'Radish': 0,
+//         'Tomato': 0,
+//     };
+// }
+
+// function saveData() {
+//     dataManager.saveToLocalStorage();
+// }
+
+// playBackgroundMusic();
+
+async function playBackgroundMusic() {
+    try {
+        backgroundMusic = new Howl({
+            src: ['./media/audio/main_bgm.mp3'],
+            loop: true,
+            volume: adjustableData.volume,
+        });
+
+        await backgroundMusic.play();
+
+        adjustableData.onVolumeChange = (newVolume) => {
+            const clampedVolume = Phaser.Math.Clamp(newVolume, 0.1, 1.0);
+            backgroundMusic.volume(clampedVolume);
+        };
+    } catch (error) {
+        console.error('Error playing background music:', error.message);
+    }
 }
