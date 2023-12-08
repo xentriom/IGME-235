@@ -1220,11 +1220,8 @@ class Settings extends Phaser.Scene {
 
     createSave() {
         this.add.image(100, 420, 'FloppyDisk').setOrigin(0.5).setScale(2);
-
-        const autoSaveText = this.add.text(140, 400, 'Auto Save', {
-            fontSize: '40px',
-            fill: '#000',
-        });
+        this.add.text(140, 400, 'Auto Save', { fontSize: '40px', fill: '#000', });
+        this.add.text(140, 450, '*Tiggers every 15 second', { fontSize: '18px', fill: '#000' });
 
         let x = 390;
         let y = 400;
