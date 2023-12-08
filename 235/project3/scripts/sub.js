@@ -7,7 +7,7 @@ class LoadingScene extends Phaser.Scene {
     preload() {
         loadData();
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const iconNames = ['Power', 'FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
+        const iconNames = ['Coin2', 'Power', 'FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
 
         veggieNames.forEach((veggieName) => {
             this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
@@ -87,6 +87,14 @@ class MainMenu extends Phaser.Scene {
     constructor() { super({ key: 'MainMenu' }); }
 
     create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
         this.add.text(this.sys.game.config.width / 2, 200, 'Veggie Slicer', {
             fontSize: '120px',
             fill: '#fff',
@@ -169,6 +177,14 @@ class Intermission extends Phaser.Scene {
     constructor() { super({ key: 'Intermission' }); }
 
     create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
         this.createHomeButton();
 
         this.add.text(this.sys.game.config.width / 2, 150, 'Select a game mode!', {
@@ -297,6 +313,14 @@ class PracticeGame extends Phaser.Scene {
     }
 
     create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
         this.createHomeButton();
         this.scoreField = this.createScoreField();
 
@@ -304,7 +328,7 @@ class PracticeGame extends Phaser.Scene {
 
         this.spawnVeggie();
         this.time.addEvent({
-            delay: 500,
+            delay: gameData.rateOfSpawn,
             callback: this.spawnVeggie,
             callbackScope: this,
             loop: true,
@@ -384,7 +408,7 @@ class PracticeGame extends Phaser.Scene {
 
         const path = {
             t: 0,
-            duration: 5000,
+            duration: gameData.pathDuration,
             yoyo: false,
             repeat: 0,
             points: [
@@ -480,20 +504,13 @@ class TimedGame extends Phaser.Scene {
     }
 
     create() {
-        this.cutCounts = {
-            BellPepper: 0,
-            Broccoli: 0,
-            Carrot: 0,
-            Cauliflower: 0,
-            Corn: 0,
-            Eggplant: 0,
-            GreenCabbage: 0,
-            Mushroom: 0,
-            Potato: 0,
-            Pumpkin: 0,
-            Radish: 0,
-            Tomato: 0
-        };
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
 
         this.createHomeButton();
         this.scoreField = this.createScoreField();
@@ -503,7 +520,7 @@ class TimedGame extends Phaser.Scene {
 
         this.spawnVeggie();
         this.time.addEvent({
-            delay: 500,
+            delay: gameData.rateOfSpawn,
             callback: this.spawnVeggie,
             callbackScope: this,
             loop: true,
@@ -627,7 +644,7 @@ class TimedGame extends Phaser.Scene {
 
         const path = {
             t: 0,
-            duration: 5000,
+            duration: gameData.pathDuration,
             yoyo: false,
             repeat: 0,
             points: [
@@ -732,6 +749,14 @@ class LifeGame extends Phaser.Scene {
     }
 
     create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
         this.createHomeButton();
         this.scoreField = this.createScoreField();
 
@@ -739,7 +764,7 @@ class LifeGame extends Phaser.Scene {
 
         this.spawnVeggie();
         this.time.addEvent({
-            delay: 500,
+            delay: gameData.rateOfSpawn,
             callback: this.spawnVeggie,
             callbackScope: this,
             loop: true,
@@ -829,7 +854,7 @@ class LifeGame extends Phaser.Scene {
 
         const path = {
             t: 0,
-            duration: 5000,
+            duration: gameData.pathDuration,
             yoyo: false,
             repeat: 0,
             points: [
@@ -946,12 +971,21 @@ class GameOver extends Phaser.Scene {
     }
 
     create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
         for (const veggieType in roundData.cutCount) {
             if (roundData.cutCount.hasOwnProperty(veggieType)) {
                 const cutCount = roundData.cutCount[veggieType];
                 const veggieValue = gameData.veggieValues[veggieType] || 0;
 
                 adjustableData.totalCoins += cutCount * veggieValue;
+                adjustableData.maxCoins += cutCount * veggieValue;
             }
         }
 
@@ -977,6 +1011,8 @@ class GameOver extends Phaser.Scene {
         for (const veggieType in roundData.cutCount) {
             if (roundData.cutCount.hasOwnProperty(veggieType)) {
                 const cutCount = roundData.cutCount[veggieType];
+                adjustableData.totalCutCount[veggieType] = (adjustableData.totalCutCount[veggieType] || 0) + cutCount;
+                console.log(adjustableData.totalCutCount);
 
                 const veggieImage = this.add.image(offsetX, offsetY, veggieType).setScale(2);
                 const cutCountText = this.add.text(offsetX + 30, offsetY, `Sliced: ${cutCount}`, {
@@ -1056,65 +1092,21 @@ class Shop extends Phaser.Scene {
     constructor() { super({ key: 'Shop' }); }
 
     create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
         this.createHomeButton();
 
-        this.add.text(this.sys.game.config.width / 2, 150, `You got ${adjustableData.totalCoins} bucks`, {
-            fontSize: '120px',
-            fill: '#fff',
-        }).setOrigin(0.5);
+        this.add.text(this.sys.game.config.width / 2, 110, `Shop`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
 
-        // if (dataManager.isSavingData) {
-        //     dataManager.saveData();
-        // }
-    }
-
-    createHomeButton() {
-        const homeButton = this.add.container(20, 20);
-
-        const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
-            .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
-                Phaser.Geom.Rectangle.Contains)
-            .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
-            })
-            .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
-            })
-            .on('pointerdown', () => {
-                this.scene.start('MainMenu');
-            });
-
-        const homeIcon = this.add.image(30, 25, 'Home')
-            .setOrigin(0.5)
-            .setScale(2);
-
-        const homeText = this.add.text(100, 25, `Return`, {
-            fontSize: '24px',
-            fill: '#000',
-        }).setOrigin(0.5);
-
-        homeButton.add([buttonBackground, homeIcon, homeText]);
-
-        return homeButton;
-    }
-}
-
-class Settings extends Phaser.Scene {
-    constructor() { super({ key: 'Settings' }); }
-
-    create() {
-        this.createHomeButton();
         this.createBackground();
-
-        this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
-        this.createVolume();
-        this.createSave();
-        this.createReset();
+        this.createCash();
+        this.createTrailColor();
     }
 
     createHomeButton() {
@@ -1156,6 +1148,110 @@ class Settings extends Phaser.Scene {
         const background = this.add.graphics()
             .fillStyle(0xd3d3d3)
             .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
+
+        return background;
+    }
+
+    createCash() {
+        this.add.graphics().fillStyle(0xffffff).fillRoundedRect(this.sys.game.config.width - 230, 220, 160, 50, 10);
+        this.add.image(this.sys.game.config.width - 205, 245, 'Coin2').setOrigin(0.5).setScale(2.5);
+        this.add.text(this.sys.game.config.width - 180, 225, adjustableData.totalCoins, { fontSize: '40px', fill: '#000', });
+    }
+
+    createTrailColor() {
+        const trailColor = this.add.container(100, 300);
+
+        const trailColorBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10);
+
+        const trailColorText = this.add.text(20, 25, `Trail Color`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0, 0.5);
+
+        trailColor.add([trailColorBackground, trailColorText]);
+
+        return trailColor;
+    }
+}
+
+class Settings extends Phaser.Scene {
+    constructor() { super({ key: 'Settings' }); }
+
+    create() {
+        this.gameTimeTimer = this.time.addEvent({
+            delay: 1000,
+            callback: () => {
+                adjustableData.gameTime += 1;
+            },
+            loop: true,
+        });
+
+        this.createHomeButton();
+        this.createBackground();
+
+        this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
+        this.createVolume();
+        this.createSave();
+        this.createReset();
+        this.createStats();
+        this.createVeggieCutStats();
+    }
+
+    update() {
+        const formattedGameTime = this.formatTime(adjustableData.gameTime);
+
+        this.timeText.setText([
+            `Elpased Time: ${formattedGameTime}`,
+        ]);
+
+        if (adjustableData.isAutoSaving) {
+            saveData();
+        }
+    }
+
+    createHomeButton() {
+        const homeButton = this.add.container(20, 20);
+
+        const buttonBackground = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 0, 160, 50, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                buttonBackground.fillStyle(0x00ff00, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerout', () => {
+                buttonBackground.fillStyle(0xffffff, 1);
+                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+            })
+            .on('pointerdown', () => {
+                this.scene.start('MainMenu');
+            });
+
+        const homeIcon = this.add.image(30, 25, 'Home')
+            .setOrigin(0.5)
+            .setScale(2);
+
+        const homeText = this.add.text(100, 25, `Return`, {
+            fontSize: '24px',
+            fill: '#000',
+        }).setOrigin(0.5);
+
+        homeButton.add([buttonBackground, homeIcon, homeText]);
+
+        return homeButton;
+    }
+
+    createBackground() {
+        const background = this.add.graphics()
+            .fillStyle(0xd3d3d3)
+            .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
+
+        this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 + 160, 220, 5, 600, 3);
 
         return background;
     }
@@ -1287,6 +1383,61 @@ class Settings extends Phaser.Scene {
         resetButton.setDepth(1);
         resetText.setDepth(2);
     }
+
+    createStats() {
+        this.add.text(this.sys.game.config.width / 2 + 350, 230, 'Stats', { fontSize: '60px', fill: '#000' });
+        this.timeText = this.add.text(this.sys.game.config.width / 2 + 200, 310, '', {
+            fontSize: '30px',
+            fill: '#000',
+        });
+        this.add.text(this.sys.game.config.width / 2 + 200, 350, `Total coins: ${adjustableData.maxCoins}`, { fontSize: '30px', fill: '#000' });
+    }
+
+    formatTime(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const remainingSeconds = Math.floor(seconds % 60);
+
+        const formattedTime = `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(remainingSeconds)}`;
+        return formattedTime;
+    }
+
+    padZero(value) {
+        return value < 10 ? `0${value}` : value;
+    }
+
+    createVeggieCutStats() {    
+        let offsetX = this.sys.game.config.width / 2 + 240;
+        let offsetY = 440;
+        const veggiesPerRow = 4;
+        const spacingX = 125;
+        let totalCutCount = 0;
+    
+        for (const veggieType in adjustableData.totalCutCount) {
+            if (adjustableData.totalCutCount.hasOwnProperty(veggieType)) {
+                const cutCount = adjustableData.totalCutCount[veggieType];
+    
+                const veggieImage = this.add.image(offsetX, offsetY, veggieType).setScale(2);
+                const cutCountText = this.add.text(offsetX, offsetY + 50, `Count: ${cutCount}`, {
+                    fontSize: '16px',
+                    fill: '#000',
+                }).setOrigin(0.5);
+
+                totalCutCount += cutCount;
+                offsetX += spacingX;
+    
+                if (offsetX > this.sys.game.config.width / 2 + 200 + (veggiesPerRow) * spacingX) {
+                    offsetX = this.sys.game.config.width / 2 + 240;
+                    offsetY += 120;
+                }
+            }
+        }
+    
+        const totalCutText = this.add.text(offsetX + 110, offsetY - 10, `Total Sliced: ${totalCutCount}`, {
+            fontSize: '30px',
+            fill: '#000',
+        }).setOrigin(0.5);
+    }
 }
 
 const config = {
@@ -1322,9 +1473,27 @@ let adjustableData = {
     trailSize: 2,
     trailLength: 5,
     totalCoins: 0,
+    maxCoins: 0,
+    gameTime: 1,
+    totalCutCount: {
+        'BellPepper': 0,
+        'Broccoli': 0,
+        'Carrot': 0,
+        'Cauliflower': 0,
+        'Corn': 0,
+        'Eggplant': 0,
+        'GreenCabbage': 0,
+        'Mushroom': 0,
+        'Potato': 0,
+        'Pumpkin': 0,
+        'Radish': 0,
+        'Tomato': 0,
+    },
 }
 
 const gameData = {
+    rateOfSpawn: 300,
+    pathDuration: 3500,
     alottedTime: 60000,
     numberOfHearts: 5,
     veggieNames: [
@@ -1413,6 +1582,22 @@ function resetGameData() {
         trailSize: 2,
         trailLength: 5,
         totalCoins: 0,
+        maxCoins: 0,
+        gameTime: 0,
+        totalCutCount: {
+            'BellPepper': 0,
+            'Broccoli': 0,
+            'Carrot': 0,
+            'Cauliflower': 0,
+            'Corn': 0,
+            'Eggplant': 0,
+            'GreenCabbage': 0,
+            'Mushroom': 0,
+            'Potato': 0,
+            'Pumpkin': 0,
+            'Radish': 0,
+            'Tomato': 0,
+        },
     };
 
     saveData();
