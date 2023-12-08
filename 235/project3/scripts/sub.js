@@ -1408,7 +1408,7 @@ function resetGameData() {
     adjustableData = {
         isAutoSaving: false,
         isMusicPlaying: true,
-        volume: 0.1,
+        volume: 0.5,
         trailSize: 2,
         trailLength: 5,
         totalCoins: 0,
