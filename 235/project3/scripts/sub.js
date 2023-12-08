@@ -1017,10 +1017,7 @@ class GameOver extends Phaser.Scene {
         });
 
         resetRoundData();
-
-        // if (dataManager.isSavingData) {
-        //     dataManager.saveData();
-        // }
+        if (adjustableData.isAutoSaving) { saveData(); }
     }
 
     createReturnButton({ x, text, icon, onClick }) {
@@ -1213,15 +1210,13 @@ class Settings extends Phaser.Scene {
         adjustableData.volume = Phaser.Math.Clamp(volume, 0, 1.0);
         this.scene.restart();
 
-        if (backgroundMusic) {
-            backgroundMusic.volume(adjustableData.volume);
-        }
+        if (backgroundMusic) { backgroundMusic.volume(adjustableData.volume); }
+        if (adjustableData.isAutoSaving) { saveData(); }
     }
 
     createSave() {
         this.add.image(100, 420, 'FloppyDisk').setOrigin(0.5).setScale(2);
         this.add.text(140, 400, 'Auto Save', { fontSize: '40px', fill: '#000', });
-        this.add.text(140, 450, '*Tiggers every 15 second', { fontSize: '18px', fill: '#000' });
 
         let x = 390;
         let y = 400;
@@ -1242,9 +1237,6 @@ class Settings extends Phaser.Scene {
                 if (!adjustableData.isAutoSaving) {
                     adjustableData.isAutoSaving = !adjustableData.isAutoSaving;
                     saveData();
-                    this.autoSaveInterval = setInterval(() => {
-                        saveData();
-                    }, 15000);
                 }
                 this.scene.restart();
             });
@@ -1262,7 +1254,6 @@ class Settings extends Phaser.Scene {
             .on('pointerdown', () => {
                 if (adjustableData.isAutoSaving) {
                     adjustableData.isAutoSaving = !adjustableData.isAutoSaving;
-                    clearInterval(this.autoSaveInterval);
                     saveData();
                 }
                 this.scene.restart();
@@ -1326,7 +1317,7 @@ const game = new Phaser.Game(config);
 let adjustableData = {
     isAutoSaving: false,
     isMusicPlaying: true,
-    volume: 0.1,
+    volume: 0.5,
     trailSize: 2,
     trailLength: 5,
     totalCoins: 0,
