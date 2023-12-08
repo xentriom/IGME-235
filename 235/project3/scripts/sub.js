@@ -1279,6 +1279,7 @@ class Settings extends Phaser.Scene {
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerdown', () => {
                 resetGameData();
+                backgroundMusic.stop();
                 this.scene.start('LoadingScene');
             });
         resetButton.input.cursor = 'pointer';
@@ -1428,7 +1429,7 @@ async function playBackgroundMusic() {
         await backgroundMusic.play();
 
         adjustableData.onVolumeChange = (newVolume) => {
-            const clampedVolume = Phaser.Math.Clamp(newVolume, 0.1, 1.0);
+            const clampedVolume = Phaser.Math.Clamp(newVolume, 0, 1.0);
             backgroundMusic.volume(clampedVolume);
         };
     } catch (error) {
