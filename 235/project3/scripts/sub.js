@@ -1113,9 +1113,9 @@ class Shop extends Phaser.Scene {
         this.createRedTrail(130, 320, 0xff0000, 100);
         this.createYellowTrail(130, 390, 0xffff00, 100);
         this.createBlueTrail(130, 460, 0x0000ff, 100);
-        this.createOrangeTrail(130, 570, 0xffa500, 100);
-        this.createGreenTrail(130, 640, 0x04ff00, 100);
-        this.createPurpleTrail(130, 710, 0x7F00FF, 100);
+        this.createOrangeTrail(130, 570, 0xffa500, 150);
+        this.createGreenTrail(130, 640, 0x04ff00, 150);
+        this.createPurpleTrail(130, 710, 0x7F00FF, 150);
 
         this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height - 75, `More to come....`, { fontSize: '20px', fill: '#000' }).setOrigin(0.5);
     }
