@@ -1117,7 +1117,7 @@ class Shop extends Phaser.Scene {
         this.createGreenTrail(130, 640, 0x04ff00, 100);
         this.createPurpleTrail(130, 710, 0x7F00FF, 100);
 
-        this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height - 75, `Shop is very much broken and barely functional`, { fontSize: '20px', fill: '#000' }).setOrigin(0.5);
+        this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height - 75, `More to come....`, { fontSize: '20px', fill: '#000' }).setOrigin(0.5);
     }
 
     update() {
@@ -2164,7 +2164,7 @@ function resetGameData() {
         isOrangeTrailUnlocked: false,
         isGreenTrailUnlocked: false,
         isPurpleTrailUnlocked: false,
-        totalCoins: 990,
+        totalCoins: 0,
         maxCoins: 0,
         gameTime: 0,
         totalCutCount: {
