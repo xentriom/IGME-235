@@ -1165,18 +1165,19 @@ class Shop extends Phaser.Scene {
 
     createColorShop() {
         this.add.text(170, 230, `Trail Colors`, { fontSize: '50px', fill: '#000' });
-        this.createRedTrail(130, 320, 0xFF0000, 100.99);
-        this.createYellowTrail(130, 390, 0xFFFF00, 100.99);
-        this.createBlueTrail(130, 460, 0x0000FF, 100.99);
-        this.createOrangeTrail(130, 570, 0xFFA500, 150.99);
-        this.createGreenTrail(130, 640, 0x00FF00, 150.99);
-        this.createPurpleTrail(130, 710, 0x8F00FF, 150.99);
-        this.createRedOrangeTrail(370, 324, 0xff5349, 200.99);
-        this.createYellowOrangeTrail(370, 399, 0xffae42, 200.99);
-        this.createYellowGreenTrail(370, 474, 0x9acd32, 200.99);
-        this.createBlueGreenTrail(370, 549, 0x00ff7f, 200.99);
-        this.createBlueVioletTrail(370, 624, 0x8A2BE2, 200.99);
-        this.createRedVioletTrail(370, 699, 0xC71585, 200.99);
+        this.createRedTrail(130, 325, 0xFF0000, 100.99);
+        this.createYellowTrail(130, 400, 0xFFFF00, 100.99);
+        this.createBlueTrail(130, 475, 0x0000FF, 100.99);
+        this.createOrangeTrail(130, 550, 0xFFA500, 150.99);
+        this.createGreenTrail(130, 625, 0x00FF00, 150.99);
+        this.createPurpleTrail(130, 700, 0x8F00FF, 150.99);
+
+        this.createRedOrangeTrail(370, 325, 0xff5349, 200.99);
+        this.createYellowOrangeTrail(370, 400, 0xffae42, 200.99);
+        this.createYellowGreenTrail(370, 475, 0x9acd32, 200.99);
+        this.createBlueGreenTrail(370, 550, 0x00ff7f, 200.99);
+        this.createBlueVioletTrail(370, 625, 0x8A2BE2, 200.99);
+        this.createRedVioletTrail(370, 700, 0xC71585, 200.99);
     }
 
     createRedTrail(x, y, color, cost) {
