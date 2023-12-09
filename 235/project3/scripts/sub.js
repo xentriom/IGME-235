@@ -1817,6 +1817,7 @@ class Settings extends Phaser.Scene {
             .fillStyle(0xd3d3d3)
             .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
 
+        this.add.graphics().fillStyle(0x000000).fillRoundedRect(70, this.sys.game.config.height - 200, 825, 5, 3);
         this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 + 160, 220, 5, 600, 3);
 
         return background;
@@ -1929,15 +1930,15 @@ class Settings extends Phaser.Scene {
     }
 
     createReset() {
-        this.add.image(100, 570, 'Power').setOrigin(0.5).setScale(2);
-        this.add.text(140, 550, 'Reset Game', { fontSize: '40px', fill: '#000' });
+        this.add.image(140, 765, 'Power').setOrigin(0.5).setScale(3);
+        this.add.text(180, 740, 'RESET GAME', { fontSize: '50px', fill: '#000' });
 
-        const resetText = this.add.text(430 + 50, 550 + 20, 'RESET', { fontSize: '24px', fill: '#000' }).setOrigin(0.5);
+        const resetText = this.add.text(530 + 60, 745 + 20, 'RESET', { fontSize: '24px', fill: '#000' }).setOrigin(0.5);
         const resetButton = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(430, 550, 100, 40, 10)
+            .fillStyle(0xff0000)
+            .fillRoundedRect(530, 745, 120, 40, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(390, 550, 460, 40),
+                new Phaser.Geom.Rectangle(530, 745, 120, 40),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerdown', () => {
                 resetGameData();
@@ -1945,6 +1946,8 @@ class Settings extends Phaser.Scene {
                 this.scene.start('LoadingScene');
             });
         resetButton.input.cursor = 'pointer';
+
+        this.add.text(530 + 250, 745 + 20, 'WARNING:\nThis action\ncannot be\nreversed.', { fontSize: '18px', fill: '#000' }).setOrigin(0.5);
 
         resetButton.setDepth(1);
         resetText.setDepth(2);
