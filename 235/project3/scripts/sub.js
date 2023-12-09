@@ -1108,7 +1108,14 @@ class Shop extends Phaser.Scene {
 
         this.createBackground();
         this.createCash();
-        this.createTrailColor();
+
+        this.add.text(200, 230, `Trail Colors`, { fontSize: '50px', fill: '#000' });
+        this.createRedTrail(130, 320, 0xff0000, 100);
+        this.createYellowTrail(130, 390, 0xffff00, 100);
+        this.createBlueTrail(130, 460, 0x0000ff, 100);
+        this.createOrangeTrail(130, 570, 0xffa500, 100);
+        this.createGreenTrail(130, 640, 0x04ff00, 100);
+        this.createPurpleTrail(130, 710, 0x7F00FF, 100);
 
         this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height - 75, `Shop is very much broken and barely functional`, { fontSize: '20px', fill: '#000' }).setOrigin(0.5);
     }
@@ -1166,322 +1173,575 @@ class Shop extends Phaser.Scene {
         this.amount = this.add.text(this.sys.game.config.width - 180, 225, adjustableData.totalCoins, { fontSize: '40px', fill: '#000', });
     }
 
-    createTrailColor() {
-        this.add.text(100, 230, `Trail Colors`, { fontSize: '50px', fill: '#000' });
-
-        this.createColorPurchase(100, 320, 0x04ff00, 100);
-        this.createColorPurchase(300, 320, 0x0000ff, 100);
-        this.createColorPurchase(500, 320, 0xff0000, 100);
-        this.createColorPurchase(700, 320, 0x800080, 100);
-        this.createColorPurchase(900, 320, 0xffff00, 100);
-    }
-
-    createColorPurchase(x, y, color, cost) {
+    createRedTrail(x, y, color, cost) {
         const width = 160;
         const height = 50;
 
-        this.add.graphics().fillStyle(color).fillRoundedRect(x, y, width, 25, 10);
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
 
-        if (color == '04ff00' && adjustableData.isGreenTrailUnlocked) {
-            const equipeBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    equipeBackground.fillStyle(0x708090, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip?`);
-                })
-                .on('pointerout', () => {
-                    equipeBackground.fillStyle(0xffffff, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip`);
-                })
-                .on('pointerdown', () => {
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Equipped!`);
-                });
-        } else if (color == '04ff00' && !adjustableData.isGreenTrailUnlocked) {
-            const purchaseBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    purchaseBackground.fillStyle(0x708090, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Purchase?`);
-                })
-                .on('pointerout', () => {
-                    purchaseBackground.fillStyle(0xffffff, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`$${cost}`);
-                })
-                .on('pointerdown', () => {
-                    if (adjustableData.totalCoins < 100) {
-                        purchaseBackground.fillStyle(0xff0000, 1);
-                        purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                        statusText.setText(`Failed`);
-                        return;
-                    }
+        const redShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(x, y, width, height), Phaser.Geom.Rectangle.Contains);
 
-                    adjustableData.totalCoins -= 100;
+        let redHover = () => { };
+        let redOut = () => { };
+        let redOnClick = () => { };
 
-                    // if (color == 0x04ff00) { adjustableData.isGreenTrailUnlocked = true; }
-                    // else if (color == 0x0000ff) { adjustableData.isBlueTrailUnlocked = true; }
-                    // else if (color == 0xff0000) { adjustableData.isRedTrailUnlocked = true; }
-                    // else if (color == 0x800080) { adjustableData.isPurpleTrailUnlocked = true; }
+        if (!adjustableData.isRedTrailUnlocked) {
+            redHover = () => {
+                redShop.fillStyle(0x708090, 1);
+                redShop.fillRoundedRect(x, y, width, height, 10);
+                redText.setText(`$${cost}`);
+            };
 
-                    adjustableData.trailColor = color;
+            redOut = () => {
+                redShop.fillStyle(0xffffff, 1);
+                redShop.fillRoundedRect(x, y, width, height, 10);
+                redText.setText(`Red`);
+            };
 
-                    adjustableData.isGreenTrailUnlocked = true;
-                    console.log(adjustableData.isGreenTrailUnlocked);
+            redOnClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    redShop.fillStyle(0xff0000, 1);
+                    redShop.fillRoundedRect(x, y, width, height, 10);
+                    redText.setText(`Failed`);
+                    return;
+                }
 
-                    statusText.setText(`Success!`);
+                adjustableData.totalCoins -= cost;
+                adjustableData.isRedTrailUnlocked = true;
+                adjustableData.trailColor = color;
 
-                    if (adjustableData.isAutoSaving) { saveData(); }
-
-                    this.scene.restart();
-                });
-            purchaseBackground.input.cursor = 'pointer';
+                redText.setText(`Success!`);
+                this.scene.restart();
+            };
         }
 
-        if (color == '0x0000ff' && adjustableData.isBlueTrailUnlocked) {
-            const equipeBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    equipeBackground.fillStyle(0x708090, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip?`);
-                })
-                .on('pointerout', () => {
-                    equipeBackground.fillStyle(0xffffff, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip`);
-                })
-                .on('pointerdown', () => {
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Equipped!`);
-                });
-        } else if (color == '0x0000ff' && !adjustableData.isBlueTrailUnlocked){
-            const purchaseBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    purchaseBackground.fillStyle(0x708090, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Purchase?`);
-                })
-                .on('pointerout', () => {
-                    purchaseBackground.fillStyle(0xffffff, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`$${cost}`);
-                })
-                .on('pointerdown', () => {
-                    if (adjustableData.totalCoins < 100) {
-                        purchaseBackground.fillStyle(0xff0000, 1);
-                        purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                        statusText.setText(`Failed`);
-                        return;
-                    }
+        if (adjustableData.isRedTrailUnlocked) {
+            redHover = () => {
+                redShop.fillStyle(0x708090, 1);
+                redShop.fillRoundedRect(x, y, width, height, 10);
+                redText.setText(`Equip?`);
+            }
 
-                    adjustableData.totalCoins -= 100;
-                    adjustableData.isBlueTrailUnlocked = true;
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Success!`);
+            redOut = () => {
+                redShop.fillStyle(0xffffff, 1);
+                redShop.fillRoundedRect(x, y, width, height, 10);
+                redText.setText(`Equip`);
+            }
 
-                    if (adjustableData.isAutoSaving) { saveData(); }
-
-                    this.scene.restart();
-                });
-            purchaseBackground.input.cursor = 'pointer';
+            redOnClick = () => {
+                adjustableData.trailColor = 0x04ff00;
+                redText.setText(`Equipped!`);
+                this.scene.restart();
+            }
         }
 
-        if (color == '0xff0000' && adjustableData.isRedTrailUnlocked) {
-            const equipeBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    equipeBackground.fillStyle(0x708090, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip?`);
-                })
-                .on('pointerout', () => {
-                    equipeBackground.fillStyle(0xffffff, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip`);
-                })
-                .on('pointerdown', () => {
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Equipped!`);
-                });
-        } else if (color == '0xff0000' && !adjustableData.isRedTrailUnlocked) {
-            const purchaseBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    purchaseBackground.fillStyle(0x708090, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Purchase?`);
-                })
-                .on('pointerout', () => {
-                    purchaseBackground.fillStyle(0xffffff, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`$${cost}`);
-                })
-                .on('pointerdown', () => {
-                    if (adjustableData.totalCoins < 100) {
-                        purchaseBackground.fillStyle(0xff0000, 1);
-                        purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                        statusText.setText(`Failed`);
-                        return;
-                    }
+        if (adjustableData.isRedTrailUnlocked && adjustableData.trailColor == color) {
+            redHover = () => {
+                redShop.fillStyle(0x708090, 1);
+                redShop.fillRoundedRect(x, y, 160, height, 10);
+                redText.setText(`Unequip?`);
+            }
 
-                    adjustableData.totalCoins -= 100;
-                    adjustableData.isRedTrailUnlocked = true;
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Success!`);
+            redOut = () => {
+                redShop.fillStyle(0xffffff, 1);
+                redShop.fillRoundedRect(x, y, 160, height, 10);
+                redText.setText('Equipped');
+            }
 
-                    if (adjustableData.isAutoSaving) { saveData(); }
-
-                    this.scene.restart();
-                });
-            purchaseBackground.input.cursor = 'pointer';
+            redOnClick = () => {
+                adjustableData.trailColor = 0xffffff;
+                redText.setText(`Unequipped!`);
+                this.scene.restart();
+            }
         }
 
-        if (color == '0x800080' && adjustableData.isPurpleTrailUnlocked) {
-            const equipeBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    equipeBackground.fillStyle(0x708090, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip?`);
-                })
-                .on('pointerout', () => {
-                    equipeBackground.fillStyle(0xffffff, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip`);
-                })
-                .on('pointerdown', () => {
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Equipped!`);
-                });
-        } else if (color == '0x800080' && !adjustableData.isPurpleTrailUnlocked) {
-            const purchaseBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    purchaseBackground.fillStyle(0x708090, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Purchase?`);
-                })
-                .on('pointerout', () => {
-                    purchaseBackground.fillStyle(0xffffff, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`$${cost}`);
-                })
-                .on('pointerdown', () => {
-                    if (adjustableData.totalCoins < 100) {
-                        purchaseBackground.fillStyle(0xff0000, 1);
-                        purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                        statusText.setText(`Failed`);
-                        return;
-                    }
+        redShop.on('pointerover', () => redHover());
+        redShop.on('pointerout', () => redOut());
+        redShop.on('pointerdown', () => redOnClick());
+        redShop.input.cursor = 'pointer';
 
-                    adjustableData.totalCoins -= 100;
-                    adjustableData.isPurpleTrailUnlocked = true;
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Success!`);
+        const redText = this.add.text(x + 80, y + 25, `Red`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
 
-                    if (adjustableData.isAutoSaving) { saveData(); }
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
 
-                    this.scene.restart();
-                });
-            purchaseBackground.input.cursor = 'pointer';
+    createYellowTrail(x, y, color, cost) {
+        const width = 160;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const yellowShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(x, y, width, height), Phaser.Geom.Rectangle.Contains);
+
+        let yellowHover = () => { };
+        let yellowOut = () => { };
+        let yellowOnClick = () => { };
+
+        if (!adjustableData.isYellowTrailUnlocked) {
+            yellowHover = () => {
+                yellowShop.fillStyle(0x708090, 1);
+                yellowShop.fillRoundedRect(x, y, width, height, 10);
+                yellowText.setText(`$${cost}`);
+            };
+
+            yellowOut = () => {
+                yellowShop.fillStyle(0xffffff, 1);
+                yellowShop.fillRoundedRect(x, y, width, height, 10);
+                yellowText.setText(`Yellow`);
+            };
+
+            yellowOnClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    yellowShop.fillStyle(0xff0000, 1);
+                    yellowShop.fillRoundedRect(x, y, width, height, 10);
+                    yellowText.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isYellowTrailUnlocked = true;
+                adjustableData.trailColor = color;
+
+                yellowText.setText(`Success!`);
+                this.scene.restart();
+            };
         }
 
-        if (color == '0xffff00' && adjustableData.isYellowTrailUnlocked) {
-            const equipeBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    equipeBackground.fillStyle(0x708090, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip?`);
-                })
-                .on('pointerout', () => {
-                    equipeBackground.fillStyle(0xffffff, 1);
-                    equipeBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Equip`);
-                })
-                .on('pointerdown', () => {
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Equipped!`);
-                });
-        } else if (color == '0xffff00' && !adjustableData.isYellowTrailUnlocked) {
-            const purchaseBackground = this.add.graphics()
-                .fillStyle(0xffffff)
-                .fillRoundedRect(x, y + 50, width, height, 10)
-                .setInteractive(
-                    new Phaser.Geom.Rectangle(x, y + 50, width, height),
-                    Phaser.Geom.Rectangle.Contains)
-                .on('pointerover', () => {
-                    purchaseBackground.fillStyle(0x708090, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`Purchase?`);
-                })
-                .on('pointerout', () => {
-                    purchaseBackground.fillStyle(0xffffff, 1);
-                    purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                    statusText.setText(`$${cost}`);
-                })
-                .on('pointerdown', () => {
-                    if (adjustableData.totalCoins < 100) {
-                        purchaseBackground.fillStyle(0xff0000, 1);
-                        purchaseBackground.fillRoundedRect(x, y + 50, width, height, 10);
-                        statusText.setText(`Failed`);
-                        return;
-                    }
+        if (adjustableData.isYellowTrailUnlocked) {
+            yellowHover = () => {
+                yellowShop.fillStyle(0x708090, 1);
+                yellowShop.fillRoundedRect(x, y, width, height, 10);
+                yellowText.setText(`Equip?`);
+            }
 
-                    adjustableData.totalCoins -= 100;
-                    adjustableData.isYellowTrailUnlocked = true;
-                    adjustableData.trailColor = color;
-                    statusText.setText(`Success!`);
+            yellowOut = () => {
+                yellowShop.fillStyle(0xffffff, 1);
+                yellowShop.fillRoundedRect(x, y, width, height, 10);
+                yellowText.setText(`Equip`);
+            }
 
-                    if (adjustableData.isAutoSaving) { saveData(); }
-
-                    this.scene.restart();
-                });
-            purchaseBackground.input.cursor = 'pointer';
+            yellowOnClick = () => {
+                adjustableData.trailColor = 0x04ff00;
+                yellowText.setText(`Equipped!`);
+                this.scene.restart();
+            }
         }
 
-        const statusText = this.add.text(x + 80, y + 75, `$${cost}`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+        if (adjustableData.isYellowTrailUnlocked && adjustableData.trailColor == color) {
+            yellowHover = () => {
+                yellowShop.fillStyle(0x708090, 1);
+                yellowShop.fillRoundedRect(x, y, 160, height, 10);
+                yellowText.setText(`Unequip?`);
+            }
+
+            yellowOut = () => {
+                yellowShop.fillStyle(0xffffff, 1);
+                yellowShop.fillRoundedRect(x, y, 160, height, 10);
+                yellowText.setText('Equipped');
+            }
+
+            yellowOnClick = () => {
+                adjustableData.trailColor = 0xffffff;
+                yellowText.setText(`Unequipped!`);
+                this.scene.restart();
+            }
+        }
+
+        yellowShop.on('pointerover', () => yellowHover());
+        yellowShop.on('pointerout', () => yellowOut());
+        yellowShop.on('pointerdown', () => yellowOnClick());
+        yellowShop.input.cursor = 'pointer';
+
+        const yellowText = this.add.text(x + 80, y + 25, `Yellow`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
+
+    createBlueTrail(x, y, color, cost) {
+        const width = 160;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const blueShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(x, y, width, height), Phaser.Geom.Rectangle.Contains);
+
+        let blueHover = () => { };
+        let blueOut = () => { };
+        let blueOnClick = () => { };
+
+        if (!adjustableData.isBlueTrailUnlocked) {
+            blueHover = () => {
+                blueShop.fillStyle(0x708090, 1);
+                blueShop.fillRoundedRect(x, y, width, height, 10);
+                blueText.setText(`$${cost}`);
+            };
+
+            blueOut = () => {
+                blueShop.fillStyle(0xffffff, 1);
+                blueShop.fillRoundedRect(x, y, width, height, 10);
+                blueText.setText(`Blue`);
+            };
+
+            blueOnClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    blueShop.fillStyle(0xff0000, 1);
+                    blueShop.fillRoundedRect(x, y, width, height, 10);
+                    blueText.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isBlueTrailUnlocked = true;
+                adjustableData.trailColor = color;
+
+                blueText.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isBlueTrailUnlocked) {
+            blueHover = () => {
+                blueShop.fillStyle(0x708090, 1);
+                blueShop.fillRoundedRect(x, y, width, height, 10);
+                blueText.setText(`Equip?`);
+            }
+
+            blueOut = () => {
+                blueShop.fillStyle(0xffffff, 1);
+                blueShop.fillRoundedRect(x, y, width, height, 10);
+                blueText.setText(`Equip`);
+            }
+
+            blueOnClick = () => {
+                adjustableData.trailColor = 0x04ff00;
+                blueText.setText(`Equipped!`);
+                this.scene.restart();
+            }
+        }
+
+        if (adjustableData.isBlueTrailUnlocked && adjustableData.trailColor == color) {
+            blueHover = () => {
+                blueShop.fillStyle(0x708090, 1);
+                blueShop.fillRoundedRect(x, y, 160, height, 10);
+                blueText.setText(`Unequip?`);
+            }
+
+            blueOut = () => {
+                blueShop.fillStyle(0xffffff, 1);
+                blueShop.fillRoundedRect(x, y, 160, height, 10);
+                blueText.setText('Equipped');
+            }
+
+            blueOnClick = () => {
+                adjustableData.trailColor = 0xffffff;
+                blueText.setText(`Unequipped!`);
+                this.scene.restart();
+            }
+        }
+
+        blueShop.on('pointerover', () => blueHover());
+        blueShop.on('pointerout', () => blueOut());
+        blueShop.on('pointerdown', () => blueOnClick());
+        blueShop.input.cursor = 'pointer';
+
+        const blueText = this.add.text(x + 80, y + 25, `Blue`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
+
+    createOrangeTrail(x, y, color, cost) {
+        const width = 160;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const orangeShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(x, y, width, height), Phaser.Geom.Rectangle.Contains);
+
+        let orangeHover = () => { };
+        let orangeOut = () => { };
+        let orangeOnClick = () => { };
+
+        if (!adjustableData.isOrangeTrailUnlocked) {
+            orangeHover = () => {
+                orangeShop.fillStyle(0x708090, 1);
+                orangeShop.fillRoundedRect(x, y, width, height, 10);
+                orangeText.setText(`$${cost}`);
+            };
+
+            orangeOut = () => {
+                orangeShop.fillStyle(0xffffff, 1);
+                orangeShop.fillRoundedRect(x, y, width, height, 10);
+                orangeText.setText(`Orange`);
+            };
+
+            orangeOnClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    orangeShop.fillStyle(0xff0000, 1);
+                    orangeShop.fillRoundedRect(x, y, width, height, 10);
+                    orangeText.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isOrangeTrailUnlocked = true;
+                adjustableData.trailColor = color;
+
+                orangeText.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isOrangeTrailUnlocked) {
+            orangeHover = () => {
+                orangeShop.fillStyle(0x708090, 1);
+                orangeShop.fillRoundedRect(x, y, width, height, 10);
+                orangeText.setText(`Equip?`);
+            }
+
+            orangeOut = () => {
+                orangeShop.fillStyle(0xffffff, 1);
+                orangeShop.fillRoundedRect(x, y, width, height, 10);
+                orangeText.setText(`Equip`);
+            }
+
+            orangeOnClick = () => {
+                adjustableData.trailColor = 0x04ff00;
+                orangeText.setText(`Equipped!`);
+                this.scene.restart();
+            }
+        }
+
+        if (adjustableData.isOrangeTrailUnlocked && adjustableData.trailColor == color) {
+            orangeHover = () => {
+                orangeShop.fillStyle(0x708090, 1);
+                orangeShop.fillRoundedRect(x, y, 160, height, 10);
+                orangeText.setText(`Unequip?`);
+            }
+
+            orangeOut = () => {
+                orangeShop.fillStyle(0xffffff, 1);
+                orangeShop.fillRoundedRect(x, y, 160, height, 10);
+                orangeText.setText('Equipped');
+            }
+
+            orangeOnClick = () => {
+                adjustableData.trailColor = 0xffffff;
+                orangeText.setText(`Unequipped!`);
+                this.scene.restart();
+            }
+        }
+
+        orangeShop.on('pointerover', () => orangeHover());
+        orangeShop.on('pointerout', () => orangeOut());
+        orangeShop.on('pointerdown', () => orangeOnClick());
+        orangeShop.input.cursor = 'pointer';
+
+        const orangeText = this.add.text(x + 80, y + 25, `Orange`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
+
+    createGreenTrail(x, y, color, cost) {
+        const width = 160;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const greenShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(x, y, width, height), Phaser.Geom.Rectangle.Contains);
+
+
+        let greenHover = () => { };
+        let greenOut = () => { };
+        let greenOnClick = () => { };
+
+        if (!adjustableData.isGreenTrailUnlocked) {
+            greenHover = () => {
+                greenShop.fillStyle(0x708090, 1);
+                greenShop.fillRoundedRect(x, y, width, height, 10);
+                greenText.setText(`$${cost}`);
+            };
+
+            greenOut = () => {
+                greenShop.fillStyle(0xffffff, 1);
+                greenShop.fillRoundedRect(x, y, width, height, 10);
+                greenText.setText(`Green`);
+            };
+
+            greenOnClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    greenShop.fillStyle(0xff0000, 1);
+                    greenShop.fillRoundedRect(x, y, width, height, 10);
+                    greenText.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isGreenTrailUnlocked = true;
+                adjustableData.trailColor = color;
+
+                greenText.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isGreenTrailUnlocked) {
+            greenHover = () => {
+                greenShop.fillStyle(0x708090, 1);
+                greenShop.fillRoundedRect(x, y, width, height, 10);
+                greenText.setText(`Equip?`);
+            }
+
+            greenOut = () => {
+                greenShop.fillStyle(0xffffff, 1);
+                greenShop.fillRoundedRect(x, y, width, height, 10);
+                greenText.setText(`Equip`);
+            }
+
+            greenOnClick = () => {
+                adjustableData.trailColor = 0x04ff00;
+                greenText.setText(`Equipped!`);
+                this.scene.restart();
+            }
+        }
+
+        if (adjustableData.isGreenTrailUnlocked && adjustableData.trailColor == color) {
+            greenHover = () => {
+                greenShop.fillStyle(0x708090, 1);
+                greenShop.fillRoundedRect(x, y, 160, height, 10);
+                greenText.setText(`Unequip?`);
+            }
+
+            greenOut = () => {
+                greenShop.fillStyle(0xffffff, 1);
+                greenShop.fillRoundedRect(x, y, 160, height, 10);
+                greenText.setText('Equipped');
+            }
+
+            greenOnClick = () => {
+                adjustableData.trailColor = 0xffffff;
+                greenText.setText(`Unequipped!`);
+                this.scene.restart();
+            }
+        }
+
+        greenShop.on('pointerover', () => greenHover());
+        greenShop.on('pointerout', () => greenOut());
+        greenShop.on('pointerdown', () => greenOnClick());
+        greenShop.input.cursor = 'pointer';
+
+        const greenText = this.add.text(x + 80, y + 25, `Green`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
+
+    createPurpleTrail(x, y, color, cost) {
+        const width = 160;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const purpleShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(x, y, width, height), Phaser.Geom.Rectangle.Contains);
+
+        let purpleHover = () => { };
+        let purpleOut = () => { };
+        let purpleOnClick = () => { };
+
+        if (!adjustableData.isPurpleTrailUnlocked) {
+            purpleHover = () => {
+                purpleShop.fillStyle(0x708090, 1);
+                purpleShop.fillRoundedRect(x, y, width, height, 10);
+                purpleText.setText(`$${cost}`);
+            };
+
+            purpleOut = () => {
+                purpleShop.fillStyle(0xffffff, 1);
+                purpleShop.fillRoundedRect(x, y, width, height, 10);
+                purpleText.setText(`Violet`);
+            };
+
+            purpleOnClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    purpleShop.fillStyle(0xff0000, 1);
+                    purpleShop.fillRoundedRect(x, y, width, height, 10);
+                    purpleText.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isPurpleTrailUnlocked = true;
+                adjustableData.trailColor = color;
+
+                purpleText.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isPurpleTrailUnlocked) {
+            purpleHover = () => {
+                purpleShop.fillStyle(0x708090, 1);
+                purpleShop.fillRoundedRect(x, y, width, height, 10);
+                purpleText.setText(`Equip?`);
+            }
+
+            purpleOut = () => {
+                purpleShop.fillStyle(0xffffff, 1);
+                purpleShop.fillRoundedRect(x, y, width, height, 10);
+                purpleText.setText(`Equip`);
+            }
+
+            purpleOnClick = () => {
+                adjustableData.trailColor = 0x04ff00;
+                purpleText.setText(`Equipped!`);
+                this.scene.restart();
+            }
+        }
+
+        if (adjustableData.isPurpleTrailUnlocked && adjustableData.trailColor == color) {
+            purpleHover = () => {
+                purpleShop.fillStyle(0x708090, 1);
+                purpleShop.fillRoundedRect(x, y, 160, height, 10);
+                purpleText.setText(`Unequip?`);
+            }
+
+            purpleOut = () => {
+                purpleShop.fillStyle(0xffffff, 1);
+                purpleShop.fillRoundedRect(x, y, 160, height, 10);
+                purpleText.setText('Equipped');
+            }
+
+            purpleOnClick = () => {
+                adjustableData.trailColor = 0xffffff;
+                purpleText.setText(`Unequipped!`);
+                this.scene.restart();
+            }
+        }
+
+        purpleShop.on('pointerover', () => purpleHover());
+        purpleShop.on('pointerout', () => purpleOut());
+        purpleShop.on('pointerdown', () => purpleOnClick());
+        purpleShop.input.cursor = 'pointer';
+
+        const purpleText = this.add.text(x + 80, y + 25, `Violet`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
     }
 }
 
@@ -1782,11 +2042,12 @@ let adjustableData = {
     trailSize: 2,
     trailLength: 5,
     trailColor: 16777215,
-    isGreenTrailUnlocked: false,
-    isBlueTrailUnlocked: false,
     isRedTrailUnlocked: false,
-    isPurpleTrailUnlocked: false,
     isYellowTrailUnlocked: false,
+    isBlueTrailUnlocked: false,
+    isOrangeTrailUnlocked: false,
+    isGreenTrailUnlocked: false,
+    isPurpleTrailUnlocked: false,
     totalCoins: 0,
     maxCoins: 0,
     gameTime: 1,
@@ -1897,12 +2158,13 @@ function resetGameData() {
         trailSize: 2,
         trailLength: 5,
         trailColor: 16777215,
-        isGreenTrailUnlocked: false,
-        isBlueTrailUnlocked: false,
         isRedTrailUnlocked: false,
-        isPurpleTrailUnlocked: false,
         isYellowTrailUnlocked: false,
-        totalCoins: 0,
+        isBlueTrailUnlocked: false,
+        isOrangeTrailUnlocked: false,
+        isGreenTrailUnlocked: false,
+        isPurpleTrailUnlocked: false,
+        totalCoins: 990,
         maxCoins: 0,
         gameTime: 0,
         totalCutCount: {
