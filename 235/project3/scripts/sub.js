@@ -1107,12 +1107,12 @@ class Shop extends Phaser.Scene {
         this.createCash();
 
         this.add.text(200, 230, `Trail Colors`, { fontSize: '50px', fill: '#000' });
-        this.createRedTrail(130, 320, 0xff0000, 100);
-        this.createYellowTrail(130, 390, 0xffff00, 100);
-        this.createBlueTrail(130, 460, 0x0000ff, 100);
-        this.createOrangeTrail(130, 570, 0xffa500, 150);
-        this.createGreenTrail(130, 640, 0x04ff00, 150);
-        this.createPurpleTrail(130, 710, 0x7F00FF, 150);
+        this.createRedTrail(130, 320, 0xff0000, 100.99);
+        this.createYellowTrail(130, 390, 0xffff00, 100.99);
+        this.createBlueTrail(130, 460, 0x0000ff, 100.99);
+        this.createOrangeTrail(130, 570, 0xffa500, 150.99);
+        this.createGreenTrail(130, 640, 0x04ff00, 150.99);
+        this.createPurpleTrail(130, 710, 0x7F00FF, 150.99);
 
         this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height - 75, `More to come....`, { fontSize: '20px', fill: '#000' }).setOrigin(0.5);
     }
@@ -1165,9 +1165,9 @@ class Shop extends Phaser.Scene {
     }
 
     createCash() {
-        this.add.graphics().fillStyle(0xffffff).fillRoundedRect(this.sys.game.config.width - 230, 220, 160, 50, 10);
-        this.add.image(this.sys.game.config.width - 205, 245, 'Coin2').setOrigin(0.5).setScale(2.5);
-        this.amount = this.add.text(this.sys.game.config.width - 180, 230, formatCurrency(adjustableData.totalCoins), { fontSize: '28px', fill: '#000', });
+        this.add.graphics().fillStyle(0xffffff).fillRoundedRect(this.sys.game.config.width - 250, 220, 180, 50, 10);
+        this.add.image(this.sys.game.config.width - 220, 245, 'Coin2').setOrigin(0.5).setScale(2.5);
+        this.amount = this.add.text(this.sys.game.config.width - 195, 230, formatCurrency(adjustableData.totalCoins), { fontSize: '28px', fill: '#000', });
     }
 
     createRedTrail(x, y, color, cost) {
@@ -1186,11 +1186,7 @@ class Shop extends Phaser.Scene {
         let redOnClick = () => { };
 
         if (!adjustableData.isRedTrailUnlocked) {
-            redHover = () => {
-                redShop.fillStyle(0x708090, 1);
-                redShop.fillRoundedRect(x, y, width, height, 10);
-                redText.setText(`$${cost}`);
-            };
+            redHover = () => { redText.setText(`$${cost}`); };
 
             redOut = () => {
                 redShop.fillStyle(0xffffff, 1);
@@ -1216,11 +1212,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isRedTrailUnlocked) {
-            redHover = () => {
-                redShop.fillStyle(0x708090, 1);
-                redShop.fillRoundedRect(x, y, width, height, 10);
-                redText.setText(`Equip?`);
-            }
+            redHover = () => { redText.setText(`Equip?`); }
 
             redOut = () => {
                 redShop.fillStyle(0xffffff, 1);
@@ -1236,11 +1228,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isRedTrailUnlocked && adjustableData.trailColor == color) {
-            redHover = () => {
-                redShop.fillStyle(0x708090, 1);
-                redShop.fillRoundedRect(x, y, 160, height, 10);
-                redText.setText(`Unequip?`);
-            }
+            redHover = () => { redText.setText(`Unequip?`); }
 
             redOut = () => {
                 redShop.fillStyle(0xffffff, 1);
@@ -1281,11 +1269,7 @@ class Shop extends Phaser.Scene {
         let yellowOnClick = () => { };
 
         if (!adjustableData.isYellowTrailUnlocked) {
-            yellowHover = () => {
-                yellowShop.fillStyle(0x708090, 1);
-                yellowShop.fillRoundedRect(x, y, width, height, 10);
-                yellowText.setText(`$${cost}`);
-            };
+            yellowHover = () => { yellowText.setText(`$${cost}`); };
 
             yellowOut = () => {
                 yellowShop.fillStyle(0xffffff, 1);
@@ -1311,11 +1295,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isYellowTrailUnlocked) {
-            yellowHover = () => {
-                yellowShop.fillStyle(0x708090, 1);
-                yellowShop.fillRoundedRect(x, y, width, height, 10);
-                yellowText.setText(`Equip?`);
-            }
+            yellowHover = () => { yellowText.setText(`Equip?`); }
 
             yellowOut = () => {
                 yellowShop.fillStyle(0xffffff, 1);
@@ -1331,11 +1311,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isYellowTrailUnlocked && adjustableData.trailColor == color) {
-            yellowHover = () => {
-                yellowShop.fillStyle(0x708090, 1);
-                yellowShop.fillRoundedRect(x, y, 160, height, 10);
-                yellowText.setText(`Unequip?`);
-            }
+            yellowHover = () => { yellowText.setText(`Unequip?`); }
 
             yellowOut = () => {
                 yellowShop.fillStyle(0xffffff, 1);
@@ -1376,11 +1352,7 @@ class Shop extends Phaser.Scene {
         let blueOnClick = () => { };
 
         if (!adjustableData.isBlueTrailUnlocked) {
-            blueHover = () => {
-                blueShop.fillStyle(0x708090, 1);
-                blueShop.fillRoundedRect(x, y, width, height, 10);
-                blueText.setText(`$${cost}`);
-            };
+            blueHover = () => { blueText.setText(`$${cost}`); };
 
             blueOut = () => {
                 blueShop.fillStyle(0xffffff, 1);
@@ -1406,11 +1378,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isBlueTrailUnlocked) {
-            blueHover = () => {
-                blueShop.fillStyle(0x708090, 1);
-                blueShop.fillRoundedRect(x, y, width, height, 10);
-                blueText.setText(`Equip?`);
-            }
+            blueHover = () => { blueText.setText(`Equip?`); }
 
             blueOut = () => {
                 blueShop.fillStyle(0xffffff, 1);
@@ -1426,11 +1394,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isBlueTrailUnlocked && adjustableData.trailColor == color) {
-            blueHover = () => {
-                blueShop.fillStyle(0x708090, 1);
-                blueShop.fillRoundedRect(x, y, 160, height, 10);
-                blueText.setText(`Unequip?`);
-            }
+            blueHover = () => { blueText.setText(`Unequip?`); }
 
             blueOut = () => {
                 blueShop.fillStyle(0xffffff, 1);
@@ -1471,11 +1435,7 @@ class Shop extends Phaser.Scene {
         let orangeOnClick = () => { };
 
         if (!adjustableData.isOrangeTrailUnlocked) {
-            orangeHover = () => {
-                orangeShop.fillStyle(0x708090, 1);
-                orangeShop.fillRoundedRect(x, y, width, height, 10);
-                orangeText.setText(`$${cost}`);
-            };
+            orangeHover = () => { orangeText.setText(`$${cost}`); };
 
             orangeOut = () => {
                 orangeShop.fillStyle(0xffffff, 1);
@@ -1501,11 +1461,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isOrangeTrailUnlocked) {
-            orangeHover = () => {
-                orangeShop.fillStyle(0x708090, 1);
-                orangeShop.fillRoundedRect(x, y, width, height, 10);
-                orangeText.setText(`Equip?`);
-            }
+            orangeHover = () => { orangeText.setText(`Equip?`); }
 
             orangeOut = () => {
                 orangeShop.fillStyle(0xffffff, 1);
@@ -1521,11 +1477,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isOrangeTrailUnlocked && adjustableData.trailColor == color) {
-            orangeHover = () => {
-                orangeShop.fillStyle(0x708090, 1);
-                orangeShop.fillRoundedRect(x, y, 160, height, 10);
-                orangeText.setText(`Unequip?`);
-            }
+            orangeHover = () => { orangeText.setText(`Unequip?`); }
 
             orangeOut = () => {
                 orangeShop.fillStyle(0xffffff, 1);
@@ -1567,11 +1519,7 @@ class Shop extends Phaser.Scene {
         let greenOnClick = () => { };
 
         if (!adjustableData.isGreenTrailUnlocked) {
-            greenHover = () => {
-                greenShop.fillStyle(0x708090, 1);
-                greenShop.fillRoundedRect(x, y, width, height, 10);
-                greenText.setText(`$${cost}`);
-            };
+            greenHover = () => { greenText.setText(`$${cost}`); };
 
             greenOut = () => {
                 greenShop.fillStyle(0xffffff, 1);
@@ -1597,11 +1545,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isGreenTrailUnlocked) {
-            greenHover = () => {
-                greenShop.fillStyle(0x708090, 1);
-                greenShop.fillRoundedRect(x, y, width, height, 10);
-                greenText.setText(`Equip?`);
-            }
+            greenHover = () => { greenText.setText(`Equip?`); }
 
             greenOut = () => {
                 greenShop.fillStyle(0xffffff, 1);
@@ -1617,11 +1561,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isGreenTrailUnlocked && adjustableData.trailColor == color) {
-            greenHover = () => {
-                greenShop.fillStyle(0x708090, 1);
-                greenShop.fillRoundedRect(x, y, 160, height, 10);
-                greenText.setText(`Unequip?`);
-            }
+            greenHover = () => { greenText.setText(`Unequip?`); }
 
             greenOut = () => {
                 greenShop.fillStyle(0xffffff, 1);
@@ -1662,11 +1602,7 @@ class Shop extends Phaser.Scene {
         let purpleOnClick = () => { };
 
         if (!adjustableData.isPurpleTrailUnlocked) {
-            purpleHover = () => {
-                purpleShop.fillStyle(0x708090, 1);
-                purpleShop.fillRoundedRect(x, y, width, height, 10);
-                purpleText.setText(`$${cost}`);
-            };
+            purpleHover = () => { purpleText.setText(`$${cost}`); };
 
             purpleOut = () => {
                 purpleShop.fillStyle(0xffffff, 1);
@@ -1692,11 +1628,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isPurpleTrailUnlocked) {
-            purpleHover = () => {
-                purpleShop.fillStyle(0x708090, 1);
-                purpleShop.fillRoundedRect(x, y, width, height, 10);
-                purpleText.setText(`Equip?`);
-            }
+            purpleHover = () => { purpleText.setText(`Equip?`); }
 
             purpleOut = () => {
                 purpleShop.fillStyle(0xffffff, 1);
@@ -1712,11 +1644,7 @@ class Shop extends Phaser.Scene {
         }
 
         if (adjustableData.isPurpleTrailUnlocked && adjustableData.trailColor == color) {
-            purpleHover = () => {
-                purpleShop.fillStyle(0x708090, 1);
-                purpleShop.fillRoundedRect(x, y, 160, height, 10);
-                purpleText.setText(`Unequip?`);
-            }
+            purpleHover = () => { purpleText.setText(`Unequip?`); }
 
             purpleOut = () => {
                 purpleShop.fillStyle(0xffffff, 1);
@@ -2016,7 +1944,7 @@ const config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 },
+            gravity: { y: 10 },
             debug: false,
         },
     },
@@ -2087,18 +2015,18 @@ const gameData = {
         'Tomato'
     ],
     veggieValues: {
-        'BellPepper': -1,
-        'Broccoli': 1,
-        'Carrot': 1,
-        'Cauliflower': 1,
-        'Corn': 0.5,
-        'Eggplant': 1,
-        'GreenCabbage': 1,
-        'Mushroom': 1,
-        'Potato': 1,
-        'Pumpkin': 1,
-        'Radish': 1,
-        'Tomato': 1,
+        'BellPepper': 1.78,
+        'Broccoli': 1.92,
+        'Carrot': 0.68,
+        'Cauliflower': 1.88,
+        'Corn': 0.92,
+        'Eggplant': -0.79,
+        'GreenCabbage': 1.12,
+        'Mushroom': -0.41,
+        'Potato': 0.57,
+        'Pumpkin': 1.69,
+        'Radish': 1.04,
+        'Tomato': 1.19,
     },
 }
 
