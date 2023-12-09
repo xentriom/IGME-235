@@ -1,6 +1,3 @@
-let score = 0;
-let trailSize = 2;
-
 class LoadingScene extends Phaser.Scene {
     constructor() { super({ key: 'LoadingScene' }); }
 
@@ -499,7 +496,7 @@ class TimedGame extends Phaser.Scene {
         this.veggieGroup;
         this.trailGraphics;
         this.trailPoints = [];
-        this.currentTime = 60000;
+        this.currentTime = 30000;
         this.timerEvent;
     }
 
@@ -605,7 +602,7 @@ class TimedGame extends Phaser.Scene {
             .setOrigin(0.5)
             .setScale(3);
 
-        const timerText = this.add.text(20, 25, '1:00', {
+        const timerText = this.add.text(20, 25, '0:30', {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5, 0.5);
@@ -1121,7 +1118,7 @@ class Shop extends Phaser.Scene {
     }
 
     update() {
-        this.amount.setText(adjustableData.totalCoins);
+        this.amount.setText(formatCurrency(adjustableData.totalCoins));
     }
 
     createHomeButton() {
@@ -1170,7 +1167,7 @@ class Shop extends Phaser.Scene {
     createCash() {
         this.add.graphics().fillStyle(0xffffff).fillRoundedRect(this.sys.game.config.width - 230, 220, 160, 50, 10);
         this.add.image(this.sys.game.config.width - 205, 245, 'Coin2').setOrigin(0.5).setScale(2.5);
-        this.amount = this.add.text(this.sys.game.config.width - 180, 225, adjustableData.totalCoins, { fontSize: '40px', fill: '#000', });
+        this.amount = this.add.text(this.sys.game.config.width - 180, 230, formatCurrency(adjustableData.totalCoins), { fontSize: '28px', fill: '#000', });
     }
 
     createRedTrail(x, y, color, cost) {
@@ -1959,7 +1956,7 @@ class Settings extends Phaser.Scene {
             fontSize: '30px',
             fill: '#000',
         });
-        this.add.text(this.sys.game.config.width / 2 + 200, 350, `Total coins: ${adjustableData.maxCoins}`, { fontSize: '30px', fill: '#000' });
+        this.add.text(this.sys.game.config.width / 2 + 200, 350, `Total Earned: ${formatCurrency(adjustableData.maxCoins)}`, { fontSize: '30px', fill: '#000' });
     }
 
     formatTime(seconds) {
@@ -2048,8 +2045,8 @@ let adjustableData = {
     isOrangeTrailUnlocked: false,
     isGreenTrailUnlocked: false,
     isPurpleTrailUnlocked: false,
-    totalCoins: 0,
-    maxCoins: 0,
+    totalCoins: 0.0,
+    maxCoins: 0.0,
     gameTime: 1,
     totalCutCount: {
         'BellPepper': 0,
@@ -2070,7 +2067,7 @@ let adjustableData = {
 const gameData = {
     rateOfSpawn: 300,
     pathDuration: 3500,
-    alottedTime: 60000,
+    alottedTime: 30000,
     numberOfHearts: 5,
     veggieNames: [
         'BellPepper',
@@ -2087,11 +2084,11 @@ const gameData = {
         'Tomato'
     ],
     veggieValues: {
-        'BellPepper': 1,
+        'BellPepper': -1,
         'Broccoli': 1,
         'Carrot': 1,
         'Cauliflower': 1,
-        'Corn': 1,
+        'Corn': 0.5,
         'Eggplant': 1,
         'GreenCabbage': 1,
         'Mushroom': 1,
@@ -2164,8 +2161,8 @@ function resetGameData() {
         isOrangeTrailUnlocked: false,
         isGreenTrailUnlocked: false,
         isPurpleTrailUnlocked: false,
-        totalCoins: 0,
-        maxCoins: 0,
+        totalCoins: 0.0,
+        maxCoins: 0.0,
         gameTime: 0,
         totalCutCount: {
             'BellPepper': 0,
@@ -2209,4 +2206,8 @@ function hexToDecimal(hexString) {
     hexString = hexString.replace(/^#/, '');
 
     return parseInt(hexString, 16);
+}
+
+function formatCurrency(amount) {
+    return amount.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
 }
