@@ -92,9 +92,10 @@ class MainMenu extends Phaser.Scene {
             loop: true,
         });
 
-        this.add.text(this.sys.game.config.width / 2, 200, 'Veggie Slicer', {
+        this.add.text(this.sys.game.config.width / 2, 200, 'VEGGIE SLICER', {
             fontSize: '120px',
-            fill: '#fff',
+            fill: '#F0810E',
+            fontWeight: 'bold',
         }).setOrigin(0.5);
 
         this.createIconButton({
@@ -112,7 +113,7 @@ class MainMenu extends Phaser.Scene {
         this.createIconButton({
             iconKey: 'Shop',
             x: this.sys.game.config.width / 2,
-            y: 550,
+            y: 560,
             width: 300,
             height: 75,
             scale: 2.5,
@@ -124,7 +125,7 @@ class MainMenu extends Phaser.Scene {
         this.createIconButton({
             iconKey: 'Gear',
             x: this.sys.game.config.width / 2,
-            y: 650,
+            y: 670,
             width: 300,
             height: 75,
             scale: 2.5,
@@ -137,22 +138,25 @@ class MainMenu extends Phaser.Scene {
     createIconButton({ iconKey, x, y, width, height, scale, text, textColor, onClick }) {
         const radius = 10;
 
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130)
+            .fillRoundedRect((x - width / 2) - 5, (y - height / 2) - 5, width + 10, height + 10, radius);
+
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
+            .fillStyle(0xF8F2E6)
             .fillRoundedRect(x - width / 2, y - height / 2, width, height, radius)
             .setInteractive(
-                new Phaser.Geom.Rectangle(x - width / 2, y - height / 2, width, height),
+                new Phaser.Geom.Rectangle((x - width / 2) - 5, (y - height / 2) - 5, width + 10, height + 10),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(x - width / 2, y - height / 2, width, height, radius);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect((x - width / 2) - 5, (y - height / 2) - 5, width + 10, height + 10, radius);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(x - width / 2, y - height / 2, width, height, radius);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect((x - width / 2) - 5, (y - height / 2) - 5, width + 10, height + 10, radius);
             })
             .on('pointerdown', onClick);
-
         buttonBackground.input.cursor = 'pointer';
 
         const icon = this.add.image(x - width / 2 + 30, y, iconKey)
@@ -164,9 +168,10 @@ class MainMenu extends Phaser.Scene {
             fill: textColor,
         }).setOrigin(0.5);
 
-        buttonBackground.setDepth(1);
-        icon.setDepth(2);
-        buttonText.setDepth(3);
+        buttonOutline.setDepth(1);
+        buttonBackground.setDepth(2);
+        icon.setDepth(3);
+        buttonText.setDepth(4);
     }
 }
 
@@ -186,7 +191,7 @@ class Intermission extends Phaser.Scene {
 
         this.add.text(this.sys.game.config.width / 2, 150, 'Select a game mode!', {
             fontSize: '80px',
-            fill: '#fff',
+            fill: '#F0810E',
         }).setOrigin(0.5);
 
         this.createGameModes(0, 'practice');
@@ -195,36 +200,41 @@ class Intermission extends Phaser.Scene {
     }
 
     createHomeButton() {
-        const homeButton = this.add.container(20, 20);
+        const homeButton = this.add.container(50, 20);
+
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130, 1)
+            .fillRoundedRect(0, 0, 160, 60, 10);
 
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(5, 5, 150, 50, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                new Phaser.Geom.Rectangle(5, 5, 160, 50),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
+        buttonBackground.input.cursor = 'pointer';
 
-        const homeIcon = this.add.image(30, 25, 'Home')
+        const homeIcon = this.add.image(30, 30, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        const homeText = this.add.text(100, 25, `Return`, {
+        const homeText = this.add.text(100, 30, `Return`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5);
 
-        homeButton.add([buttonBackground, homeIcon, homeText]);
+        homeButton.add([buttonOutline, buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -232,8 +242,8 @@ class Intermission extends Phaser.Scene {
     createGameModes(index, sceneKey) {
         const buttonWidth = 350;
         const buttonHeight = 500;
-        const buttonOutlineColor = 0xffffff;
-        const selectedOutlineColor = 0x00ff00;
+        const buttonOutlineColor = 0xF8F2E6;
+        const selectedOutlineColor = 0x426F86;
         const buttonSpacing = 75;
 
         const x = (index * (buttonWidth + buttonSpacing)) + buttonWidth / 2 + 150;
@@ -274,9 +284,9 @@ class Intermission extends Phaser.Scene {
             });
 
         const gameModeName = this.add.text(
-            button.x, button.y - buttonHeight / 2 + 30,
+            button.x, button.y - buttonHeight / 2 + 35,
             modeInfo[sceneKey].title, {
-            fontSize: '30px',
+            fontSize: '40px',
             fill: '#000',
             fontWeight: 'bold',
         }).setOrigin(0.5);
@@ -284,14 +294,14 @@ class Intermission extends Phaser.Scene {
         // const gameModeImage = this.add.image(button.x, button.y - buttonHeight / 2 + 60, modeInfo[sceneKey].image);
         // gameModeImage.setOrigin(0.5).setScale(0.5);
 
-        const gameModeDescription = this.add.text(button.x, button.y + 150, modeInfo[sceneKey].description, {
-            fontSize: '20px',
+        const gameModeDescription = this.add.text(button.x, button.y + 155, modeInfo[sceneKey].description, {
+            fontSize: '24px',
             fill: '#000',
             wordWrap: { width: buttonWidth - 15 },
         }).setOrigin(0.5);
 
         const changeOutlineColor = (target, color) => {
-            target.setStrokeStyle(2, color);
+            target.setStrokeStyle(5, color);
         };
 
         button.setDepth(1);
@@ -336,36 +346,41 @@ class PracticeGame extends Phaser.Scene {
     }
 
     createHomeButton() {
-        const homeButton = this.add.container(20, 20);
+        const homeButton = this.add.container(50, 20);
+
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130, 1)
+            .fillRoundedRect(0, 0, 160, 60, 10);
 
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(5, 5, 150, 50, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                new Phaser.Geom.Rectangle(5, 5, 160, 50),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
+        buttonBackground.input.cursor = 'pointer';
 
-        const homeIcon = this.add.image(30, 25, 'Home')
+        const homeIcon = this.add.image(30, 30, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        const homeText = this.add.text(100, 25, `Return`, {
+        const homeText = this.add.text(100, 30, `Return`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5);
 
-        homeButton.add([buttonBackground, homeIcon, homeText]);
+        homeButton.add([buttonOutline, buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -535,36 +550,41 @@ class TimedGame extends Phaser.Scene {
     }
 
     createHomeButton() {
-        const homeButton = this.add.container(20, 20);
+        const homeButton = this.add.container(50, 20);
+
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130, 1)
+            .fillRoundedRect(0, 0, 160, 60, 10);
 
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(5, 5, 150, 50, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                new Phaser.Geom.Rectangle(5, 5, 160, 50),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
+        buttonBackground.input.cursor = 'pointer';
 
-        const homeIcon = this.add.image(30, 25, 'Home')
+        const homeIcon = this.add.image(30, 30, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        const homeText = this.add.text(100, 25, `Return`, {
+        const homeText = this.add.text(100, 30, `Return`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5);
 
-        homeButton.add([buttonBackground, homeIcon, homeText]);
+        homeButton.add([buttonOutline, buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -781,36 +801,41 @@ class LifeGame extends Phaser.Scene {
     }
 
     createHomeButton() {
-        const homeButton = this.add.container(20, 20);
+        const homeButton = this.add.container(50, 20);
+
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130, 1)
+            .fillRoundedRect(0, 0, 160, 60, 10);
 
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(5, 5, 150, 50, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                new Phaser.Geom.Rectangle(5, 5, 160, 50),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
+        buttonBackground.input.cursor = 'pointer';
 
-        const homeIcon = this.add.image(30, 25, 'Home')
+        const homeIcon = this.add.image(30, 30, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        const homeText = this.add.text(100, 25, `Return`, {
+        const homeText = this.add.text(100, 30, `Return`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5);
 
-        homeButton.add([buttonBackground, homeIcon, homeText]);
+        homeButton.add([buttonOutline, buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
@@ -1101,7 +1126,7 @@ class Shop extends Phaser.Scene {
 
         this.createHomeButton();
 
-        this.add.text(this.sys.game.config.width / 2, 110, `Trail Shop`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
+        this.add.text(this.sys.game.config.width / 2, 110, `Trail Shop`, { fontSize: '110px', fill: '#F0810E' }).setOrigin(0.5);
 
         this.createBackground();
         this.createCash();
@@ -1118,41 +1143,46 @@ class Shop extends Phaser.Scene {
     createHomeButton() {
         const homeButton = this.add.container(50, 20);
 
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130, 1)
+            .fillRoundedRect(0, 0, 160, 60, 10);
+
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(5, 5, 150, 50, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                new Phaser.Geom.Rectangle(5, 5, 160, 50),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
+        buttonBackground.input.cursor = 'pointer';
 
-        const homeIcon = this.add.image(30, 25, 'Home')
+        const homeIcon = this.add.image(30, 30, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        const homeText = this.add.text(100, 25, `Return`, {
+        const homeText = this.add.text(100, 30, `Return`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5);
 
-        homeButton.add([buttonBackground, homeIcon, homeText]);
+        homeButton.add([buttonOutline, buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
 
     createBackground() {
         const background = this.add.graphics()
-            .fillStyle(0xd3d3d3)
+            .fillStyle(0xA7A9A8)
             .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
 
         this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 - 100, 220, 5, 600, 4);
@@ -2495,7 +2525,7 @@ class Settings extends Phaser.Scene {
         this.createHomeButton();
         this.createBackground();
 
-        this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
+        this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#F0810E' }).setOrigin(0.5);
         this.createVolume();
         this.createSave();
         this.createAutoSave();
@@ -2519,41 +2549,46 @@ class Settings extends Phaser.Scene {
     createHomeButton() {
         const homeButton = this.add.container(50, 20);
 
+        const buttonOutline = this.add.graphics()
+            .fillStyle(0x2F3130, 1)
+            .fillRoundedRect(0, 0, 160, 60, 10);
+
         const buttonBackground = this.add.graphics()
-            .fillStyle(0xffffff)
-            .fillRoundedRect(0, 0, 160, 50, 10)
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(5, 5, 150, 50, 10)
             .setInteractive(
-                new Phaser.Geom.Rectangle(0, 0, 160, 50),
+                new Phaser.Geom.Rectangle(5, 5, 160, 50),
                 Phaser.Geom.Rectangle.Contains)
             .on('pointerover', () => {
-                buttonBackground.fillStyle(0x00ff00, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x426F86, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerout', () => {
-                buttonBackground.fillStyle(0xffffff, 1);
-                buttonBackground.fillRoundedRect(0, 0, 160, 50, 10);
+                buttonOutline.fillStyle(0x2F3130, 1);
+                buttonOutline.fillRoundedRect(0, 0, 160, 60, 10);
             })
             .on('pointerdown', () => {
                 this.scene.start('MainMenu');
             });
+        buttonBackground.input.cursor = 'pointer';
 
-        const homeIcon = this.add.image(30, 25, 'Home')
+        const homeIcon = this.add.image(30, 30, 'Home')
             .setOrigin(0.5)
             .setScale(2);
 
-        const homeText = this.add.text(100, 25, `Return`, {
+        const homeText = this.add.text(100, 30, `Return`, {
             fontSize: '24px',
             fill: '#000',
         }).setOrigin(0.5);
 
-        homeButton.add([buttonBackground, homeIcon, homeText]);
+        homeButton.add([buttonOutline, buttonBackground, homeIcon, homeText]);
 
         return homeButton;
     }
 
     createBackground() {
         const background = this.add.graphics()
-            .fillStyle(0xd3d3d3)
+            .fillStyle(0xA7A9A8)
             .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
 
         this.add.graphics().fillStyle(0x000000).fillRoundedRect(70, this.sys.game.config.height - 200, 825, 5, 3);
@@ -2775,6 +2810,7 @@ const config = {
     type: Phaser.AUTO,
     width: window.innerWidth,
     height: window.innerHeight,
+    backgroundColor: '#2F3130',
     physics: {
         default: 'arcade',
         arcade: {
@@ -2840,6 +2876,9 @@ let adjustableData = {
 }
 
 const gameData = {
+    hoverColor: 0xF9B931,
+    confrimColor: 0xD1FFBD,
+    denyColor: 0xFF474C,
     rateOfSpawn: 300,
     pathDuration: 3500,
     alottedTime: 30000,
