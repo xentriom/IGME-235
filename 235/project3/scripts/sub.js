@@ -2347,8 +2347,8 @@ class Shop extends Phaser.Scene {
         const gameHeight = this.sys.game.config.height;
 
         this.add.text(gameWidth - 350, gameHeight / 2 + 80, `Length`, { fontSize: '50px', fill: '#000' });
-        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 499.99, 0.5);
-        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 999.99, 2.5);
+        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 799.99, 0.5);
+        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 2000.00, 2.5);
     }
 
     createTLPurchase1(x, y, cost, upgrade) {
