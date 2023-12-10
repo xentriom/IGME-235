@@ -1283,19 +1283,21 @@ class Shop extends Phaser.Scene {
 
     createColorShop() {
         this.add.text(250, 230, `Colors`, { fontSize: '50px', fill: '#000' });
-        this.createRedTrail(130, 325, 0xFF0000, 100.99);
-        this.createYellowTrail(130, 400, 0xFFFF00, 100.99);
-        this.createBlueTrail(130, 475, 0x0000FF, 100.99);
-        this.createOrangeTrail(130, 550, 0xFFA500, 150.99);
-        this.createGreenTrail(130, 625, 0x00FF00, 150.99);
-        this.createPurpleTrail(130, 700, 0x8F00FF, 150.99);
+        this.createWhiteTrail(130, 315, 0xF5F5F5);
+        this.createRedTrail(130, 390, 0xFF0000, 100.99);
+        this.createYellowTrail(130, 465, 0xFFFF00, 100.99);
+        this.createBlueTrail(130, 540, 0x0000FF, 100.99);
+        this.createOrangeTrail(130, 615, 0xFFA500, 150.99);
+        this.createGreenTrail(130, 690, 0x00FF00, 150.99);
+        this.createPurpleTrail(130, 765, 0x8F00FF, 150.99);
 
-        this.createRedOrangeTrail(370, 325, 0xff5349, 200.99);
-        this.createYellowOrangeTrail(370, 400, 0xffae42, 200.99);
-        this.createYellowGreenTrail(370, 475, 0x9acd32, 200.99);
-        this.createBlueGreenTrail(370, 550, 0x00ff7f, 200.99);
-        this.createBlueVioletTrail(370, 625, 0x8A2BE2, 200.99);
-        this.createRedVioletTrail(370, 700, 0xC71585, 200.99);
+        this.createBlackTrail(370, 315, 0x2F3130);
+        this.createRedOrangeTrail(370, 390, 0xff5349, 200.99);
+        this.createYellowOrangeTrail(370, 465, 0xffae42, 200.99);
+        this.createYellowGreenTrail(370, 540, 0x9acd32, 200.99);
+        this.createBlueGreenTrail(370, 615, 0x00ff7f, 200.99);
+        this.createBlueVioletTrail(370, 690, 0x8A2BE2, 200.99);
+        this.createRedVioletTrail(370, 765, 0xC71585, 200.99);
     }
 
     createRedTrail(x, y, color, cost) {
@@ -2295,6 +2297,66 @@ class Shop extends Phaser.Scene {
         redVioletShop.input.cursor = 'pointer';
 
         const redVioletText = this.add.text(x + 110, y + 25, `Red Violet`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
+
+    createWhiteTrail(x, y, color) {
+        const width = 160;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const whiteShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(x, y, width, height),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => { whiteText.setText(`Equip?`); })
+            .on('pointerout', () => {
+                whiteShop.fillStyle(0xffffff, 1);
+                whiteShop.fillRoundedRect(x, y, width, height, 10);
+                whiteText.setText(`White`);
+            })
+            .on('pointerdown', () => {
+                adjustableData.trailColor = 0xffffff;
+                whiteText.setText(`Equipped!`);
+                this.scene.restart();
+            });
+        whiteShop.input.cursor = 'pointer';
+
+        const whiteText = this.add.text(x + 80, y + 25, `White`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+    }
+
+    createBlackTrail(x, y, color) {
+        const width = 220;
+        const height = 50;
+
+        this.add.graphics().fillStyle(color).fillRoundedRect(x - 30, y, width, height, 10);
+
+        const blackShop = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(x, y, width, height, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(x, y, width, height),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => { blackText.setText(`Equip?`); })
+            .on('pointerout', () => {
+                blackShop.fillStyle(0xffffff, 1);
+                blackShop.fillRoundedRect(x, y, width, height, 10);
+                blackText.setText(`Heavy Metal`);
+            })
+            .on('pointerdown', () => {
+                adjustableData.trailColor = 0x2F3130;
+                blackText.setText(`Equipped!`);
+                this.scene.restart();
+            });
+        blackShop.input.cursor = 'pointer';
+
+        const blackText = this.add.text(x + 110, y + 25, `Heavy Metal`, { fontSize: '25px', fill: '#000', }).setOrigin(0.5);
 
         if (adjustableData.isAutoSaving) { saveData(); }
     }
