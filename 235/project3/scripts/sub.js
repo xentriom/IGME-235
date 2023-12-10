@@ -201,11 +201,11 @@ class MainMenu extends Phaser.Scene {
         }).setOrigin(0.5);
 
         const infoButtonOutline = this.add.graphics()
-            .fillStyle(0xF8F2E6)
+            .fillStyle(0xF9B931)
             .fillRoundedRect(-205, 245, 410, 70, 10);
 
         const infoButton = this.add.graphics()
-            .fillStyle(0xF8F2E6)
+            .fillStyle(0xF9B931)
             .fillRoundedRect(-200, 250, 400, 60, 10)
             .setInteractive(
                 new Phaser.Geom.Rectangle(-200, 250, 400, 60),
@@ -215,7 +215,7 @@ class MainMenu extends Phaser.Scene {
                 infoButtonOutline.fillRoundedRect(-205, 245, 410, 70, 10);
             })
             .on('pointerout', () => {
-                infoButtonOutline.fillStyle(0xF8F2E6, 1);
+                infoButtonOutline.fillStyle(0xF9B931, 1);
                 infoButtonOutline.fillRoundedRect(-205, 245, 410, 70, 10);
             })
             .on('pointerdown', () => {
@@ -2302,11 +2302,11 @@ class Shop extends Phaser.Scene {
     createDisplay() {
         const container = this.add.container(this.sys.game.config.width / 2 - 50, 240);
 
-        const outline1 = this.add.graphics().fillStyle(0xffffff).fillRoundedRect(0, 0, 510, 220, 10);
-        const outline2 = this.add.graphics().fillStyle(0xffffff).fillRoundedRect(470, 80, 220, 140, 10);
+        const outline1 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(0, 0, 510, 220, 10);
+        const outline2 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(470, 80, 220, 140, 10);
 
-        const background1 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(10, 10, 490, 200, 10);
-        const background2 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(480, 90, 200, 120, 10);
+        const background1 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(5, 5, 498, 208, 10);
+        const background2 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(478, 88, 205, 125, 10);
 
         const line = this.add.graphics()
             .fillStyle(adjustableData.trailColor)
@@ -2331,7 +2331,7 @@ class Shop extends Phaser.Scene {
         const container = this.add.container(x, y);
 
         const outline = this.add.graphics()
-            .fillStyle(0x708090)
+            .fillStyle(0x426F86)
             .fillRoundedRect(0, 0, 120, 120, 10);
 
         const background = this.add.graphics()
@@ -2395,7 +2395,7 @@ class Shop extends Phaser.Scene {
         const container = this.add.container(x, y);
 
         const outline = this.add.graphics()
-            .fillStyle(0x708090)
+            .fillStyle(0x426F86)
             .fillRoundedRect(0, 0, 120, 120, 10);
 
         const background = this.add.graphics()
@@ -2468,7 +2468,7 @@ class Shop extends Phaser.Scene {
         const container = this.add.container(x, y);
 
         const outline = this.add.graphics()
-            .fillStyle(0x708090)
+            .fillStyle(0x426F86)
             .fillRoundedRect(0, 0, 120, 120, 10);
 
         const background = this.add.graphics()
@@ -2532,7 +2532,7 @@ class Shop extends Phaser.Scene {
         const container = this.add.container(x, y);
 
         const outline = this.add.graphics()
-            .fillStyle(0x708090)
+            .fillStyle(0x426F86)
             .fillRoundedRect(0, 0, 120, 120, 10);
 
         const background = this.add.graphics()
