@@ -2959,9 +2959,6 @@ let adjustableData = {
 }
 
 const gameData = {
-    hoverColor: 0xF9B931,
-    confrimColor: 0xD1FFBD,
-    denyColor: 0xFF474C,
     rateOfSpawn: 300,
     pathDuration: 3500,
     alottedTime: 30000,
@@ -3015,7 +3012,7 @@ const roundData = {
 }
 
 function resetRoundData() {
-    gameData.alottedTime = 60000;
+    gameData.alottedTime = 30000;
     roundData.score = 0;
     roundData.cutCount = {
         'BellPepper': 0,
