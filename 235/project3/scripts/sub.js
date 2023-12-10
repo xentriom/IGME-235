@@ -2351,6 +2351,7 @@ class Shop extends Phaser.Scene {
             })
             .on('pointerdown', () => {
                 adjustableData.trailColor = 0x2F3130;
+                adjustableData.totalCoins -= 0.01;
                 blackText.setText(`Equipped!`);
                 this.scene.restart();
             });
@@ -2367,8 +2368,8 @@ class Shop extends Phaser.Scene {
         const outline1 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(0, 0, 510, 220, 10);
         const outline2 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(470, 80, 220, 140, 10);
 
-        const background1 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(5, 5, 498, 208, 10);
-        const background2 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(478, 88, 205, 125, 10);
+        const background1 = this.add.graphics().fillStyle(0x2F3130).fillRoundedRect(5, 5, 498, 208, 10);
+        const background2 = this.add.graphics().fillStyle(0x2F3130).fillRoundedRect(478, 88, 205, 125, 10);
 
         const line = this.add.graphics()
             .fillStyle(adjustableData.trailColor)
