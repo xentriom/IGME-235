@@ -133,6 +133,23 @@ class MainMenu extends Phaser.Scene {
             textColor: '#000',
             onClick: () => this.scene.start('Settings'),
         });
+
+        // const infoButton = this.add.image(20, this.sys.game.config.height - 50, 'infoIcon')
+        //     .setOrigin(0)
+        //     .setInteractive({ useHandCursor: true })
+        //     .on('pointerdown', () => this.showInfoPopup());
+
+        const infoButton = this.add.graphics()
+            .fillStyle(0xF9B931)
+            .fillRoundedRect(20, this.sys.game.config.height - 60, 40, 40, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(20, this.sys.game.config.height - 60, 40, 40),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerdown', () => this.showInfoPopup());
+        infoButton.input.cursor = 'pointer';
+        this.add.text(40, this.sys.game.config.height - 40, 'i', { fontSize: '35px', fill: '#000' }).setOrigin(0.5);
+
+        this.createInfoPopup();
     }
 
     createIconButton({ iconKey, x, y, width, height, scale, text, textColor, onClick }) {
@@ -172,6 +189,77 @@ class MainMenu extends Phaser.Scene {
         buttonBackground.setDepth(2);
         icon.setDepth(3);
         buttonText.setDepth(4);
+    }
+
+    createInfoPopup() {
+        this.infoPopupContainer = this.add.container(this.sys.game.config.width / 2, this.sys.game.config.height / 2).setAlpha(0).setDepth(5);
+
+        const popupBackground = this.add.graphics().fillStyle(0xffffff).fillRoundedRect(-275, -340, 550, 680, 10);
+
+        const infoTitle = this.add.text(0, -280, 'Info', { fontSize: '50px', fill: '#000', fontWeight: 'bold', align: 'center' }).setOrigin(0.5);
+
+        const infoText = this.add.text(0, -10, 'Veggie Slicer is a web game built using the Phaser3 and Howler API library. This is also heavily inspired by a mobile game known as Fruit Ninja.\n\nTo play, simply click on \'Start Game\' and select the mode you wish to play. A practice mode is available for you to practice and get a feel of the speed and size of the veggies.\n\nOnce you are confident, challenge yourself to timed or life mode where you have to get the highest score possible. You earn coins depending on the veggies sliced. Beware, some veggies will deduct coins! Use those coins to better equip yourself for the future.\n\nRemember to save the game if you want to keep your progress!', {
+            fontSize: '20px',
+            fill: '#000',
+            align: 'left',
+            wordWrap: { width: 500 },
+        }).setOrigin(0.5);
+
+        const infoButtonOutline = this.add.graphics()
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(-205, 245, 410, 70, 10);
+
+        const infoButton = this.add.graphics()
+            .fillStyle(0xF8F2E6)
+            .fillRoundedRect(-200, 250, 400, 60, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(-200, 250, 400, 60),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                infoButtonOutline.fillStyle(0x426F86, 1);
+                infoButtonOutline.fillRoundedRect(-205, 245, 410, 70, 10);
+            })
+            .on('pointerout', () => {
+                infoButtonOutline.fillStyle(0xF8F2E6, 1);
+                infoButtonOutline.fillRoundedRect(-205, 245, 410, 70, 10);
+            })
+            .on('pointerdown', () => {
+
+            });
+        infoButton.input.cursor = 'pointer';
+
+        const infoButtonText = this.add.text(0, 280, 'Visit About Page', { fontSize: '35px', fill: '#000' }).setOrigin(0.5);
+
+        const closeButton = this.add.graphics()
+            .fillStyle(0xF9B931)
+            .fillRoundedRect(-250, -320, 40, 40, 10)
+            .setInteractive(
+                new Phaser.Geom.Rectangle(-250, -320, 40, 40),
+                Phaser.Geom.Rectangle.Contains)
+            .on('pointerdown', () => this.hideInfoPopup());
+        closeButton.input.cursor = 'pointer';
+
+        const closeButtonText = this.add.text(-229, -298, 'X', { fontSize: '30px', fill: '#000' }).setOrigin(0.5);
+
+        this.infoPopupContainer.add([popupBackground, infoTitle, infoText, infoButtonOutline, infoButton, infoButtonText, closeButton, closeButtonText]);
+    }
+
+    showInfoPopup() {
+        this.tweens.add({
+            targets: this.infoPopupContainer,
+            alpha: 1,
+            duration: 200,
+            ease: 'Linear',
+        });
+    }
+
+    hideInfoPopup() {
+        this.tweens.add({
+            targets: this.infoPopupContainer,
+            alpha: 0,
+            duration: 200,
+            ease: 'Linear',
+        });
     }
 }
 
