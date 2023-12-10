@@ -1101,11 +1101,14 @@ class Shop extends Phaser.Scene {
 
         this.createHomeButton();
 
-        this.add.text(this.sys.game.config.width / 2, 110, `Shop`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
+        this.add.text(this.sys.game.config.width / 2, 110, `Trail Shop`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
 
         this.createBackground();
         this.createCash();
         this.createColorShop();
+        this.createDisplay();
+        this.createTrailSize();
+        this.createTrailLength();
     }
 
     update() {
@@ -1154,6 +1157,7 @@ class Shop extends Phaser.Scene {
 
         this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 - 100, 220, 5, 600, 4);
         this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 - 70, 500, 750, 5, 4);
+        this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 + 300, 520, 5, 300, 4);
 
         return background;
     }
@@ -1165,7 +1169,7 @@ class Shop extends Phaser.Scene {
     }
 
     createColorShop() {
-        this.add.text(170, 230, `Trail Colors`, { fontSize: '50px', fill: '#000' });
+        this.add.text(250, 230, `Colors`, { fontSize: '50px', fill: '#000' });
         this.createRedTrail(130, 325, 0xFF0000, 100.99);
         this.createYellowTrail(130, 400, 0xFFFF00, 100.99);
         this.createBlueTrail(130, 475, 0x0000FF, 100.99);
@@ -2181,6 +2185,299 @@ class Shop extends Phaser.Scene {
 
         if (adjustableData.isAutoSaving) { saveData(); }
     }
+
+    createDisplay() {
+        const container = this.add.container(this.sys.game.config.width / 2 - 50, 240);
+
+        const outline1 = this.add.graphics().fillStyle(0xffffff).fillRoundedRect(0, 0, 510, 220, 10);
+        const outline2 = this.add.graphics().fillStyle(0xffffff).fillRoundedRect(470, 80, 220, 140, 10);
+
+        const background1 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(10, 10, 490, 200, 10);
+        const background2 = this.add.graphics().fillStyle(0x000000).fillRoundedRect(480, 90, 200, 120, 10);
+
+        const line = this.add.graphics()
+            .fillStyle(adjustableData.trailColor)
+            .fillRoundedRect(65, 30, adjustableData.trailLength * 60, adjustableData.trailSize, 0)
+            .setRotation(0.31415);
+
+        const disclaimer = this.add.text(515, 125, `This preview of\ntrail may not\nbe accurate.`, { fontSize: '16px', fill: '#fff' });
+
+        container.add([outline1, outline2, background1, background2, line, disclaimer]);
+    }
+
+    createTrailSize() {
+        const gameWidth = this.sys.game.config.width;
+        const gameHeight = this.sys.game.config.height;
+
+        this.add.text(gameWidth / 2 + 50, gameHeight / 2 + 80, `Size`, { fontSize: '50px', fill: '#000' });
+        this.createTSPurchase1(gameWidth / 2 - 40, gameHeight / 2 + 160, 499.99, 1);
+        this.createTSPurchase2(gameWidth / 2 + 120, gameHeight / 2 + 160, 999.99, 4);
+    }
+
+    createTSPurchase1(x, y, cost, upgrade) {
+        const container = this.add.container(x, y);
+
+        const outline = this.add.graphics()
+            .fillStyle(0x708090)
+            .fillRoundedRect(0, 0, 120, 120, 10);
+
+        const background = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(5, 5, 110, 110, 10);
+
+        const button = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 130, 120, 40, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(0, 130, 120, 40), Phaser.Geom.Rectangle.Contains);
+
+        let onOver = () => { };
+        let onOut = () => { };
+        let onClick = () => { };
+
+        if (!adjustableData.isTrailSizeUpgrade1Unlocked) {
+            onOver = () => { text.setText(`Purchase?`); };
+
+            onOut = () => {
+                button.fillStyle(0xffffff, 1);
+                button.fillRoundedRect(0, 130, 120, 40, 10);
+                text.setText(`${formatCurrency(cost)}`);
+            };
+
+            onClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    button.fillStyle(0xff0000, 1);
+                    button.fillRoundedRect(0, 130, 120, 40, 10);
+                    text.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isTrailSizeUpgrade1Unlocked = true;
+                adjustableData.trailSize += upgrade;
+
+                text.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isTrailSizeUpgrade1Unlocked) {
+            onOver = () => { text.setText(`Purchased`); }
+            onOut = () => { text.setText(`Purchased`); }
+            onClick = () => { text.setText(`Purchased`); }
+        }
+
+        button.on('pointerover', () => onOver());
+        button.on('pointerout', () => onOut());
+        button.on('pointerdown', () => onClick());
+        button.input.cursor = 'pointer';
+
+        const text = this.add.text(60, 150, formatCurrency(cost), { fontSize: '20px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+
+        container.add([outline, background, button, text]);
+    }
+
+    createTSPurchase2(x, y, cost, upgrade) {
+        const container = this.add.container(x, y);
+
+        const outline = this.add.graphics()
+            .fillStyle(0x708090)
+            .fillRoundedRect(0, 0, 120, 120, 10);
+
+        const background = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(5, 5, 110, 110, 10);
+
+        const button = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 130, 120, 40, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(0, 130, 120, 40), Phaser.Geom.Rectangle.Contains);
+
+        let onOver = () => { };
+        let onOut = () => { };
+        let onClick = () => { };
+
+        if (!adjustableData.isTrailSizeUpgrade2Unlocked) {
+            onOver = () => { text.setText(`Purchase?`); };
+
+            onOut = () => {
+                button.fillStyle(0xffffff, 1);
+                button.fillRoundedRect(0, 130, 120, 40, 10);
+                text.setText(`${formatCurrency(cost)}`);
+            };
+
+            onClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    button.fillStyle(0xff0000, 1);
+                    button.fillRoundedRect(0, 130, 120, 40, 10);
+                    text.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isTrailSizeUpgrade2Unlocked = true;
+                adjustableData.trailSize += upgrade;
+
+                text.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isTrailSizeUpgrade2Unlocked) {
+            onOver = () => { text.setText(`Purchased`); }
+            onOut = () => { text.setText(`Purchased`); }
+            onClick = () => { text.setText(`Purchased`); }
+        }
+
+        button.on('pointerover', () => onOver());
+        button.on('pointerout', () => onOut());
+        button.on('pointerdown', () => onClick());
+        button.input.cursor = 'pointer';
+
+        const text = this.add.text(60, 150, formatCurrency(cost), { fontSize: '20px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+
+        container.add([outline, background, button, text]);
+    }
+
+    createTrailLength() {
+        const gameWidth = this.sys.game.config.width;
+        const gameHeight = this.sys.game.config.height;
+
+        this.add.text(gameWidth - 350, gameHeight / 2 + 80, `Length`, { fontSize: '50px', fill: '#000' });
+        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 499.99, 0.5);
+        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 999.99, 2.5);
+    }
+
+    createTLPurchase1(x, y, cost, upgrade) {
+        const container = this.add.container(x, y);
+
+        const outline = this.add.graphics()
+            .fillStyle(0x708090)
+            .fillRoundedRect(0, 0, 120, 120, 10);
+
+        const background = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(5, 5, 110, 110, 10);
+
+        const button = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 130, 120, 40, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(0, 130, 120, 40), Phaser.Geom.Rectangle.Contains);
+
+        let onOver = () => { };
+        let onOut = () => { };
+        let onClick = () => { };
+
+        if (!adjustableData.isTrailLengthUpgrade1Unlocked) {
+            onOver = () => { text.setText(`Purchase?`); };
+
+            onOut = () => {
+                button.fillStyle(0xffffff, 1);
+                button.fillRoundedRect(0, 130, 120, 40, 10);
+                text.setText(`${formatCurrency(cost)}`);
+            };
+
+            onClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    button.fillStyle(0xff0000, 1);
+                    button.fillRoundedRect(0, 130, 120, 40, 10);
+                    text.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isTrailLengthUpgrade1Unlocked = true;
+                adjustableData.trailLength += upgrade;
+
+                text.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isTrailLengthUpgrade1Unlocked) {
+            onOver = () => { text.setText(`Purchased`); }
+            onOut = () => { text.setText(`Purchased`); }
+            onClick = () => { text.setText(`Purchased`); }
+        }
+
+        button.on('pointerover', () => onOver());
+        button.on('pointerout', () => onOut());
+        button.on('pointerdown', () => onClick());
+        button.input.cursor = 'pointer';
+
+        const text = this.add.text(60, 150, formatCurrency(cost), { fontSize: '20px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+
+        container.add([outline, background, button, text]);
+    }
+
+    createTLPurchase2(x, y, cost, upgrade) {
+        const container = this.add.container(x, y);
+
+        const outline = this.add.graphics()
+            .fillStyle(0x708090)
+            .fillRoundedRect(0, 0, 120, 120, 10);
+
+        const background = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(5, 5, 110, 110, 10);
+
+        const button = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(0, 130, 120, 40, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(0, 130, 120, 40), Phaser.Geom.Rectangle.Contains);
+
+        let onOver = () => { };
+        let onOut = () => { };
+        let onClick = () => { };
+
+        if (!adjustableData.isTrailLengthUpgrade2Unlocked) {
+            onOver = () => { text.setText(`Purchase?`); };
+
+            onOut = () => {
+                button.fillStyle(0xffffff, 1);
+                button.fillRoundedRect(0, 130, 120, 40, 10);
+                text.setText(`${formatCurrency(cost)}`);
+            };
+
+            onClick = () => {
+                if (adjustableData.totalCoins < cost) {
+                    button.fillStyle(0xff0000, 1);
+                    button.fillRoundedRect(0, 130, 120, 40, 10);
+                    text.setText(`Failed`);
+                    return;
+                }
+
+                adjustableData.totalCoins -= cost;
+                adjustableData.isTrailLengthUpgrade2Unlocked = true;
+                adjustableData.trailLength += upgrade;
+
+                text.setText(`Success!`);
+                this.scene.restart();
+            };
+        }
+
+        if (adjustableData.isTrailLengthUpgrade2Unlocked) {
+            onOver = () => { text.setText(`Purchased`); }
+            onOut = () => { text.setText(`Purchased`); }
+            onClick = () => { text.setText(`Purchased`); }
+        }
+
+        button.on('pointerover', () => onOver());
+        button.on('pointerout', () => onOut());
+        button.on('pointerdown', () => onClick());
+        button.input.cursor = 'pointer';
+
+        const text = this.add.text(60, 150, formatCurrency(cost), { fontSize: '20px', fill: '#000', }).setOrigin(0.5);
+
+        if (adjustableData.isAutoSaving) { saveData(); }
+
+        container.add([outline, background, button, text]);
+    }
 }
 
 class Settings extends Phaser.Scene {
@@ -2505,7 +2802,11 @@ let adjustableData = {
     isMusicPlaying: true,
     volume: 0.5,
     trailSize: 2,
+    isTrailSizeUpgrade1Unlocked: false,
+    isTrailSizeUpgrade2Unlocked: false,
     trailLength: 3,
+    isTrailLengthUpgrade1Unlocked: false,
+    isTrailLengthUpgrade2Unlocked: false,
     trailColor: 16777215,
     isRedTrailUnlocked: false,
     isYellowTrailUnlocked: false,
@@ -2519,8 +2820,8 @@ let adjustableData = {
     isBlueGreenTrailUnlocked: false,
     isBlueVioletTrailUnlocked: false,
     isRedVioletTrailUnlocked: false,
-    totalCoins: 0.0,
-    maxCoins: 0.0,
+    totalCoins: 0.00,
+    maxCoins: 0.00,
     gameTime: 1,
     totalCutCount: {
         'BellPepper': 0,
@@ -2627,7 +2928,11 @@ function resetGameData() {
         isMusicPlaying: true,
         volume: 0.5,
         trailSize: 2,
+        isTrailSizeUpgrade1Unlocked: false,
+        isTrailSizeUpgrade2Unlocked: false,
         trailLength: 3,
+        isTrailLengthUpgrade1Unlocked: false,
+        isTrailLengthUpgrade2Unlocked: false,
         trailColor: 16777215,
         isRedTrailUnlocked: false,
         isYellowTrailUnlocked: false,
@@ -2641,8 +2946,8 @@ function resetGameData() {
         isBlueGreenTrailUnlocked: false,
         isBlueVioletTrailUnlocked: false,
         isRedVioletTrailUnlocked: false,
-        totalCoins: 0.0,
-        maxCoins: 0.0,
+        totalCoins: 0.00,
+        maxCoins: 0.00,
         gameTime: 0,
         totalCutCount: {
             'BellPepper': 0,
