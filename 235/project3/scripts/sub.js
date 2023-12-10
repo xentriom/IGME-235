@@ -4,7 +4,7 @@ class LoadingScene extends Phaser.Scene {
     preload() {
         loadData();
         const veggieNames = ['BellPepper', 'Broccoli', 'Carrot', 'Cauliflower', 'Corn', 'Eggplant', 'GreenCabbage', 'Mushroom', 'Potato', 'Pumpkin', 'Radish', 'Tomato'];
-        const iconNames = ['Coin2', 'Power', 'FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
+        const iconNames = ['Cloud', 'Coin2', 'Power', 'FloppyDisk', 'Home', 'Shop', 'Instruction', 'Play', 'Gear', 'PlayPause', 'Heart', 'BrokenHeart', 'Backpack', 'CookingPot', 'Restart', 'Monitor', 'SpeakerOn', 'SpeakerMute'];
 
         veggieNames.forEach((veggieName) => {
             this.load.image(veggieName, `./media/veggies/${veggieName}.png`);
@@ -1106,8 +1106,6 @@ class Shop extends Phaser.Scene {
         this.createBackground();
         this.createCash();
         this.createColorShop();
-
-        this.add.text(this.sys.game.config.width / 2, this.sys.game.config.height - 75, `More to come....`, { fontSize: '20px', fill: '#000' }).setOrigin(0.5);
     }
 
     update() {
@@ -1115,7 +1113,7 @@ class Shop extends Phaser.Scene {
     }
 
     createHomeButton() {
-        const homeButton = this.add.container(20, 20);
+        const homeButton = this.add.container(50, 20);
 
         const buttonBackground = this.add.graphics()
             .fillStyle(0xffffff)
@@ -1153,6 +1151,9 @@ class Shop extends Phaser.Scene {
         const background = this.add.graphics()
             .fillStyle(0xd3d3d3)
             .fillRoundedRect(50, 200, this.sys.game.config.width - 100, this.sys.game.config.height - 250, 20);
+
+        this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 - 100, 220, 5, 600, 4);
+        this.add.graphics().fillStyle(0x000000).fillRoundedRect(this.sys.game.config.width / 2 - 70, 500, 750, 5, 4);
 
         return background;
     }
@@ -2200,6 +2201,7 @@ class Settings extends Phaser.Scene {
         this.add.text(this.sys.game.config.width / 2, 110, `Settings`, { fontSize: '110px', fill: '#fff' }).setOrigin(0.5);
         this.createVolume();
         this.createSave();
+        this.createAutoSave();
         this.createReset();
         this.createStats();
         this.createVeggieCutStats();
@@ -2218,7 +2220,7 @@ class Settings extends Phaser.Scene {
     }
 
     createHomeButton() {
-        const homeButton = this.add.container(20, 20);
+        const homeButton = this.add.container(50, 20);
 
         const buttonBackground = this.add.graphics()
             .fillStyle(0xffffff)
@@ -2318,11 +2320,34 @@ class Settings extends Phaser.Scene {
     }
 
     createSave() {
-        this.add.image(100, 420, 'FloppyDisk').setOrigin(0.5).setScale(2);
-        this.add.text(140, 400, 'Auto Save', { fontSize: '40px', fill: '#000', });
+        this.add.image(100, 375, 'Cloud').setOrigin(0.5).setScale(2);
+        this.add.text(140, 355, 'Save', { fontSize: '40px', fill: '#000' });
+        this.button = this.add.graphics()
+            .fillStyle(0xffffff)
+            .fillRoundedRect(280, 355, 100, 40, 10)
+            .setInteractive(new Phaser.Geom.Rectangle(280, 355, 100, 40), Phaser.Geom.Rectangle.Contains)
+            .on('pointerover', () => {
+                this.button.fillStyle(0x00ff00);
+                this.button.fillRoundedRect(280, 355, 100, 40, 10);
+            })
+            .on('pointerout', () => {
+                this.button.fillStyle(0xffffff);
+                this.button.fillRoundedRect(280, 355, 100, 40, 10);
+            })
+            .on('pointerdown', () => {
+                saveData();
+                this.scene.restart();
+            });
+        this.button.input.cursor = 'pointer';
+        this.add.text(330, 375, `Save`, { fontSize: '24px', fill: '#000' }).setOrigin(0.5);
+    }
+
+    createAutoSave() {
+        this.add.image(100, 470, 'FloppyDisk').setOrigin(0.5).setScale(2);
+        this.add.text(140, 450, 'Auto Save', { fontSize: '40px', fill: '#000', });
 
         let x = 390;
-        let y = 400;
+        let y = 450;
         let radius = 10;
         let width = 140;
         let height = 40;
