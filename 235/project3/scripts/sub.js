@@ -134,11 +134,6 @@ class MainMenu extends Phaser.Scene {
             onClick: () => this.scene.start('Settings'),
         });
 
-        // const infoButton = this.add.image(20, this.sys.game.config.height - 50, 'infoIcon')
-        //     .setOrigin(0)
-        //     .setInteractive({ useHandCursor: true })
-        //     .on('pointerdown', () => this.showInfoPopup());
-
         const infoButton = this.add.graphics()
             .fillStyle(0xF9B931)
             .fillRoundedRect(20, this.sys.game.config.height - 60, 40, 40, 10)
