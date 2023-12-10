@@ -224,7 +224,7 @@ class MainMenu extends Phaser.Scene {
                 infoButtonOutline.fillRoundedRect(-205, 245, 410, 70, 10);
             })
             .on('pointerdown', () => {
-
+                window.location.href = "./about.html";
             });
         infoButton.input.cursor = 'pointer';
 
