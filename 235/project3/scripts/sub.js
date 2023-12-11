@@ -1276,9 +1276,9 @@ class Shop extends Phaser.Scene {
     }
 
     createCash() {
-        this.add.graphics().fillStyle(0xffffff).fillRoundedRect(this.sys.game.config.width - 250, 220, 180, 50, 10);
-        this.add.image(this.sys.game.config.width - 220, 245, 'Coin2').setOrigin(0.5).setScale(2.5);
-        this.amount = this.add.text(this.sys.game.config.width - 195, 230, formatCurrency(adjustableData.totalCoins), { fontSize: '28px', fill: '#000', });
+        this.add.graphics().fillStyle(0xffffff).fillRoundedRect(this.sys.game.config.width - 270, 220, 190, 50, 10);
+        this.add.image(this.sys.game.config.width - 240, 245, 'Coin2').setOrigin(0.5).setScale(2.5);
+        this.amount = this.add.text(this.sys.game.config.width - 215, 230, formatCurrency(adjustableData.totalCoins), { fontSize: '28px', fill: '#000', });
     }
 
     createColorShop() {
@@ -2365,11 +2365,11 @@ class Shop extends Phaser.Scene {
     createDisplay() {
         const container = this.add.container(this.sys.game.config.width / 2 - 50, 240);
 
-        const outline1 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(0, 0, 510, 220, 10);
-        const outline2 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(470, 80, 220, 140, 10);
+        const outline1 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(0, 0, 490, 220, 10);
+        const outline2 = this.add.graphics().fillStyle(0x426F86).fillRoundedRect(460, 80, 230, 140, 10);
 
-        const background1 = this.add.graphics().fillStyle(0x2F3130).fillRoundedRect(5, 5, 498, 208, 10);
-        const background2 = this.add.graphics().fillStyle(0x2F3130).fillRoundedRect(478, 88, 205, 125, 10);
+        const background1 = this.add.graphics().fillStyle(0x2F3130).fillRoundedRect(5, 5, 478, 208, 10);
+        const background2 = this.add.graphics().fillStyle(0x2F3130).fillRoundedRect(468, 88, 215, 125, 10);
 
         const line = this.add.graphics()
             .fillStyle(adjustableData.trailColor)
