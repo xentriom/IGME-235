@@ -470,13 +470,13 @@ class PracticeGame extends Phaser.Scene {
 
     createScoreField() {
         roundData.score = 0;
-        const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
+        const scoreField = this.add.container(this.sys.game.config.width - 25, 20);
 
         const fieldBackground = this.add.graphics()
-            .fillStyle(0xffffff)
+            .fillStyle(0xF8F2E6)
             .fillRoundedRect(-220, 0, 215, 50, 10);
 
-        const scoreIcon = this.add.image(this.sys.game.config.width - 210, 43, 'Backpack')
+        const scoreIcon = this.add.image(this.sys.game.config.width - 215, 43, 'Backpack')
             .setOrigin(0.5)
             .setScale(2);
 
@@ -674,13 +674,13 @@ class TimedGame extends Phaser.Scene {
 
     createScoreField() {
         roundData.score = 0;
-        const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
+        const scoreField = this.add.container(this.sys.game.config.width - 25, 20);
 
         const fieldBackground = this.add.graphics()
-            .fillStyle(0xffffff)
+            .fillStyle(0xF8F2E6)
             .fillRoundedRect(-220, 0, 215, 50, 10);
 
-        const scoreIcon = this.add.image(this.sys.game.config.width - 210, 43, 'Backpack')
+        const scoreIcon = this.add.image(this.sys.game.config.width - 215, 43, 'Backpack')
             .setOrigin(0.5)
             .setScale(2);
 
@@ -698,7 +698,7 @@ class TimedGame extends Phaser.Scene {
         const timerContainer = this.add.container(this.sys.game.config.width / 2, 20);
 
         const timerBackground = this.add.graphics()
-            .fillStyle(0xffffff)
+            .fillStyle(0xF8F2E6)
             .fillRoundedRect(-75, 0, 150, 50, 10);
 
         const timerIcon = this.add.image(this.sys.game.config.width / 2 - 45, 43, 'CookingPot')
@@ -873,12 +873,14 @@ class LifeGame extends Phaser.Scene {
         this.trailGraphics = this.add.graphics();
         this.input.on('pointermove', this.handleMouseMove, this);
 
+        this.add.graphics().fillStyle(0xF8F2E6).fillRoundedRect(this.sys.game.config.width / 2 - 150, 20, 300, 50, 10);
+
         this.hearts = [];
         const totalWidth = gameData.numberOfHearts * 40 * 2;
-        const startX = (this.sys.game.config.width - totalWidth) / 2;
+        const startX = (this.sys.game.config.width - totalWidth) / 2 + 70;
 
         for (let i = 0; i < gameData.numberOfHearts; i++) {
-            const heart = this.add.image(startX + i * 40 * 2, 20, 'Heart').setOrigin(0, 0).setScale(2);
+            const heart = this.add.image(startX + i * 40 * 1.25, 20, 'Heart').setOrigin(0, 0).setScale(1.5);
             this.hearts.push(heart);
         }
     }
@@ -925,13 +927,13 @@ class LifeGame extends Phaser.Scene {
 
     createScoreField() {
         roundData.score = 0;
-        const scoreField = this.add.container(this.sys.game.config.width - 20, 20);
+        const scoreField = this.add.container(this.sys.game.config.width - 25, 20);
 
         const fieldBackground = this.add.graphics()
-            .fillStyle(0xffffff)
+            .fillStyle(0xF8F2E6)
             .fillRoundedRect(-220, 0, 215, 50, 10);
 
-        const scoreIcon = this.add.image(this.sys.game.config.width - 210, 43, 'Backpack')
+        const scoreIcon = this.add.image(this.sys.game.config.width - 215, 43, 'Backpack')
             .setOrigin(0.5)
             .setScale(2);
 
@@ -1284,20 +1286,20 @@ class Shop extends Phaser.Scene {
     createColorShop() {
         this.add.text(250, 230, `Colors`, { fontSize: '50px', fill: '#000' });
         this.createWhiteTrail(130, 315, 0xF5F5F5);
-        this.createRedTrail(130, 390, 0xFF0000, 100.99);
-        this.createYellowTrail(130, 465, 0xFFFF00, 100.99);
-        this.createBlueTrail(130, 540, 0x0000FF, 100.99);
-        this.createOrangeTrail(130, 615, 0xFFA500, 150.99);
-        this.createGreenTrail(130, 690, 0x00FF00, 150.99);
-        this.createPurpleTrail(130, 765, 0x8F00FF, 150.99);
+        this.createRedTrail(130, 390, 0xFF0000, 49.99);
+        this.createYellowTrail(130, 465, 0xFFFF00, 49.99);
+        this.createBlueTrail(130, 540, 0x0000FF, 49.99);
+        this.createOrangeTrail(130, 615, 0xFFA500, 99.99);
+        this.createGreenTrail(130, 690, 0x00FF00, 99.99);
+        this.createPurpleTrail(130, 765, 0x8F00FF, 99.99);
 
         this.createBlackTrail(370, 315, 0x2F3130);
-        this.createRedOrangeTrail(370, 390, 0xff5349, 200.99);
-        this.createYellowOrangeTrail(370, 465, 0xffae42, 200.99);
-        this.createYellowGreenTrail(370, 540, 0x9acd32, 200.99);
-        this.createBlueGreenTrail(370, 615, 0x00ff7f, 200.99);
-        this.createBlueVioletTrail(370, 690, 0x8A2BE2, 200.99);
-        this.createRedVioletTrail(370, 765, 0xC71585, 200.99);
+        this.createRedOrangeTrail(370, 390, 0xff5349, 199.99);
+        this.createYellowOrangeTrail(370, 465, 0xffae42, 199.99);
+        this.createYellowGreenTrail(370, 540, 0x9acd32, 199.99);
+        this.createBlueGreenTrail(370, 615, 0x00ff7f, 199.99);
+        this.createBlueVioletTrail(370, 690, 0x8A2BE2, 199.99);
+        this.createRedVioletTrail(370, 765, 0xC71585, 199.99);
     }
 
     createRedTrail(x, y, color, cost) {
@@ -2387,7 +2389,7 @@ class Shop extends Phaser.Scene {
 
         this.add.text(gameWidth / 2 + 50, gameHeight / 2 + 80, `Size`, { fontSize: '50px', fill: '#000' });
         this.createTSPurchase1(gameWidth / 2 - 40, gameHeight / 2 + 160, 499.99, 1);
-        this.createTSPurchase2(gameWidth / 2 + 120, gameHeight / 2 + 160, 999.99, 4);
+        this.createTSPurchase2(gameWidth / 2 + 120, gameHeight / 2 + 160, 999.99, 3);
     }
 
     createTSPurchase1(x, y, cost, upgrade) {
@@ -2523,8 +2525,8 @@ class Shop extends Phaser.Scene {
         const gameHeight = this.sys.game.config.height;
 
         this.add.text(gameWidth - 350, gameHeight / 2 + 80, `Length`, { fontSize: '50px', fill: '#000' });
-        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 799.99, 0.5);
-        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 2000.00, 2.5);
+        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 799.99, 1);
+        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 2000.00, 2);
     }
 
     createTLPurchase1(x, y, cost, upgrade) {
