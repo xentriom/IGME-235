@@ -92,6 +92,8 @@ class MainMenu extends Phaser.Scene {
             loop: true,
         });
 
+        this.createDecor();
+
         this.add.text(this.sys.game.config.width / 2, 200, 'VEGGIE SLICER', {
             fontSize: '120px',
             fill: '#F0810E',
@@ -145,6 +147,12 @@ class MainMenu extends Phaser.Scene {
         this.add.text(40, this.sys.game.config.height - 40, 'i', { fontSize: '35px', fill: '#000' }).setOrigin(0.5);
 
         this.createInfoPopup();
+    }
+
+    createDecor() {
+        this.add.image(50, 80, 'Potato').setOrigin(0.5).setScale(10);
+        this.add.image(this.sys.game.config.width / 2 + 460, this.sys.game.config.height / 2, 'Carrot').setOrigin(0.5).setScale(20).setRotation(-.4);
+        this.add.image(this.sys.game.config.width / 2 - 300, this.sys.game.config.height / 2 + 200, 'Cauliflower').setOrigin(0, 1).setScale(7).setRotation(-.2);
     }
 
     createIconButton({ iconKey, x, y, width, height, scale, text, textColor, onClick }) {
