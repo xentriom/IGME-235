@@ -1361,7 +1361,7 @@ class Shop extends Phaser.Scene {
             }
 
             redOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0xFF0000;
                 redText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1444,7 +1444,7 @@ class Shop extends Phaser.Scene {
             }
 
             yellowOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0xFFFF00;
                 yellowText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1527,7 +1527,7 @@ class Shop extends Phaser.Scene {
             }
 
             blueOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0x0000FF;
                 blueText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1610,7 +1610,7 @@ class Shop extends Phaser.Scene {
             }
 
             orangeOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0xFFA500;
                 orangeText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1694,7 +1694,7 @@ class Shop extends Phaser.Scene {
             }
 
             greenOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0x00FF00;
                 greenText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1777,7 +1777,7 @@ class Shop extends Phaser.Scene {
             }
 
             purpleOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0x8F00FF;
                 purpleText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1860,7 +1860,7 @@ class Shop extends Phaser.Scene {
             }
 
             redOrangeOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0xff5349;
                 redOrangeText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -1943,7 +1943,7 @@ class Shop extends Phaser.Scene {
             }
 
             yellowOrangeOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0xffae42;
                 yellowOrangeText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -2026,7 +2026,7 @@ class Shop extends Phaser.Scene {
             }
 
             yellowGreenOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0x9acd32;
                 yellowGreenText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -2109,7 +2109,7 @@ class Shop extends Phaser.Scene {
             }
 
             blueGreenOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0x00ff7f;
                 blueGreenText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -2194,7 +2194,7 @@ class Shop extends Phaser.Scene {
             }
 
             blueVioletOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0x8A2BE2;
                 blueVioletText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -2279,7 +2279,7 @@ class Shop extends Phaser.Scene {
             }
 
             redVioletOnClick = () => {
-                adjustableData.trailColor = 0x04ff00;
+                adjustableData.trailColor = 0xC71585;
                 redVioletText.setText(`Equipped!`);
                 this.scene.restart();
             }
@@ -2396,8 +2396,8 @@ class Shop extends Phaser.Scene {
         const gameHeight = this.sys.game.config.height;
 
         this.add.text(gameWidth / 2 + 50, gameHeight / 2 + 80, `Size`, { fontSize: '50px', fill: '#000' });
-        this.createTSPurchase1(gameWidth / 2 - 40, gameHeight / 2 + 160, 499.99, 1);
-        this.createTSPurchase2(gameWidth / 2 + 120, gameHeight / 2 + 160, 999.99, 3);
+        this.createTSPurchase1(gameWidth / 2 - 40, gameHeight / 2 + 160, 399.99, 1);
+        this.createTSPurchase2(gameWidth / 2 + 120, gameHeight / 2 + 160, 699.99, 3);
     }
 
     createTSPurchase1(x, y, cost, upgrade) {
@@ -2533,8 +2533,8 @@ class Shop extends Phaser.Scene {
         const gameHeight = this.sys.game.config.height;
 
         this.add.text(gameWidth - 350, gameHeight / 2 + 80, `Length`, { fontSize: '50px', fill: '#000' });
-        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 799.99, 1);
-        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 2000.00, 2);
+        this.createTLPurchase1(gameWidth - 400, gameHeight / 2 + 160, 599.99, 1);
+        this.createTLPurchase2(gameWidth - 230, gameHeight / 2 + 160, 1999.99, 2);
     }
 
     createTLPurchase1(x, y, cost, upgrade) {
