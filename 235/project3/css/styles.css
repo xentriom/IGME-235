@@ -1,0 +1,243 @@
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+.center {
+    text-align: center;
+}
+
+.full {
+    background-color: rgb(247, 217, 168);
+    width: 100vw;
+    height: 100vh;
+}
+
+body {
+    margin: 0px;
+}
+
+/* ==========================================
+Navigation
+========================================== */
+nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    top: 0;
+    width: 100%;
+    position: fixed;
+}
+
+nav a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    float: left;
+}
+
+nav a:hover {
+    background-color: #111;
+    border-bottom: 1px solid white;
+}
+
+/* ==========================================
+Home Section
+========================================== */
+.homeBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "homeInfo homeImage";
+    column-gap: 2%;
+}
+
+.homeInfo {
+    grid-area: homeInfo;
+    padding: 10%;
+    padding-top: 20%;
+    padding-right: 0px;
+}
+
+.homeInfo h1 {
+    font-size: 6vw;
+    font-weight: bolder;
+    margin-bottom: 2%;
+}
+
+.homeInfo p {
+    font-size: 20px;
+    line-height: 2;
+    margin-bottom: 5%;
+}
+
+.homeInfo button {
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.homeImage {
+    grid-area: homeImage;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15%;
+}
+
+.homeImage img {
+    width: 100%;
+    height: auto;
+}
+
+/* ==========================================
+Info Section
+========================================== */
+.infoBox {
+    padding: 10%;
+    padding-top: 20%;
+
+}
+
+.infoBox h3 {
+    font-size: 40px;
+    margin-bottom: 2%;
+}
+
+.infoBox p {
+    font-size: 25px;
+    line-height: 1.75;
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+/* ==========================================
+Feature Section
+========================================== */
+.featureBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "featureMode featureShop featureSetting";
+    column-gap: 2%;
+    padding: 5%;
+    padding-top: 10%;
+}
+
+.featureBox h2 {
+    font-size: 40px;
+    margin-bottom: 2%;
+}
+
+.featureBox p {
+    font-size: 20px;
+    line-height: 2;
+    margin-bottom: 5%;
+}
+
+.featureMode {
+    grid-area: featureMode;
+    padding: 5%;
+}
+
+.featureShop {
+    grid-area: featureShop;
+    padding: 5%;
+}
+
+.featureSetting {
+    grid-area: featureSetting;
+    padding: 5%;
+}
+
+/* ==========================================
+Documentation Section
+========================================== */
+.docuBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "docuHurdle docuChange docuRight";
+    column-gap: 8%;
+    padding: 10%;
+    padding-top: 6%;
+}
+
+.docuBox h2 {
+    font-size: 40px;
+    margin-bottom: 2%;
+}
+
+.docuBox p {
+    font-size: 20px;
+    line-height: 2;
+    margin-bottom: 5%;
+}
+
+.docuHurdle {
+    grid-area: docuHurdle;
+}
+
+.docuChange {
+    grid-area: docuChange;
+}
+
+.docuRight {
+    grid-area: docuRight;
+}
+
+/* ==========================================
+Thoughts Section
+========================================== */
+.thoughtBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "thoughts1 thoughts2 thoughts3";
+    column-gap: 8%;
+    padding: 10%;
+    padding-top: 6%;
+}
+
+/* ==========================================
+Credits Section
+========================================== */
+.creditBox {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "credits1 credits2";
+    column-gap: 8%;
+    padding: 10%;
+    padding-top: 6%;
+}
+
+/* ==========================================
+Back to Top Button
+========================================== */
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+}
+
+#myBtn:hover {
+    background-color: #111;
+}

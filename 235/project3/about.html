@@ -15,6 +15,7 @@
     <meta property="og:image" content=https://people.rit.edu/jc5892/235/project3/media/veggies/Carrot.png>
     <meta property="og:image:width" content="1080" />
     <meta property="og:image:height" content="1080" />
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
@@ -32,44 +33,148 @@
         <div class="homeBox">
             <section class="homeInfo">
                 <h1>Veggie Slicer</h1>
-                <p>A recreation of a simplistic mobile game called Fruit Ninja. Veggie Slicer takes it to the next level with various upgrades purchasable via the shop as well as three modes for you to play. Unleash your inner ninja and slice through each and every veggie that comes your way. Beware, some veggies may have a negative impact on your overall money!</p>
+                <p>A recreation of a simplistic mobile game called Fruit Ninja. Veggie Slicer takes it to the next level
+                    with various upgrades purchasable via the shop as well as three modes for you to play. Unleash your
+                    inner ninja and slice through each and every veggie that comes your way. Beware, some veggies may
+                    have a negative impact on your overall money!</p>
                 <button class="center visit" onclick="window.location.href='index.html'">Play Veggie Slicer</button>
             </section>
             <div class="homeImage">
-                <img src="media/rwd.png" alt="pokedex">
+                <img src="media/graphics/ninja.png" alt="Ninja silhouette">
             </div>
         </div>
     </div>
 
-    <div id="info">
+    <div id="info" class="full">
         <div class="infoBox">
-
+            <section>
+                <h3 class="center">About Veggie Slicer</h3>
+                <p>Veggie Slicer is a solo project developed in IGME235, Intro to Game Web Tech. The goal was to develop
+                    and deploy a game using PIXI or Phaser.</p>
+            </section>
         </div>
     </div>
 
-    <div id="feature">
+    <div id="feature" class="full">
         <div class="featureBox">
-            
+            <section class="featureMode">
+                <h2>Game Modes</h2>
+                <p>Launching with 3 initial game modes, one for practice and 2 for the score and currency. </p>
+            </section>
+
+            <section class="featureShop">
+                <h2>Upgrades</h2>
+                <p>With various upgrades to the trail from the shop, players can further customize and improve their
+                    gaming experience by microtransactions within the game. Each veggie cut during the game will result
+                    in a increase or decrease of currency</p>
+            </section>
+
+            <section class="featureSetting">
+                <h2>Settings</h2>
+                <p>With game customizations such as saving data as well as muting and adjusting game volumn to your
+                    preferance! You can also view your stats such as total coins earned, total veggies sliced, and the
+                    amount of veggies sliced.</p>
+            </section>
         </div>
     </div>
 
-    <div id="docu">
-
+    <div id="docu" class="full">
+        <div class="docuBox">
+            <section class="docuHurdle">
+                <h2>OVERCOMING THE HURDLE</h2>
+                <p>Getting the project started and getting the flow was the hard part. Once i got started, got things layed out,
+                    everything else was plug and chug. There was a few issued I had that made me pause and think but
+                    nothing that difficult. After getting about 70% of the way done, I did realize a significant flaw
+                    and I redid the whole variable system to make use of JavaScript ovbjects and splitting them up into
+                    game data, adjustable data, and session data. This change made everything else such as upgrades and
+                    setting chages very easy.</p>
+            </section>
+            <section class="docuChanged">
+                <h2>WHAT CHANGED?</h2>
+                <p>Many things changed since my first vision of this project. One of the change was a more and better
+                    shop which consisted of more upgrades. As I worked, I realize how difficult it was so I made the
+                    colors a majority of the upgrade. Another major feature I ended up never adding was the effect of
+                    the veggie being split in half after falling, that was too much....</p>
+            </section>
+            <section class="docuRight">
+                <h2>WHAT WENT RIGHT</h2>
+                <p>Infact, I am pleased with the overall product of this project. I feel as if I put in my best effort
+                    and make this good. The shop was a messaive success and it took the longest time, first deciding on
+                    what to put, then implementing them. I am also very pleased with the settings, though I didn't have
+                    as much customizations as I initially wanted.</p>
+            </section>
+        </div>
     </div>
 
-    <div id="thought">
-
-    </div>
-
-    <div id="credits">
-        <section>
-            <h2>Resources</h2>
-            <p>I used a variety of free resources including art and many other websites for assistance. </p>
+    <div id="thought" class="full">
+        <section class="thoughtBox">
+            <h2>Final Thoughts</h2>
+            <p>Overall, I am very pleased with the final product of this project. I feel as if I put in my best effort
+                and make this good. The shop was a messaive success and it took the longest time, first deciding on
+                what to put, then implementing them. I am also very pleased with the settings, though I didn't have
+                as much customizations as I initially wanted.</p>
         </section>
     </div>
 
-    <script>
+    <div id="credits" class="full">
+        <section class="creditBox">
+            <h2>Resources & Credits</h2>
+            <p>During the duration of this project, I used various resources to help me accomplish thhis.</p>
+            <p>Image by <a
+                    href="https://www.freepik.com/free-vector/ninja-logo-template-flat-style_15291970.htm#query=ninja%20silhouette&position=13&from_view=keyword&track=ais&uuid=910fbbe2-d3fd-4894-bdc1-5b2c44410e62">Freepik</a>
+            </p>
+        </section>
+    </div>
 
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+    <script>
+        "use strict";
+        document.querySelector('a[href="#home"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('home').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#info"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('info').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#feature"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('feature').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#docu"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('docu').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#thought"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('thought').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        document.querySelector('a[href="#credits"]').addEventListener('click', function (event) {
+            event.preventDefault();
+            document.getElementById('credits').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        let mybutton = document.getElementById("myBtn");
+
+        window.onscroll = function () { scrollFunction() };
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollIntoView({ behavior: "smooth" });
+            document.documentElement.scrollIntoView({ behavior: "smooth" });
+        }
     </script>
 </body>
 
